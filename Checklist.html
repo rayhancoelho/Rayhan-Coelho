@@ -1,644 +1,461 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Checklist do Sono - Rayhan Coelho</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Checklist do sono — Rayhan Coelho</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    .ck-head { margin-bottom: 28px; }
+    .ck-progress {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: end;
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 32px;
+    }
+    .ck-progress-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--paper-dim);
+    }
+    .ck-progress-count {
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--paper);
+      letter-spacing: -0.02em;
+      margin-top: 2px;
+    }
+    .ck-progress-count span { color: var(--amber); }
+    .ck-percent {
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--amber);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    .ck-progress-bar {
+      grid-column: 1 / -1;
+      height: 1px;
+      background: var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+    .ck-progress-bar::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: var(--p, 0%);
+      background: var(--amber);
+      transition: width 360ms var(--ease);
+    }
 
-        body {
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #1a1408 0%, #2a1f10 50%, #3a2f15 100%);
-            color: white;
-            line-height: 1.6;
-            min-height: 100vh;
-        }
+    .ck-cat { margin-bottom: 36px; }
+    .ck-cat-head {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      gap: 14px;
+      align-items: baseline;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line-strong);
+      margin-bottom: 8px;
+    }
+    .ck-cat-n {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--amber);
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+    .ck-cat-title {
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      color: var(--paper);
+    }
+    .ck-cat-meta {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--paper-dim);
+    }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 24px 20px;
-        }
+    .ck-list { list-style: none; }
+    .ck-item {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 16px 4px;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+      user-select: none;
+      transition: background var(--fast) var(--ease);
+    }
+    .ck-item:hover { background: var(--amber-bg); }
+    .ck-item:active { background: var(--amber-bg); }
+    .ck-box {
+      width: 18px; height: 18px;
+      border: 1.5px solid var(--paper-dim);
+      border-radius: 2px;
+      margin-top: 3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color var(--fast) var(--ease), background var(--fast) var(--ease);
+      flex-shrink: 0;
+    }
+    .ck-box::after {
+      content: "";
+      width: 8px; height: 4px;
+      border-left: 1.5px solid var(--ink);
+      border-bottom: 1.5px solid var(--ink);
+      transform: rotate(-45deg) translate(1px, -1px);
+      opacity: 0;
+      transition: opacity var(--fast) var(--ease);
+    }
+    .ck-item.done .ck-box { background: var(--amber); border-color: var(--amber); }
+    .ck-item.done .ck-box::after { opacity: 1; }
+    .ck-text {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 1.35;
+      color: var(--paper);
+      transition: color var(--fast) var(--ease);
+    }
+    .ck-detail {
+      display: block;
+      font-family: var(--sans);
+      font-weight: 400;
+      font-size: 13.5px;
+      color: var(--paper-dim);
+      margin-top: 4px;
+      line-height: 1.45;
+    }
+    .ck-item.done .ck-text { color: var(--paper-muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+    .ck-item.done .ck-detail { color: var(--paper-muted); }
 
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: rgba(255, 220, 180, 0.8);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 24px;
-            padding: 8px 14px;
-            background: rgba(226, 130, 30, 0.08);
-            border-radius: 12px;
-            border: 1px solid rgba(226, 130, 30, 0.2);
-        }
+    .ck-reset {
+      margin-top: 24px;
+      text-align: center;
+    }
 
-        /* HERO */
-        .hero {
-            text-align: center;
-            margin-bottom: 32px;
-        }
+    .ck-upsell {
+      margin-top: 48px;
+      padding: 28px 0;
+      border-top: 1px solid var(--amber);
+      border-bottom: 1px solid var(--amber);
+    }
+    .ck-upsell-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 12px;
+    }
+    .ck-upsell h2 {
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: clamp(24px, 6vw, 30px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--paper);
+      margin-bottom: 8px;
+    }
+    .ck-upsell p {
+      font-family: var(--serif);
+      font-style: italic;
+      color: var(--paper-dim);
+      font-size: 16px;
+      margin-bottom: 18px;
+    }
 
-        .hero-badge {
-            display: inline-block;
-            background: rgba(34, 197, 94, 0.15);
-            color: #22c55e;
-            padding: 6px 14px;
-            border-radius: 100px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-            border: 1px solid rgba(34, 197, 94, 0.3);
-        }
-
-        h1 {
-            font-size: 32px;
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -1.5px;
-            margin-bottom: 12px;
-            color: white;
-        }
-
-        h1 span {
-            background: linear-gradient(135deg, #c2691a 0%, #e8821e 50%, #ffa500 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: 15px;
-            color: rgba(255, 220, 180, 0.8);
-            max-width: 460px;
-            margin: 0 auto;
-            line-height: 1.5;
-        }
-
-        /* PROGRESS */
-        .progress-card {
-            background: rgba(226, 130, 30, 0.08);
-            padding: 18px 20px;
-            border-radius: 18px;
-            margin-bottom: 24px;
-            border: 1.5px solid rgba(226, 130, 30, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .progress-info {
-            flex: 1;
-        }
-
-        .progress-label {
-            font-size: 12px;
-            color: rgba(255, 220, 180, 0.7);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .progress-text {
-            font-size: 18px;
-            font-weight: 800;
-            color: white;
-        }
-
-        .progress-text span {
-            color: #e8821e;
-        }
-
-        .progress-ring {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: conic-gradient(#e8821e 0deg, rgba(255,255,255,0.08) 0deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.5s ease;
-            position: relative;
-        }
-
-        .progress-ring::before {
-            content: "";
-            position: absolute;
-            width: 44px;
-            height: 44px;
-            background: #2a1f10;
-            border-radius: 50%;
-        }
-
-        .progress-percent {
-            position: relative;
-            z-index: 1;
-            font-size: 14px;
-            font-weight: 800;
-            color: white;
-        }
-
-        /* CATEGORY */
-        .category {
-            margin-bottom: 28px;
-        }
-
-        .category-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .category-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #c2691a, #e8821e);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        .category-title {
-            font-size: 20px;
-            font-weight: 800;
-            color: white;
-            letter-spacing: -0.5px;
-        }
-
-        /* CHECKLIST ITEMS */
-        .checklist {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .check-item {
-            background: rgba(255, 255, 255, 0.04);
-            padding: 16px 18px;
-            border-radius: 14px;
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            border: 1.5px solid rgba(255, 255, 255, 0.06);
-            cursor: pointer;
-            transition: all 0.2s;
-            user-select: none;
-        }
-
-        .check-item:active {
-            transform: scale(0.98);
-        }
-
-        .check-item.checked {
-            background: rgba(34, 197, 94, 0.08);
-            border-color: rgba(34, 197, 94, 0.3);
-        }
-
-        .check-item.checked .check-text {
-            color: rgba(255, 220, 180, 0.5);
-            text-decoration: line-through;
-        }
-
-        .check-item.checked .check-detail {
-            color: rgba(255, 220, 180, 0.35);
-        }
-
-        .checkbox {
-            width: 24px;
-            height: 24px;
-            border-radius: 8px;
-            border: 2px solid rgba(255, 220, 180, 0.4);
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            margin-top: 2px;
-        }
-
-        .check-item.checked .checkbox {
-            background: #22c55e;
-            border-color: #22c55e;
-        }
-
-        .checkbox::after {
-            content: "✓";
-            color: white;
-            font-weight: 900;
-            font-size: 14px;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .check-item.checked .checkbox::after {
-            opacity: 1;
-        }
-
-        .check-content {
-            flex: 1;
-        }
-
-        .check-text {
-            font-size: 15px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 2px;
-            line-height: 1.4;
-        }
-
-        .check-detail {
-            font-size: 13px;
-            color: rgba(255, 220, 180, 0.7);
-            line-height: 1.4;
-        }
-
-        /* RESET BUTTON */
-        .reset-section {
-            text-align: center;
-            margin-top: 28px;
-            margin-bottom: 24px;
-        }
-
-        .reset-button {
-            background: rgba(255, 255, 255, 0.06);
-            color: rgba(255, 220, 180, 0.8);
-            border: 1.5px solid rgba(255, 255, 255, 0.12);
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.2s;
-        }
-
-        .reset-button:active {
-            transform: scale(0.95);
-        }
-
-        /* UPSELL */
-        .upsell {
-            background: linear-gradient(135deg, rgba(226, 130, 30, 0.15), rgba(160, 85, 24, 0.08));
-            padding: 24px;
-            border-radius: 20px;
-            margin-bottom: 24px;
-            border: 1.5px solid rgba(226, 130, 30, 0.3);
-            text-align: center;
-        }
-
-        .upsell-title {
-            font-size: 18px;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 8px;
-            letter-spacing: -0.3px;
-        }
-
-        .upsell-text {
-            color: rgba(255, 220, 180, 0.8);
-            font-size: 14px;
-            margin-bottom: 16px;
-            line-height: 1.5;
-        }
-
-        .upsell-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #c2691a 0%, #e8821e 50%, #a05518 100%);
-            color: white;
-            padding: 14px 24px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            box-shadow: 0 12px 30px rgba(226, 130, 30, 0.4);
-        }
-
-        /* CELEBRATION */
-        .celebration {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .celebration.show {
-            display: flex;
-        }
-
-        .celebration-card {
-            background: linear-gradient(135deg, #c2691a 0%, #e8821e 100%);
-            padding: 32px 28px;
-            border-radius: 24px;
-            text-align: center;
-            max-width: 360px;
-            width: 100%;
-            box-shadow: 0 30px 60px rgba(226, 130, 30, 0.5);
-            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .celebration-emoji {
-            font-size: 64px;
-            margin-bottom: 12px;
-        }
-
-        .celebration-title {
-            font-size: 24px;
-            font-weight: 900;
-            color: white;
-            margin-bottom: 8px;
-        }
-
-        .celebration-text {
-            color: rgba(255, 255, 255, 0.95);
-            font-size: 15px;
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
-
-        .celebration-button {
-            background: white;
-            color: #c2691a;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 14px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            font-family: inherit;
-        }
-
-        .footer {
-            text-align: center;
-            color: rgba(255, 220, 180, 0.5);
-            font-size: 12px;
-            padding-top: 20px;
-        }
-
-        @media (max-width: 380px) {
-            h1 { font-size: 28px; }
-            .container { padding: 16px 14px; }
-            .check-item { padding: 14px 14px; }
-        }
-    </style>
+    /* Celebration */
+    .celebrate {
+      position: fixed; inset: 0;
+      background: rgba(11, 9, 7, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 200;
+    }
+    .celebrate.on { display: flex; }
+    .celebrate-card {
+      max-width: 380px;
+      width: 100%;
+      padding: 36px 28px;
+      border: 1px solid var(--amber);
+      background: var(--ink);
+      text-align: left;
+      animation: pop 280ms var(--ease);
+    }
+    @keyframes pop {
+      from { transform: translateY(8px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .celebrate-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 12px;
+    }
+    .celebrate-card h2 {
+      font-family: var(--serif);
+      font-weight: 900;
+      font-size: 40px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--paper);
+      margin-bottom: 12px;
+    }
+    .celebrate-card p { color: var(--paper-dim); margin-bottom: 22px; line-height: 1.5; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="back-link">← Voltar</a>
-
-        <div class="hero">
-            <div class="hero-badge">🎁 100% Grátis</div>
-            <h1>Checklist do <span>Sono</span></h1>
-            <p class="hero-subtitle">Marque tudo que você fez hoje. Cada item é um passo pra dormir melhor.</p>
-        </div>
-
-        <div class="progress-card">
-            <div class="progress-info">
-                <div class="progress-label">Seu progresso de hoje</div>
-                <div class="progress-text"><span id="checkedCount">0</span> de <span id="totalCount">14</span> completos</div>
-            </div>
-            <div class="progress-ring" id="progressRing">
-                <span class="progress-percent" id="progressPercent">0%</span>
-            </div>
-        </div>
-
-        <!-- DURANTE O DIA -->
-        <div class="category">
-            <div class="category-header">
-                <div class="category-icon">☀️</div>
-                <h2 class="category-title">Durante o dia</h2>
-            </div>
-            <div class="checklist">
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Tomei sol pela manhã</div>
-                        <div class="check-detail">10-15 minutos nos primeiros 30 min após acordar</div>
-                    </div>
-                </div>
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Bebi 2L de água</div>
-                        <div class="check-detail">Mas parei 2h antes de dormir</div>
-                    </div>
-                </div>
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Parei o café após as 14h</div>
-                        <div class="check-detail">Cafeína fica no corpo por 6-8h</div>
-                    </div>
-                </div>
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Me exercitei</div>
-                        <div class="check-detail">De manhã ou tarde, nunca 2h antes de dormir</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- NOITE -->
-        <div class="category">
-            <div class="category-header">
-                <div class="category-icon">🌙</div>
-                <h2 class="category-title">À noite</h2>
-            </div>
-            <div class="checklist">
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Jantei 2-3h antes de dormir</div>
-                        <div class="check-detail">Refeição leve, sem excessos</div>
-                    </div>
-                </div>
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Reduzi luzes 1h antes</div>
-                        <div class="check-detail">Luz forte engana o cérebro</div>
-                    </div>
-                </div>
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Tomei banho quente</div>
-                        <div class="check-detail">A queda de temperatura sinaliza sono</div>
-                    </div>
-                </div>
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Larguei o celular 30min antes</div>
-                        <div class="check-detail">Sim, sei que é difícil. Mas faz diferença</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- QUARTO -->
-        <div class="category">
-            <div class="category-header">
-                <div class="category-icon">🛏️</div>
-                <h2 class="category-title">No quarto</h2>
-            </div>
-            <div class="checklist">
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Quarto escuro total</div>
-                        <div class="check-detail">Cortina blackout muda o jogo</div>
-                    </div>
-                </div>
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Temperatura 18-20°C</div>
-                        <div class="check-detail">Corpo dorme melhor em ambiente fresco</div>
-                    </div>
-                </div>
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Silêncio ou ruído branco</div>
-                        <div class="check-detail">Nada de barulho intermitente</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MENTAL -->
-        <div class="category">
-            <div class="category-header">
-                <div class="category-icon">🧠</div>
-                <h2 class="category-title">Mental</h2>
-            </div>
-            <div class="checklist">
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Escrevi as preocupações</div>
-                        <div class="check-detail">Despejar pensamentos no papel</div>
-                    </div>
-                </div>
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Fiz respiração 4-6-8</div>
-                        <div class="check-detail">10 ciclos para desacelerar a mente</div>
-                    </div>
-                </div>
-                <div class="check-item" onclick="toggleCheck(this)">
-                    <div class="checkbox"></div>
-                    <div class="check-content">
-                        <div class="check-text">Mesmo horário pra dormir</div>
-                        <div class="check-detail">Consistência é tudo</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="reset-section">
-            <button class="reset-button" onclick="resetAll()">🔄 Resetar checklist</button>
-        </div>
-
-        <div class="upsell">
-            <div class="upsell-title">Quer entender o porquê de cada item?</div>
-            <div class="upsell-text">O e-book explica em detalhes a ciência por trás de cada estratégia</div>
-            <a href="landing.html" class="upsell-button">Ver E-book →</a>
-        </div>
-
-        <div class="footer">
-            Rayhan Coelho © 2025 • Durma melhor, viva melhor
-        </div>
+  <main class="page">
+    <div class="topbar">
+      <a class="back" href="LinkTree.html">← Voltar</a>
+      <span class="brand-line"><span class="mark"></span>RC · CHECKLIST</span>
     </div>
 
-    <div class="celebration" id="celebration">
-        <div class="celebration-card">
-            <div class="celebration-emoji">🎉</div>
-            <div class="celebration-title">Parabéns!</div>
-            <div class="celebration-text">Você completou todos os itens hoje. Seu sono vai agradecer!</div>
-            <button class="celebration-button" onclick="closeCelebration()">Continuar</button>
-        </div>
+    <header class="ck-head">
+      <div class="eyebrow"><span class="num">∞</span><span class="dot"></span><span>Grátis · 14 itens</span></div>
+      <h1 class="display display-l" style="margin-top: 14px;">Checklist<br>do <em>sono</em>.</h1>
+      <p class="lede" style="margin-top: 14px;">Marque tudo que você fez hoje. Cada item é um passo pra dormir melhor.</p>
+    </header>
+
+    <div class="ck-progress">
+      <div>
+        <div class="ck-progress-label">Progresso de hoje</div>
+        <div class="ck-progress-count"><span id="ckDone">0</span> / <span id="ckTotal">14</span></div>
+      </div>
+      <div class="ck-percent" id="ckPercent">0%</div>
+      <div class="ck-progress-bar" id="ckBar" style="--p:0%"></div>
     </div>
 
-    <script>
-        function toggleCheck(el) {
-            el.classList.toggle('checked');
-            if (navigator.vibrate) navigator.vibrate(30);
-            updateProgress();
-        }
+    <section class="ck-cat">
+      <div class="ck-cat-head">
+        <span class="ck-cat-n">01</span>
+        <span class="ck-cat-title">Durante o dia</span>
+        <span class="ck-cat-meta">04 itens</span>
+      </div>
+      <ul class="ck-list">
+        <li class="ck-item" data-cat="dia">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Tomei sol pela manhã</span>
+            <span class="ck-detail">10–15 minutos nos primeiros 30 min após acordar.</span>
+          </span>
+        </li>
+        <li class="ck-item" data-cat="dia">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Bebi 2 L de água</span>
+            <span class="ck-detail">Parei 2 h antes de dormir.</span>
+          </span>
+        </li>
+        <li class="ck-item" data-cat="dia">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Parei o café após as 14h</span>
+            <span class="ck-detail">Cafeína fica no corpo por 6–8 h.</span>
+          </span>
+        </li>
+        <li class="ck-item" data-cat="dia">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Me exercitei</span>
+            <span class="ck-detail">De manhã ou tarde, nunca 2 h antes de dormir.</span>
+          </span>
+        </li>
+      </ul>
+    </section>
 
-        function updateProgress() {
-            const all = document.querySelectorAll('.check-item');
-            const checked = document.querySelectorAll('.check-item.checked');
-            const total = all.length;
-            const count = checked.length;
-            const percent = Math.round((count / total) * 100);
+    <section class="ck-cat">
+      <div class="ck-cat-head">
+        <span class="ck-cat-n">02</span>
+        <span class="ck-cat-title">À noite</span>
+        <span class="ck-cat-meta">04 itens</span>
+      </div>
+      <ul class="ck-list">
+        <li class="ck-item" data-cat="noite">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Jantei 2–3 h antes de dormir</span>
+            <span class="ck-detail">Refeição leve, sem excessos.</span>
+          </span>
+        </li>
+        <li class="ck-item" data-cat="noite">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Reduzi luzes 1 h antes</span>
+            <span class="ck-detail">Luz forte engana o cérebro.</span>
+          </span>
+        </li>
+        <li class="ck-item" data-cat="noite">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Tomei banho quente</span>
+            <span class="ck-detail">A queda de temperatura depois sinaliza sono.</span>
+          </span>
+        </li>
+        <li class="ck-item" data-cat="noite">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Larguei o celular 30 min antes</span>
+            <span class="ck-detail">Sim, sei que é difícil. Faz diferença.</span>
+          </span>
+        </li>
+      </ul>
+    </section>
 
-            document.getElementById('checkedCount').textContent = count;
-            document.getElementById('totalCount').textContent = total;
-            document.getElementById('progressPercent').textContent = percent + '%';
-            
-            const ring = document.getElementById('progressRing');
-            const deg = (count / total) * 360;
-            ring.style.background = `conic-gradient(#e8821e ${deg}deg, rgba(255,255,255,0.08) ${deg}deg)`;
+    <section class="ck-cat">
+      <div class="ck-cat-head">
+        <span class="ck-cat-n">03</span>
+        <span class="ck-cat-title">No quarto</span>
+        <span class="ck-cat-meta">03 itens</span>
+      </div>
+      <ul class="ck-list">
+        <li class="ck-item" data-cat="quarto">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Quarto escuro total</span>
+            <span class="ck-detail">Cortina blackout muda o jogo.</span>
+          </span>
+        </li>
+        <li class="ck-item" data-cat="quarto">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Temperatura 18–20 °C</span>
+            <span class="ck-detail">Corpo dorme melhor em ambiente fresco.</span>
+          </span>
+        </li>
+        <li class="ck-item" data-cat="quarto">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Silêncio ou ruído branco</span>
+            <span class="ck-detail">Nada de barulho intermitente.</span>
+          </span>
+        </li>
+      </ul>
+    </section>
 
-            if (count === total && count > 0) {
-                setTimeout(() => {
-                    document.getElementById('celebration').classList.add('show');
-                    if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-                }, 400);
-            }
-        }
+    <section class="ck-cat">
+      <div class="ck-cat-head">
+        <span class="ck-cat-n">04</span>
+        <span class="ck-cat-title">Mental</span>
+        <span class="ck-cat-meta">03 itens</span>
+      </div>
+      <ul class="ck-list">
+        <li class="ck-item" data-cat="mental">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Escrevi as preocupações</span>
+            <span class="ck-detail">Despejar pensamentos no papel.</span>
+          </span>
+        </li>
+        <li class="ck-item" data-cat="mental">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Fiz respiração 4-6-8</span>
+            <span class="ck-detail">10 ciclos para desacelerar a mente.</span>
+          </span>
+        </li>
+        <li class="ck-item" data-cat="mental">
+          <span class="ck-box"></span>
+          <span>
+            <span class="ck-text">Mesmo horário pra dormir</span>
+            <span class="ck-detail">Consistência é tudo.</span>
+          </span>
+        </li>
+      </ul>
+    </section>
 
-        function resetAll() {
-            if (navigator.vibrate) navigator.vibrate(50);
-            document.querySelectorAll('.check-item').forEach(item => {
-                item.classList.remove('checked');
-            });
-            updateProgress();
-        }
+    <div class="ck-reset">
+      <button class="btn btn-ghost" onclick="resetAll()">↻  Resetar checklist</button>
+    </div>
 
-        function closeCelebration() {
-            document.getElementById('celebration').classList.remove('show');
-        }
+    <section class="ck-upsell">
+      <div class="ck-upsell-label">Próximo passo</div>
+      <h2>Quer entender o porquê de cada item?</h2>
+      <p>O e-book explica em detalhes a ciência por trás de cada estratégia.</p>
+      <a href="Landing.html" class="btn btn-primary">Ver e-book →</a>
+    </section>
 
-        document.addEventListener('touchstart', function(e) {
-            if (e.touches.length > 1) e.preventDefault();
-        }, false);
+    <footer class="foot">
+      <span>© 2025 Rayhan Coelho</span>
+      <span>Durma melhor · Viva melhor</span>
+    </footer>
+  </main>
 
-        updateProgress();
-    </script>
+  <div class="celebrate" id="celebrate" onclick="closeCelebrate()">
+    <div class="celebrate-card">
+      <div class="celebrate-label">14 / 14 · completo</div>
+      <h2>Boa noite.</h2>
+      <p>Você fez tudo hoje. Seu sono vai agradecer.</p>
+      <button class="btn btn-primary" onclick="closeCelebrate()">Continuar →</button>
+    </div>
+  </div>
+
+  <script>
+    const items = document.querySelectorAll(".ck-item");
+    const done = document.getElementById("ckDone");
+    const total = document.getElementById("ckTotal");
+    const pct = document.getElementById("ckPercent");
+    const bar = document.getElementById("ckBar");
+
+    total.textContent = String(items.length).padStart(2, "0");
+
+    function refresh() {
+      const d = document.querySelectorAll(".ck-item.done").length;
+      const t = items.length;
+      const p = Math.round((d / t) * 100);
+      done.textContent = String(d).padStart(2, "0");
+      pct.textContent = p + "%";
+      bar.style.setProperty("--p", p + "%");
+      if (d === t && t > 0) {
+        setTimeout(() => {
+          document.getElementById("celebrate").classList.add("on");
+          if (navigator.vibrate) navigator.vibrate([60, 40, 60]);
+        }, 320);
+      }
+    }
+
+    items.forEach((el) => {
+      el.addEventListener("click", () => {
+        el.classList.toggle("done");
+        if (navigator.vibrate) navigator.vibrate(15);
+        refresh();
+      });
+    });
+
+    function resetAll() {
+      items.forEach((el) => el.classList.remove("done"));
+      if (navigator.vibrate) navigator.vibrate(30);
+      refresh();
+    }
+    function closeCelebrate() {
+      document.getElementById("celebrate").classList.remove("on");
+    }
+    document.addEventListener("touchstart", (e) => {
+      if (e.touches.length > 1) e.preventDefault();
+    }, { passive: false });
+
+    refresh();
+  </script>
 </body>
 </html>
