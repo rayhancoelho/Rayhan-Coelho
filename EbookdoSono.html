@@ -1,933 +1,1415 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>E-book · Durma melhor em 7 dias — Rayhan Coelho</title>
-  <link rel="stylesheet" href="./style.css">
-  <style>
-    /* Cover spread */
-    .eb-cover {
-      padding: 40px 0 56px;
-      border-bottom: 1px solid var(--line-strong);
-      margin-bottom: 56px;
-    }
-    .eb-cover-meta {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-top: 32px;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--paper-dim);
-    }
-    .eb-cover-meta strong { color: var(--paper); font-weight: 500; }
-    .eb-cover-meta .sep { color: var(--paper-muted); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>E-book: Durma Melhor em 7 Dias - Rayhan Coelho</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Fraunces:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    /* Chapter opener */
-    .eb-chapter {
-      padding: 56px 0 24px;
-      margin-top: 32px;
-      border-top: 1px solid var(--line);
-    }
-    .eb-chapter-eyebrow {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 8px;
-    }
-    .eb-chapter-num {
-      font-family: var(--serif);
-      font-weight: 900;
-      font-variation-settings: "opsz" 144;
-      font-size: clamp(96px, 26vw, 144px);
-      line-height: 0.85;
-      letter-spacing: -0.06em;
-      color: var(--amber);
-      margin: -8px 0 4px;
-    }
-    .eb-chapter h2 {
-      font-family: var(--serif);
-      font-weight: 900;
-      font-variation-settings: "opsz" 144;
-      font-size: clamp(36px, 9vw, 52px);
-      line-height: 0.95;
-      letter-spacing: -0.025em;
-      color: var(--paper);
-      margin: 0 0 14px;
-    }
-    .eb-chapter .lede {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-style: italic;
-      font-size: clamp(18px, 4.6vw, 21px);
-      line-height: 1.35;
-      color: var(--paper-dim);
-    }
+        :root {
+            --orange: #e8821e;
+            --orange-dark: #c2691a;
+            --orange-darker: #a05518;
+            --orange-light: #ffb366;
+            --orange-bg: rgba(232, 130, 30, 0.08);
+            --orange-border: rgba(232, 130, 30, 0.25);
+            --dark: #1a1408;
+            --bg: #1a1408;
+            --bg-2: #2a1f10;
+            --text: rgba(255, 240, 220, 0.95);
+            --text-muted: rgba(255, 220, 180, 0.7);
+            --text-dim: rgba(255, 220, 180, 0.5);
+            --success: #22c55e;
+            --warning: #ef4444;
+            --info: #3b82f6;
+        }
 
-    /* Body */
-    .eb-body { padding-top: 36px; }
-    .eb-body p.dropcap::first-letter {
-      font-family: var(--serif);
-      font-weight: 900;
-      font-variation-settings: "opsz" 144;
-      font-size: 4.2em;
-      float: left;
-      line-height: 0.85;
-      margin: 6px 10px -4px 0;
-      color: var(--amber);
-    }
-    .eb-body p {
-      font-size: 17px;
-      line-height: 1.7;
-      color: var(--paper);
-      margin: 0 0 18px;
-    }
-    .eb-body p strong {
-      color: var(--paper);
-      font-weight: 600;
-      background-image: linear-gradient(transparent 78%, var(--amber-bg) 78%);
-    }
-    .eb-body h3 {
-      font-family: var(--serif);
-      font-weight: 800;
-      font-size: clamp(22px, 5.6vw, 28px);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      color: var(--paper);
-      margin: 40px 0 14px;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    /* Editorial note (callout replacement) */
-    .eb-note {
-      padding: 18px 0 18px 18px;
-      border-left: 2px solid var(--amber);
-      margin: 28px 0;
-    }
-    .eb-note.alt { border-left-color: var(--paper-dim); }
-    .eb-note-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 4px;
-    }
-    .eb-note.alt .eb-note-label { color: var(--paper-dim); }
-    .eb-note p {
-      font-size: 15.5px;
-      line-height: 1.55;
-      color: var(--paper);
-      margin: 0;
-    }
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a1408 0%, #2a1f10 50%, #3a2f15 100%);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
 
-    /* Step (numbered) */
-    .eb-step {
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: 16px;
-      align-items: baseline;
-      padding: 22px 0;
-      border-top: 1px solid var(--line);
-    }
-    .eb-step + .eb-step { border-top: 1px solid var(--line); }
-    .eb-step:last-of-type { border-bottom: 1px solid var(--line); }
-    .eb-step-n {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--amber);
-      font-variant-numeric: tabular-nums;
-      letter-spacing: 0.04em;
-      padding-top: 2px;
-    }
-    .eb-step h4 {
-      font-family: var(--serif);
-      font-weight: 800;
-      font-size: 20px;
-      letter-spacing: -0.01em;
-      color: var(--paper);
-      margin: 0 0 6px;
-      line-height: 1.2;
-    }
-    .eb-step p {
-      font-size: 15.5px;
-      line-height: 1.55;
-      color: var(--paper-dim);
-      margin: 0;
-    }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 24px 20px 60px;
+        }
 
-    /* Big quote */
-    .eb-quote {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-style: italic;
-      font-size: clamp(24px, 6.4vw, 32px);
-      line-height: 1.2;
-      color: var(--amber);
-      padding: 28px 0;
-      margin: 36px 0;
-      border-top: 1px solid var(--amber);
-      border-bottom: 1px solid var(--amber);
-      letter-spacing: -0.015em;
-    }
+        /* HEADER FIXO */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(26, 20, 8, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 0;
+            margin: -24px -20px 24px;
+            border-bottom: 1px solid var(--orange-border);
+        }
 
-    /* Bullet list */
-    .eb-bullets {
-      list-style: none;
-      margin: 16px 0 24px;
-      padding-left: 0;
-    }
-    .eb-bullets li {
-      padding: 10px 0 10px 26px;
-      position: relative;
-      font-size: 16px;
-      line-height: 1.55;
-      color: var(--paper);
-      border-bottom: 1px solid var(--line);
-    }
-    .eb-bullets li:last-child { border-bottom: 0; }
-    .eb-bullets li::before {
-      content: "—";
-      position: absolute;
-      left: 0;
-      color: var(--amber);
-      font-family: var(--mono);
-      font-weight: 700;
-    }
-    .eb-bullets li strong { color: var(--paper); font-weight: 600; }
+        .nav-content {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
 
-    /* Checklist (bonus) */
-    .eb-checklist {
-      padding: 24px 0;
-      margin: 20px 0;
-      border-top: 1px solid var(--line-strong);
-      border-bottom: 1px solid var(--line-strong);
-    }
-    .eb-checklist-title {
-      font-family: var(--mono);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 14px;
-    }
-    .eb-checklist ul { list-style: none; }
-    .eb-checklist li {
-      padding: 8px 0;
-      font-size: 15px;
-      color: var(--paper);
-      display: flex;
-      gap: 12px;
-      align-items: baseline;
-    }
-    .eb-checklist li::before {
-      content: "☐";
-      color: var(--amber);
-      font-size: 18px;
-      font-family: var(--mono);
-    }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 8px 14px;
+            background: var(--orange-bg);
+            border-radius: 10px;
+            border: 1px solid var(--orange-border);
+        }
 
-    /* Separator */
-    .eb-sep {
-      text-align: center;
-      margin: 40px 0;
-      font-family: var(--mono);
-      font-size: 14px;
-      letter-spacing: 1.5em;
-      color: var(--amber);
-      opacity: 0.7;
-      padding-right: 0;
-      padding-left: 1.5em;
-    }
+        .reading-progress {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 200px;
+        }
 
-    /* CTA mid-book */
-    .eb-cta {
-      padding: 32px 0;
-      margin: 48px 0;
-      border-top: 1px solid var(--amber);
-      border-bottom: 1px solid var(--amber);
-      text-align: left;
-    }
-    .eb-cta-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 10px;
-    }
-    .eb-cta h3 {
-      font-family: var(--serif);
-      font-weight: 800;
-      font-size: clamp(24px, 6vw, 30px);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      color: var(--paper);
-      margin-bottom: 8px;
-    }
-    .eb-cta p {
-      font-family: var(--serif);
-      font-style: italic;
-      color: var(--paper-dim);
-      font-size: 16px;
-      margin-bottom: 18px;
-    }
+        .reading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--orange-dark), var(--orange));
+            width: 0%;
+            transition: width 0.1s ease;
+            border-radius: 10px;
+        }
 
-    /* Final */
-    .eb-final {
-      margin-top: 64px;
-      padding: 56px 0 24px;
-      border-top: 1px solid var(--amber);
-    }
-    .eb-final-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 8px;
-    }
-    .eb-final h2 {
-      font-family: var(--serif);
-      font-weight: 900;
-      font-size: clamp(36px, 9vw, 48px);
-      line-height: 1;
-      letter-spacing: -0.025em;
-      color: var(--paper);
-      margin-bottom: 24px;
-    }
-    .eb-final p { font-size: 17px; line-height: 1.7; color: var(--paper); margin-bottom: 16px; }
-    .eb-final p strong { color: var(--amber); font-weight: 500; }
+        /* COVER */
+        .cover {
+            background: linear-gradient(135deg, var(--orange-dark) 0%, var(--orange) 50%, var(--orange-darker) 100%);
+            border-radius: 32px;
+            padding: 48px 32px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 30px 60px rgba(232, 130, 30, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
 
-    .eb-sign {
-      margin-top: 40px;
-      padding-top: 24px;
-      border-top: 1px solid var(--line);
-    }
-    .eb-sign-name {
-      font-family: var(--serif);
-      font-weight: 800;
-      font-size: 26px;
-      color: var(--paper);
-      letter-spacing: -0.02em;
-    }
-    .eb-sign-handle {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      color: var(--paper-dim);
-      margin-top: 4px;
-    }
-    .eb-sign-quote {
-      font-family: var(--serif);
-      font-style: italic;
-      color: var(--amber);
-      font-size: 15px;
-      margin-top: 14px;
-    }
-  </style>
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0,0,0,0.15) 0%, transparent 60%);
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-emoji {
+            font-size: 80px;
+            margin-bottom: 16px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .cover-title {
+            font-family: 'Fraunces', serif;
+            font-size: 56px;
+            font-weight: 900;
+            color: white;
+            line-height: 0.95;
+            margin-bottom: 6px;
+            letter-spacing: -2px;
+        }
+
+        .cover-subtitle {
+            font-family: 'Fraunces', serif;
+            font-size: 56px;
+            font-weight: 900;
+            color: white;
+            line-height: 0.95;
+            margin-bottom: 24px;
+            letter-spacing: -2px;
+        }
+
+        .cover-tagline {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 18px;
+            font-weight: 500;
+            font-style: italic;
+            max-width: 380px;
+            margin: 0 auto 32px;
+            line-height: 1.4;
+        }
+
+        .cover-author {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 12px 20px;
+            border-radius: 100px;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .cover-author-name {
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .cover-author-handle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* SUMÁRIO */
+        .toc {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid var(--orange-border);
+            border-radius: 24px;
+            padding: 32px 28px;
+            margin-bottom: 48px;
+        }
+
+        .toc-title {
+            font-family: 'Fraunces', serif;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            color: white;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toc-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .toc-item:active {
+            background: var(--orange-bg);
+            border-color: var(--orange-border);
+            transform: scale(0.98);
+        }
+
+        .toc-num {
+            font-family: 'Fraunces', serif;
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--orange);
+            min-width: 32px;
+        }
+
+        .toc-text {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .toc-arrow {
+            color: var(--orange);
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        /* CHAPTER COVER */
+        .chapter-cover {
+            background: linear-gradient(135deg, var(--orange-dark), var(--orange));
+            border-radius: 28px;
+            padding: 48px 32px;
+            margin: 60px 0 32px;
+            text-align: center;
+            box-shadow: 0 24px 50px rgba(232, 130, 30, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-cover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.2) 0%, transparent 50%);
+        }
+
+        .chapter-num {
+            position: relative;
+            display: inline-block;
+            font-family: 'Fraunces', serif;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: rgba(255, 255, 255, 0.85);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            padding: 6px 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 100px;
+        }
+
+        .chapter-title {
+            position: relative;
+            font-family: 'Fraunces', serif;
+            font-size: 44px;
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+            margin-bottom: 12px;
+            letter-spacing: -1.5px;
+        }
+
+        .chapter-tagline {
+            position: relative;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 17px;
+            font-style: italic;
+            font-weight: 500;
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 0 4px;
+        }
+
+        .content p {
+            font-size: 17px;
+            line-height: 1.75;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .content p strong {
+            color: var(--orange);
+            font-weight: 700;
+        }
+
+        .content h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: white;
+            margin: 40px 0 16px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .content h3 .emoji {
+            margin-right: 10px;
+        }
+
+        /* CALLOUT BOXES */
+        .callout {
+            border-radius: 18px;
+            padding: 20px 22px;
+            margin: 28px 0;
+            border-left: 5px solid;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .callout-info {
+            background: rgba(232, 130, 30, 0.1);
+            border-left-color: var(--orange);
+        }
+
+        .callout-success {
+            background: rgba(34, 197, 94, 0.08);
+            border-left-color: var(--success);
+        }
+
+        .callout-warning {
+            background: rgba(239, 68, 68, 0.08);
+            border-left-color: var(--warning);
+        }
+
+        .callout-tip {
+            background: rgba(59, 130, 246, 0.08);
+            border-left-color: var(--info);
+        }
+
+        .callout-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .callout-content {
+            flex: 1;
+        }
+
+        .callout-title {
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+
+        .callout-info .callout-title { color: var(--orange); }
+        .callout-success .callout-title { color: var(--success); }
+        .callout-warning .callout-title { color: var(--warning); }
+        .callout-tip .callout-title { color: var(--info); }
+
+        .callout-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        /* STEP BOX */
+        .step {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 24px;
+            margin: 24px 0;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--orange-dark), var(--orange));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fraunces', serif;
+            font-size: 32px;
+            font-weight: 900;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(232, 130, 30, 0.4);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-family: 'Fraunces', serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .step-text {
+            font-size: 16px;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* BIG QUOTE */
+        .big-quote {
+            font-family: 'Fraunces', serif;
+            font-size: 26px;
+            font-weight: 600;
+            font-style: italic;
+            color: var(--orange);
+            line-height: 1.3;
+            padding: 24px 0 24px 28px;
+            margin: 32px 0;
+            border-left: 4px solid var(--orange);
+            position: relative;
+        }
+
+        .big-quote::before {
+            content: '"';
+            position: absolute;
+            top: -8px;
+            left: 12px;
+            font-size: 64px;
+            color: var(--orange);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        /* BULLET LIST */
+        .bullet-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .bullet-list li {
+            padding: 10px 0 10px 28px;
+            position: relative;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .bullet-list li:last-child {
+            border-bottom: none;
+        }
+
+        .bullet-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--orange);
+            font-weight: 900;
+            font-size: 18px;
+            top: 10px;
+        }
+
+        .bullet-list li strong {
+            color: var(--orange);
+            font-weight: 700;
+        }
+
+        /* SEPARATOR */
+        .separator {
+            text-align: center;
+            margin: 40px 0;
+            color: var(--orange);
+            font-size: 24px;
+            letter-spacing: 12px;
+            opacity: 0.5;
+        }
+
+        /* CHECKLIST FINAL */
+        .checklist-section {
+            background: var(--orange-bg);
+            border: 1.5px solid var(--orange-border);
+            border-radius: 20px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+
+        .checklist-title {
+            font-family: 'Fraunces', serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checklist-items {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checklist-items li {
+            padding: 12px 14px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            font-size: 15px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .checklist-items li::before {
+            content: '';
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--orange);
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        /* FINAL */
+        .final-section {
+            background: linear-gradient(135deg, rgba(232, 130, 30, 0.12), rgba(160, 85, 24, 0.08));
+            border: 1.5px solid var(--orange-border);
+            border-radius: 28px;
+            padding: 40px 32px;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .final-title {
+            font-family: 'Fraunces', serif;
+            font-size: 36px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .signature {
+            margin-top: 32px;
+            padding-top: 28px;
+            border-top: 1px solid var(--orange-border);
+        }
+
+        .signature-name {
+            font-family: 'Fraunces', serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--orange);
+            margin-bottom: 4px;
+        }
+
+        .signature-handle {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .signature-quote {
+            font-style: italic;
+            font-size: 14px;
+            color: var(--orange);
+        }
+
+        /* CTA MENTORIA */
+        .cta-mentoria {
+            background: linear-gradient(135deg, var(--orange-dark), var(--orange));
+            border-radius: 20px;
+            padding: 28px 24px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(232, 130, 30, 0.3);
+        }
+
+        .cta-mentoria-title {
+            font-family: 'Fraunces', serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .cta-mentoria-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .cta-mentoria-button {
+            display: inline-block;
+            background: white;
+            color: var(--orange-dark);
+            padding: 14px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 480px) {
+            .container { padding: 16px 16px 40px; }
+            .top-nav { margin: -16px -16px 20px; }
+            .nav-content { padding: 0 16px; }
+            .cover { padding: 36px 24px; border-radius: 24px; }
+            .cover-title, .cover-subtitle { font-size: 44px; }
+            .cover-emoji { font-size: 64px; }
+            .cover-tagline { font-size: 16px; }
+            .toc { padding: 24px 20px; }
+            .toc-title { font-size: 26px; }
+            .chapter-cover { padding: 36px 24px; border-radius: 24px; }
+            .chapter-title { font-size: 36px; }
+            .chapter-tagline { font-size: 15px; }
+            .content p { font-size: 16px; }
+            .content h3 { font-size: 22px; }
+            .step { padding: 20px; gap: 16px; }
+            .step-number { width: 56px; height: 56px; font-size: 28px; }
+            .step-title { font-size: 19px; }
+            .big-quote { font-size: 22px; padding-left: 22px; }
+            .callout { padding: 18px 18px; }
+            .final-section { padding: 32px 24px; }
+            .final-title { font-size: 28px; }
+        }
+    </style>
 </head>
 <body>
-  <div class="progress"><div class="progress-bar" id="pgBar"></div></div>
-
-  <main class="page">
-    <div class="topbar">
-      <a class="back" href="LinkTree.html">← Voltar</a>
-      <span class="brand-line"><span class="mark"></span>RC · E-BOOK</span>
-    </div>
-
-    <!-- COVER -->
-    <section class="eb-cover">
-      <div class="eyebrow"><span class="num">N° 02</span><span class="dot"></span><span>E-book · 7 capítulos</span></div>
-      <h1 class="display display-xl" style="margin-top: 16px;">Durma<br>melhor<br>em <em>7 dias</em>.</h1>
-      <p class="lede" style="margin-top: 20px;">O guia prático que funcionou pra mim<br>(e pode funcionar pra você).</p>
-
-      <div class="eb-cover-meta">
-        <span>Por <strong>Rayhan Coelho</strong></span>
-        <span class="sep">/</span>
-        <span>@rayhancoelho</span>
-        <span class="sep">/</span>
-        <span>~45 min de leitura</span>
-      </div>
-    </section>
-
-    <!-- TOC -->
-    <section>
-      <span class="label">Sumário</span>
-      <h2 class="display display-m" style="margin: 10px 0 18px;">O que tem aqui.</h2>
-      <ul class="list-rows">
-        <li><a href="#intro"><span class="num">00</span><span class="label-text">Introdução · Por que você não dorme</span><span class="arr">→</span></a></li>
-        <li><a href="#cap1"><span class="num">01</span><span class="label-text">Os primeiros 3 dias</span><span class="arr">→</span></a></li>
-        <li><a href="#cap2"><span class="num">02</span><span class="label-text">Técnicas de desaceleração</span><span class="arr">→</span></a></li>
-        <li><a href="#cap3"><span class="num">03</span><span class="label-text">Otimizando seu ambiente</span><span class="arr">→</span></a></li>
-        <li><a href="#cap4"><span class="num">04</span><span class="label-text">Alimentação e sono</span><span class="arr">→</span></a></li>
-        <li><a href="#cap5"><span class="num">05</span><span class="label-text">Exercício e movimento</span><span class="arr">→</span></a></li>
-        <li><a href="#cap6"><span class="num">06</span><span class="label-text">Resolvendo problemas específicos</span><span class="arr">→</span></a></li>
-        <li><a href="#bonus"><span class="num">★</span><span class="label-text">Bônus · Checklist diário</span><span class="arr">→</span></a></li>
-      </ul>
-    </section>
-
-    <!-- INTRODUÇÃO -->
-    <section class="eb-chapter" id="intro">
-      <div class="eb-chapter-eyebrow">Introdução</div>
-      <div class="eb-chapter-num">00</div>
-      <h2>Por que você<br>não dorme.</h2>
-      <p class="lede">A história que talvez seja a sua também.</p>
-    </section>
-
-    <div class="eb-body">
-      <p>Vou contar uma história rápida.</p>
-
-      <p>Há alguns anos, eu trabalhava como assessor de investimentos. <strong>12 horas por dia. Todo dia.</strong></p>
-
-      <p class="dropcap">Acordava de madrugada com a cabeça acelerada. Pensando em cliente, em meta, em mercado. Tomava café como se fosse água. Comia qualquer coisa, qualquer hora. Voltava pra casa exausto, mas não conseguia dormir.</p>
-
-      <p>Quando dormia, era um sono ruim. Daqueles que você acorda mais cansado que quando deitou.</p>
-
-      <div class="eb-note">
-        <div class="eb-note-label">E o pior</div>
-        <p>Eu achava que isso era normal. Era assim que todo mundo vivia, né? Não era.</p>
-      </div>
-
-      <p>Demorei meses pra entender que não era insônia. <strong>Era negligência.</strong> Eu estava destruindo meu corpo porque estava preso num emprego que sugava minha vida.</p>
-
-      <p class="eb-quote">"E sabe o que eu mudei antes de pedir demissão? Meu sono."</p>
-
-      <p>Quando comecei a dormir melhor, tudo ficou diferente. Tinha energia pra pensar, pra agir, pra mudar minha vida. <strong>Foi o sono que me deu coragem pra sair daquele emprego.</strong></p>
-
-      <div class="eb-sep">✦ ✦ ✦</div>
-
-      <h3>O que você vai encontrar aqui</h3>
-
-      <p>Este e-book é um guia prático. Sem firula. Sem teoria da NASA.</p>
-
-      <p>São técnicas que funcionam de verdade. Que eu testei no meu corpo e no de várias pessoas que mentorei.</p>
-
-      <p>A estrutura é simples: <strong>7 dias.</strong> Cada dia você aplica algo. Não tudo de uma vez.</p>
-
-      <div class="eb-note alt">
-        <div class="eb-note-label">Aviso importante</div>
-        <p>Não pule etapas. O Dia 1 parece bobo, mas é fundação. Sem ele, o resto desmorona.</p>
-      </div>
-
-      <p style="text-align: center; font-family: var(--serif); font-style: italic; font-size: 24px; color: var(--amber); margin: 36px 0 0;">Bora?</p>
-    </div>
-
-    <!-- CAP 01 -->
-    <section class="eb-chapter" id="cap1">
-      <div class="eb-chapter-eyebrow">Capítulo</div>
-      <div class="eb-chapter-num">01</div>
-      <h2>Os primeiros<br>3 dias.</h2>
-      <p class="lede">Pare de piorar antes de tentar melhorar.</p>
-    </section>
-
-    <div class="eb-body">
-      <p>A primeira coisa pra fazer é <strong>parar de piorar</strong>.</p>
-
-      <p>Parece óbvio? É. Mas você tá fazendo várias coisas que destroem seu sono todos os dias e nem percebe.</p>
-
-      <p>Vamos lá.</p>
-
-      <div class="eb-step">
-        <span class="eb-step-n">01</span>
-        <div>
-          <h4>Pare com o café às 14h</h4>
-          <p>Eu sei, você ama café. Eu também. Mas a cafeína fica no organismo por 6–8 horas. Se você toma café às 18h, metade dele ainda tá no corpo na meia-noite.</p>
+    <div class="container">
+        <!-- TOP NAV -->
+        <div class="top-nav">
+            <div class="nav-content">
+                <a href="https://rayhancoelho.github.io/Rayhan-Coelho/LinkTree.html" class="back-link">← Voltar</a>
+                <div class="reading-progress">
+                    <div class="reading-progress-bar" id="progressBar"></div>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <p style="margin-top: 24px;">Resultado: você até consegue dormir, mas seu sono fica raso. Você acorda cansado. Toma mais café. E o ciclo continua.</p>
-
-      <div class="eb-note">
-        <div class="eb-note-label">A regra</div>
-        <p>Nada de cafeína depois das 14 h. Nem café, nem chá preto, nem energético, nem chocolate.</p>
-      </div>
-
-      <p>Você vai achar que vai morrer. Não vai. No terceiro dia já tá acostumado.</p>
-
-      <p class="eb-quote">"Se você dorme mal porque pensa demais sobre trabalho, café não ajuda. Café piora."</p>
-
-      <div class="eb-step">
-        <span class="eb-step-n">02</span>
-        <div>
-          <h4>Escureça seu quarto</h4>
-          <p>Seu cérebro é meio bobo. Quando vê luz, ele acha que é dia. Quando acha que é dia, não solta melatonina (o hormônio do sono).</p>
+        <!-- COVER -->
+        <div class="cover">
+            <div class="cover-content">
+                <div class="cover-emoji">😴</div>
+                <h1 class="cover-title">Durma Melhor</h1>
+                <h1 class="cover-subtitle">em 7 Dias</h1>
+                <p class="cover-tagline">O guia prático que funcionou pra mim<br>(e pode funcionar pra você)</p>
+                <div class="cover-author">
+                    <span class="cover-author-name">RAYHAN COELHO</span>
+                    <span class="cover-author-handle">@rayhancoelho</span>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <p style="margin-top: 24px;">Resultado: você fica deitado de olho fechado mas não dorme. Ou dorme leve.</p>
+        <!-- TOC -->
+        <nav class="toc">
+            <h2 class="toc-title">📋 Sumário</h2>
+            <ul class="toc-list">
+                <li><a href="#intro" class="toc-item">
+                    <span class="toc-num">00</span>
+                    <span class="toc-text">Introdução: Por que você não dorme</span>
+                    <span class="toc-arrow">→</span>
+                </a></li>
+                <li><a href="#cap1" class="toc-item">
+                    <span class="toc-num">01</span>
+                    <span class="toc-text">Os primeiros 3 dias</span>
+                    <span class="toc-arrow">→</span>
+                </a></li>
+                <li><a href="#cap2" class="toc-item">
+                    <span class="toc-num">02</span>
+                    <span class="toc-text">Técnicas de desaceleração</span>
+                    <span class="toc-arrow">→</span>
+                </a></li>
+                <li><a href="#cap3" class="toc-item">
+                    <span class="toc-num">03</span>
+                    <span class="toc-text">Otimizando seu ambiente</span>
+                    <span class="toc-arrow">→</span>
+                </a></li>
+                <li><a href="#cap4" class="toc-item">
+                    <span class="toc-num">04</span>
+                    <span class="toc-text">Alimentação e sono</span>
+                    <span class="toc-arrow">→</span>
+                </a></li>
+                <li><a href="#cap5" class="toc-item">
+                    <span class="toc-num">05</span>
+                    <span class="toc-text">Exercício e movimento</span>
+                    <span class="toc-arrow">→</span>
+                </a></li>
+                <li><a href="#cap6" class="toc-item">
+                    <span class="toc-num">06</span>
+                    <span class="toc-text">Resolvendo problemas específicos</span>
+                    <span class="toc-arrow">→</span>
+                </a></li>
+                <li><a href="#bonus" class="toc-item">
+                    <span class="toc-num">★</span>
+                    <span class="toc-text">Bônus: Checklist diário</span>
+                    <span class="toc-arrow">→</span>
+                </a></li>
+            </ul>
+        </nav>
 
-      <h3>Hoje você vai fazer 3 coisas:</h3>
+        <!-- INTRODUÇÃO -->
+        <section id="intro">
+            <div class="chapter-cover">
+                <span class="chapter-num">Introdução</span>
+                <h2 class="chapter-title">Por que você não dorme</h2>
+                <p class="chapter-tagline">A história que talvez seja a sua também</p>
+            </div>
 
-      <ul class="eb-bullets">
-        <li><strong>Cortina blackout:</strong> comprar uma boa, custa pouco, muda muito.</li>
-        <li><strong>Tirar TODA luz:</strong> luminária, abajur, luz de aparelho.</li>
-        <li><strong>Virar o celular:</strong> tela pra baixo (a luzinha indicadora atrapalha).</li>
-      </ul>
+            <div class="content">
+                <p>Vou contar uma história rápida.</p>
 
-      <div class="eb-note alt">
-        <div class="eb-note-label">Conceito de "escuro"</div>
-        <p>Quando eu falo escuro, é ESCURO. Você não vê a mão na frente do rosto. Sem exagero.</p>
-      </div>
+                <p>Há alguns anos, eu trabalhava como assessor de investimentos. <strong>12 horas por dia. Todo dia.</strong></p>
 
-      <div class="eb-step">
-        <span class="eb-step-n">03</span>
-        <div>
-          <h4>Crie um ritual de sono</h4>
-          <p>Seu corpo é um animal de hábito. Se você sempre faz a mesma coisa antes de dormir, ele aprende: "ah, é hora de desligar".</p>
-        </div>
-      </div>
+                <p>Acordava de madrugada com a cabeça acelerada. Pensando em cliente, em meta, em mercado. Tomava café como se fosse água. Comia qualquer coisa, qualquer hora. Voltava pra casa exausto, mas não conseguia dormir.</p>
 
-      <p style="margin-top: 24px;">O ritual é simples, mas tem que ser consistente. 20–30 minutos antes de dormir, todo dia:</p>
+                <p>Quando dormia, era um sono ruim. Daqueles que você acorda mais cansado que quando deitou.</p>
 
-      <ul class="eb-bullets">
-        <li>Tome um banho quente (a queda de temperatura depois ajuda).</li>
-        <li>Apague as luzes principais.</li>
-        <li>Deixe o celular longe da cama.</li>
-        <li>Faça 10 respirações fundas (técnica no próximo capítulo).</li>
-      </ul>
+                <div class="callout callout-warning">
+                    <div class="callout-icon">⚠️</div>
+                    <div class="callout-content">
+                        <div class="callout-title">E o pior</div>
+                        <div class="callout-text">Eu achava que isso era normal. Era assim que todo mundo vivia, né? Não era.</div>
+                    </div>
+                </div>
 
-      <p>Não precisa ser igual ao meu. Pode ser ler, alongar, ouvir música calma. <strong>O importante é ser SEMPRE igual.</strong></p>
+                <p>Demorei meses pra entender que não era insônia. <strong>Era negligência.</strong> Eu estava destruindo meu corpo porque estava preso num emprego que sugava minha vida.</p>
 
-      <div class="eb-note">
-        <div class="eb-note-label">Lembre</div>
-        <p>Seu corpo aprende com repetição. Em 1 semana, ele já começa a dar sono automaticamente quando você inicia o ritual.</p>
-      </div>
+                <div class="big-quote">E sabe o que eu mudei antes de pedir demissão? Meu sono.</div>
+
+                <p>Quando comecei a dormir melhor, tudo ficou diferente. Tinha energia pra pensar, pra agir, pra mudar minha vida. <strong>Foi o sono que me deu coragem pra sair daquele emprego.</strong></p>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <h3>O que você vai encontrar aqui</h3>
+
+                <p>Este e-book é um guia prático. Sem firula. Sem teoria da NASA.</p>
+
+                <p>São técnicas que funcionam de verdade. Que eu testei no meu corpo e no de várias pessoas que mentorei.</p>
+
+                <p>A estrutura é simples: <strong>7 dias.</strong> Cada dia você aplica algo. Não tudo de uma vez.</p>
+
+                <div class="callout callout-tip">
+                    <div class="callout-icon">📌</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Aviso importante</div>
+                        <div class="callout-text">Não pule etapas. O Dia 1 parece bobo, mas é fundação. Sem ele, o resto desmorona.</div>
+                    </div>
+                </div>
+
+                <p style="text-align: center; font-size: 22px; font-weight: 700; color: var(--orange); margin-top: 32px;">Bora?</p>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 1 -->
+        <section id="cap1">
+            <div class="chapter-cover">
+                <span class="chapter-num">Capítulo 01</span>
+                <h2 class="chapter-title">Os primeiros 3 dias</h2>
+                <p class="chapter-tagline">Pare de piorar antes de tentar melhorar</p>
+            </div>
+
+            <div class="content">
+                <p>A primeira coisa pra fazer é <strong>parar de piorar</strong>.</p>
+
+                <p>Parece óbvio? É. Mas você tá fazendo várias coisas que destroem seu sono todos os dias e nem percebe.</p>
+
+                <p>Vamos lá.</p>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4 class="step-title">Pare com o café às 14h</h4>
+                        <p class="step-text">Eu sei, você ama café. Eu também. Mas a cafeína fica no organismo por 6-8 horas. Se você toma café às 18h, metade dele ainda tá no corpo na meia-noite.</p>
+                    </div>
+                </div>
+
+                <p>Resultado: você até consegue dormir, mas seu sono fica raso. Você acorda cansado. Toma mais café. E o ciclo continua.</p>
+
+                <div class="callout callout-info">
+                    <div class="callout-icon">🎯</div>
+                    <div class="callout-content">
+                        <div class="callout-title">A regra</div>
+                        <div class="callout-text">Nada de cafeína depois das 14h. Nem café, nem chá preto, nem energético, nem chocolate.</div>
+                    </div>
+                </div>
+
+                <p>Você vai achar que vai morrer. Não vai. No terceiro dia já tá acostumado.</p>
+
+                <div class="big-quote">Se você dorme mal porque pensa demais sobre trabalho, café não ajuda. Café piora.</div>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4 class="step-title">Escurece seu quarto</h4>
+                        <p class="step-text">Seu cérebro é meio bobo. Quando vê luz, ele acha que é dia. Quando acha que é dia, não solta melatonina (o hormônio do sono).</p>
+                    </div>
+                </div>
+
+                <p>Resultado: você fica deitado de olho fechado mas não dorme. Ou dorme leve.</p>
+
+                <h3>Hoje você vai fazer 3 coisas:</h3>
+
+                <ul class="bullet-list">
+                    <li><strong>Cortina blackout:</strong> comprar uma boa, custa pouco, muda muito</li>
+                    <li><strong>Tirar TODA luz:</strong> luminária, abajur, luz de aparelho</li>
+                    <li><strong>Virar o celular:</strong> tela pra baixo (a luzinha indicadora atrapalha)</li>
+                </ul>
+
+                <div class="callout callout-warning">
+                    <div class="callout-icon">👁️</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Conceito de "escuro"</div>
+                        <div class="callout-text">Quando eu falo escuro, é ESCURO. Você não vê a mão na frente do rosto. Sem exagero.</div>
+                    </div>
+                </div>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4 class="step-title">Crie um ritual de sono</h4>
+                        <p class="step-text">Seu corpo é um animal de hábito. Se você sempre faz a mesma coisa antes de dormir, ele aprende: "ah, é hora de desligar".</p>
+                    </div>
+                </div>
+
+                <p>O ritual é simples, mas tem que ser consistente. 20-30 minutos antes de dormir, todo dia:</p>
+
+                <ul class="bullet-list">
+                    <li>Tome um banho quente (a queda de temperatura depois ajuda)</li>
+                    <li>Apague as luzes principais</li>
+                    <li>Deixe o celular longe da cama</li>
+                    <li>Faça 10 respirações fundas (técnica no próximo capítulo)</li>
+                </ul>
+
+                <p>Não precisa ser igual ao meu. Pode ser ler, alongar, ouvir música calma. <strong>O importante é ser SEMPRE igual.</strong></p>
+
+                <div class="callout callout-success">
+                    <div class="callout-icon">🧠</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Lembre</div>
+                        <div class="callout-text">Seu corpo aprende com repetição. Em 1 semana, ele já começa a dar sono automaticamente quando você inicia o ritual.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 2 -->
+        <section id="cap2">
+            <div class="chapter-cover">
+                <span class="chapter-num">Capítulo 02</span>
+                <h2 class="chapter-title">Desaceleração</h2>
+                <p class="chapter-tagline">Quando o corpo está pronto, mas a mente não</p>
+            </div>
+
+            <div class="content">
+                <p>Seu corpo tá pronto pra dormir. Mas sua mente não para?</p>
+
+                <p>Esse capítulo é pra você.</p>
+
+                <h3><span class="emoji">🌬️</span>Técnica 1: Respiração 4-6-8</h3>
+
+                <p>A mais simples e a que mais funciona. Use sempre que sua mente não desliga.</p>
+
+                <div class="step">
+                    <div class="step-number">4s</div>
+                    <div class="step-content">
+                        <h4 class="step-title">Inspire pelo nariz</h4>
+                        <p class="step-text">Conte mentalmente até 4, enchendo os pulmões completamente.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">6s</div>
+                    <div class="step-content">
+                        <h4 class="step-title">Segure a respiração</h4>
+                        <p class="step-text">Conte até 6 com o ar segurado. Sem pressão.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">8s</div>
+                    <div class="step-content">
+                        <h4 class="step-title">Solte pela boca</h4>
+                        <p class="step-text">Conte até 8, soltando o ar bem devagar pela boca.</p>
+                    </div>
+                </div>
+
+                <p>Faça <strong>10 ciclos</strong>. Sério, 10 ciclos completos.</p>
+
+                <p>O que acontece: seu corpo entende que tá tudo bem. Que não tem perigo. Que pode relaxar. <strong>É química pura.</strong></p>
+
+                <div class="callout callout-tip">
+                    <div class="callout-icon">⚡</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Bônus</div>
+                        <div class="callout-text">Essa técnica também funciona pra ansiedade durante o dia. Tô estressado? 4-6-8.</div>
+                    </div>
+                </div>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <h3><span class="emoji">🧘</span>Técnica 2: Varredura corporal</h3>
+
+                <p>Sua mente não para de pensar? Engana ela com o corpo.</p>
+
+                <p>Deita confortavelmente. Fecha os olhos. Agora:</p>
+
+                <ul class="bullet-list">
+                    <li>Foque nos seus pés. Sinta eles na cama. Como tão? Quentes? Frios?</li>
+                    <li>Sobe pra panturrilha. Mesma coisa</li>
+                    <li>Coxa. Bunda. Barriga. Peito.</li>
+                    <li>Braços, dedo por dedo</li>
+                    <li>Pescoço, queixo, bochechas, testa</li>
+                </ul>
+
+                <div class="callout callout-info">
+                    <div class="callout-icon">💡</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Por que funciona</div>
+                        <div class="callout-text">Enquanto você foca no corpo, sua mente não consegue pensar em trabalho. É impossível fazer as duas coisas ao mesmo tempo.</div>
+                    </div>
+                </div>
+
+                <p><strong>90% das pessoas dormem antes de chegar na cabeça.</strong></p>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <h3><span class="emoji">✍️</span>Técnica 3: Despejo mental</h3>
+
+                <p>Sua mente fica catalogando tarefas? Preocupações? Lembrando de fazer X amanhã?</p>
+
+                <p>Tem um motivo: seu cérebro tá com medo de esquecer.</p>
+
+                <div class="callout callout-success">
+                    <div class="callout-icon">📝</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Solução</div>
+                        <div class="callout-text">Escreva tudo. 30 minutos antes de dormir. Pega um caderno e despeja tudo que tá na sua cabeça.</div>
+                    </div>
+                </div>
+
+                <p>Tarefas, preocupações, ideias, sentimentos. Quando você escreve, seu cérebro entende: "ok, ele anotou, posso descansar".</p>
+
+                <div class="big-quote">Funciona. Testa.</div>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 3 -->
+        <section id="cap3">
+            <div class="chapter-cover">
+                <span class="chapter-num">Capítulo 03</span>
+                <h2 class="chapter-title">Ambiente</h2>
+                <p class="chapter-tagline">Seu quarto é um laboratório do sono</p>
+            </div>
+
+            <div class="content">
+                <p>Seu quarto é um laboratório. Vamos otimizar pra dormir.</p>
+
+                <h3><span class="emoji">🌡️</span>Temperatura</h3>
+
+                <p>Temperatura ideal: <strong>18-20°C</strong>.</p>
+
+                <p>Por quê? Seu corpo precisa BAIXAR a temperatura interna pra dormir profundamente. Se o quarto tá quente, ele não consegue.</p>
+
+                <ul class="bullet-list">
+                    <li><strong>Acordando suado?</strong> Tá muito quente</li>
+                    <li><strong>Dormindo com várias cobertas?</strong> Mesma coisa</li>
+                    <li><strong>Solução:</strong> ventilador, ar condicionado ou cobertor mais fino</li>
+                </ul>
+
+                <div class="callout callout-tip">
+                    <div class="callout-icon">❄️</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Princípio</div>
+                        <div class="callout-text">Se for muito frio, melhor que muito quente. Frio você cobre. Calor não tem solução fácil.</div>
+                    </div>
+                </div>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <h3><span class="emoji">🔇</span>Som</h3>
+
+                <p>Duas opções funcionam: <strong>silêncio TOTAL</strong> ou <strong>ruído branco constante</strong>.</p>
+
+                <p>O problema é o som intermitente. Vizinho rindo às 3h. Carro passando. Cachorro latindo.</p>
+
+                <p>Cada som faz seu cérebro acordar levemente, mesmo que você nem perceba.</p>
+
+                <div class="callout callout-info">
+                    <div class="callout-icon">🎧</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Soluções</div>
+                        <div class="callout-text">Ruído branco no celular, ventilador, ou tampão de ouvido (se não te incomoda).</div>
+                    </div>
+                </div>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <h3><span class="emoji">🌿</span>Aromas</h3>
+
+                <p>Lavanda não é piruá. <strong>É ciência.</strong></p>
+
+                <p>Estudos mostram que o cheiro de lavanda diminui frequência cardíaca e pressão arterial. Você relaxa.</p>
+
+                <ul class="bullet-list">
+                    <li>Compre óleo essencial de lavanda</li>
+                    <li>Coloque 2-3 gotas no travesseiro</li>
+                    <li>Ou use um difusor 30min antes de dormir</li>
+                </ul>
+
+                <p>Outras opções que funcionam: <strong>camomila, sândalo, valeriana.</strong></p>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 4 -->
+        <section id="cap4">
+            <div class="chapter-cover">
+                <span class="chapter-num">Capítulo 04</span>
+                <h2 class="chapter-title">Alimentação</h2>
+                <p class="chapter-tagline">Você é o que come (e como dorme)</p>
+            </div>
+
+            <div class="content">
+                <p>O que você come afeta como você dorme. <strong>Ponto.</strong></p>
+
+                <h3><span class="emoji">⏰</span>Quando comer</h3>
+
+                <div class="callout callout-info">
+                    <div class="callout-icon">⚡</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Regra de ouro</div>
+                        <div class="callout-text">Última refeição 2-3 horas antes de dormir.</div>
+                    </div>
+                </div>
+
+                <p>Se você dorme às 22h, jante até as 19h-20h.</p>
+
+                <p>Por quê? Quando você come, seu corpo trabalha pra digerir. Sangue vai pro estômago. Se isso acontece enquanto você tenta dormir, seu sono fica ruim.</p>
+
+                <p>Também é mais difícil emagrecer assim, se isso te importa.</p>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <h3><span class="emoji">🍽️</span>O que comer</h3>
+
+                <ul class="bullet-list">
+                    <li>Alimentos leves: frango, peixe, ovos, vegetais</li>
+                    <li>Carboidratos complexos em quantidade moderada</li>
+                    <li>Evite: muito açúcar, frituras, comida pesada</li>
+                </ul>
+
+                <p>Se você gosta de leite antes de dormir? Pode. Mas <strong>sem açúcar</strong>.</p>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <h3><span class="emoji">💊</span>Suplementos que ajudam</h3>
+
+                <div class="callout callout-warning">
+                    <div class="callout-icon">⚠️</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Aviso</div>
+                        <div class="callout-text">Não sou médico, sempre consulte um. Mas algumas opções funcionam pra muita gente.</div>
+                    </div>
+                </div>
+
+                <ul class="bullet-list">
+                    <li><strong>Magnésio glicinato:</strong> relaxa músculos e mente</li>
+                    <li><strong>Glicina:</strong> ajuda a entrar em sono profundo</li>
+                    <li><strong>Camomila ou passiflora:</strong> chás relaxantes</li>
+                    <li><strong>L-teanina:</strong> reduz ansiedade</li>
+                </ul>
+
+                <p>Comece com um por vez. Vê o que funciona pra você.</p>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <h3><span class="emoji">💧</span>Água</h3>
+
+                <p>Beba bastante durante o dia. Mas <strong>pare 2 horas antes de dormir</strong>.</p>
+
+                <div class="callout callout-warning">
+                    <div class="callout-icon">💥</div>
+                    <div class="callout-content">
+                        <div class="callout-title">A realidade</div>
+                        <div class="callout-text">Acordar pra urinar de madrugada destrói seu sono. Você até pode voltar a dormir, mas o sono nunca é mais o mesmo.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 5 -->
+        <section id="cap5">
+            <div class="chapter-cover">
+                <span class="chapter-num">Capítulo 05</span>
+                <h2 class="chapter-title">Movimento</h2>
+                <p class="chapter-tagline">Gaste energia hoje pra dormir melhor à noite</p>
+            </div>
+
+            <div class="content">
+                <p>Quer cair na cama como um morto? <strong>Exercite.</strong></p>
+
+                <h3><span class="emoji">🕐</span>Quando treinar</h3>
+
+                <ul class="bullet-list">
+                    <li><strong>De manhã:</strong> o melhor horário. Acelera metabolismo, ajusta ciclo circadiano</li>
+                    <li><strong>À tarde (até 17h):</strong> bom também</li>
+                    <li><strong>À noite:</strong> evite. Seu corpo fica acelerado por horas</li>
+                </ul>
+
+                <p>Se sua única opção é à noite, treine pelo menos 3 horas antes de dormir.</p>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <h3><span class="emoji">🏃</span>Qual exercício</h3>
+
+                <p>Honestamente? Qualquer um.</p>
+
+                <ul class="bullet-list">
+                    <li><strong>Caminhada 30 min:</strong> já melhora sono pra caramba</li>
+                    <li><strong>Musculação:</strong> ainda melhor</li>
+                    <li><strong>Yoga ou alongamento:</strong> se quer mais relaxamento</li>
+                    <li><strong>Corrida, bike, natação:</strong> tudo funciona</li>
+                </ul>
+
+                <p>A regra é: <strong>gastar energia física</strong>. Se você gastar energia, seu corpo vai PEDIR pra dormir.</p>
+
+                <div class="big-quote">Pessoas sedentárias dormem mal. É quase impossível dormir bem sem se mexer.</div>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <h3><span class="emoji">☀️</span>Sol</h3>
+
+                <p>Quase ninguém fala disso, mas é importante: <strong>tome sol pela manhã</strong>.</p>
+
+                <p>10-15 minutos nos primeiros 30 minutos após acordar. Sem óculos escuros, sem janela de vidro.</p>
+
+                <div class="callout callout-success">
+                    <div class="callout-icon">🌅</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Por que funciona</div>
+                        <div class="callout-text">Isso 'liga' seu ciclo circadiano. Seu cérebro sabe que é dia. Em 14-16 horas, ele sabe que é hora de soltar melatonina.</div>
+                    </div>
+                </div>
+
+                <p style="text-align: center; font-size: 20px; font-weight: 700; color: var(--orange); margin-top: 24px;">Tomar sol de manhã = dormir bem à noite.<br>Simples assim.</p>
+            </div>
+        </section>
+
+        <!-- CAPÍTULO 6 -->
+        <section id="cap6">
+            <div class="chapter-cover">
+                <span class="chapter-num">Capítulo 06</span>
+                <h2 class="chapter-title">Problemas Específicos</h2>
+                <p class="chapter-tagline">Quando o básico não basta</p>
+            </div>
+
+            <div class="content">
+                <p>Implementou tudo e ainda dorme mal? Aqui vão soluções pra problemas específicos.</p>
+
+                <h3><span class="emoji">😵</span>Acordo às 3 da manhã e não durmo mais</h3>
+
+                <p>Não pense. Apenas:</p>
+
+                <ul class="bullet-list">
+                    <li>Faça respiração 4-6-8 (10 ciclos)</li>
+                    <li>Se não voltar a dormir em 20 minutos, levanta</li>
+                    <li>Vai pra outro cômodo, lê algo chato</li>
+                    <li>Quando der sono, volta pra cama</li>
+                </ul>
+
+                <div class="callout callout-warning">
+                    <div class="callout-icon">🚫</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Não faça</div>
+                        <div class="callout-text">Ficar olhando o relógio. Pensar 'que horas falta pra acordar'. Pegar o celular.</div>
+                    </div>
+                </div>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <h3><span class="emoji">🌀</span>Minha mente não para</h3>
+
+                <p>Já cobrimos isso, mas resumindo:</p>
+
+                <ul class="bullet-list">
+                    <li>Despejo mental 30min antes de dormir</li>
+                    <li>Respiração 4-6-8</li>
+                    <li>Varredura corporal</li>
+                </ul>
+
+                <p>Se persistir, escreva por 20 minutos antes de dormir. <strong>Sobre QUALQUER coisa.</strong> Seu cérebro precisa de espaço.</p>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <h3><span class="emoji">😴</span>Durmo bem mas acordo cansado</h3>
+
+                <p>Algumas possibilidades:</p>
+
+                <ul class="bullet-list">
+                    <li>Você não tá entrando em sono profundo (otimiza ambiente)</li>
+                    <li>Tá com apneia do sono (procura médico)</li>
+                    <li>Tá deprimido ou ansioso (procura terapeuta)</li>
+                    <li>Tá com deficiência nutricional (faz exames)</li>
+                </ul>
+
+                <div class="callout callout-warning">
+                    <div class="callout-icon">🏥</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Atenção</div>
+                        <div class="callout-text">Se você dorme 8h e acorda cansado todo dia há mais de um mês, isso não é normal. Investigue.</div>
+                    </div>
+                </div>
+
+                <div class="separator">✦ ✦ ✦</div>
+
+                <h3><span class="emoji">💼</span>Não consigo desligar do trabalho</h3>
+
+                <p>Crie uma transição. Quando termina o trabalho:</p>
+
+                <ul class="bullet-list">
+                    <li>Anota o que precisa fazer amanhã</li>
+                    <li>Fecha o computador (de verdade)</li>
+                    <li>Sai do lugar onde trabalha</li>
+                    <li>Faz algo diferente: caminhada, banho, ligar pra alguém</li>
+                </ul>
+
+                <p>Seu cérebro precisa entender que "<strong>acabou</strong>". Sem ritual de transição, o trabalho fica na sua cabeça.</p>
+            </div>
+
+            <!-- CTA MENTORIA -->
+            <div class="cta-mentoria">
+                <h3 class="cta-mentoria-title">Travado em algum ponto?</h3>
+                <p class="cta-mentoria-text">Algumas pessoas precisam de acompanhamento personalizado. Na mentoria, eu te ajudo direto.</p>
+                <a href="https://rayhancoelho.github.io/Rayhan-Coelho/Mentoria.html" class="cta-mentoria-button">Conhecer Mentoria →</a>
+            </div>
+        </section>
+
+        <!-- BÔNUS -->
+        <section id="bonus">
+            <div class="chapter-cover">
+                <span class="chapter-num">Bônus ★</span>
+                <h2 class="chapter-title">Checklist Diário</h2>
+                <p class="chapter-tagline">Imprima e use todo dia</p>
+            </div>
+
+            <div class="content">
+                <div class="checklist-section">
+                    <h3 class="checklist-title">☀️ Durante o dia</h3>
+                    <ul class="checklist-items">
+                        <li>Tomei sol pela manhã (10-15 min)</li>
+                        <li>Bebi 2L de água</li>
+                        <li>Parei o café após as 14h</li>
+                        <li>Me exercitei</li>
+                    </ul>
+                </div>
+
+                <div class="checklist-section">
+                    <h3 class="checklist-title">🌙 À noite</h3>
+                    <ul class="checklist-items">
+                        <li>Jantei 2-3h antes de dormir</li>
+                        <li>Reduzi luzes 1h antes</li>
+                        <li>Tomei banho quente</li>
+                        <li>Larguei o celular 30min antes</li>
+                    </ul>
+                </div>
+
+                <div class="checklist-section">
+                    <h3 class="checklist-title">🛏️ No quarto</h3>
+                    <ul class="checklist-items">
+                        <li>Quarto escuro total</li>
+                        <li>Temperatura 18-20°C</li>
+                        <li>Silêncio ou ruído branco</li>
+                    </ul>
+                </div>
+
+                <div class="checklist-section">
+                    <h3 class="checklist-title">🧠 Mental</h3>
+                    <ul class="checklist-items">
+                        <li>Escrevi as preocupações</li>
+                        <li>Fiz respiração 4-6-8</li>
+                        <li>Mesmo horário pra dormir</li>
+                    </ul>
+                </div>
+
+                <div class="callout callout-tip">
+                    <div class="callout-icon">💡</div>
+                    <div class="callout-content">
+                        <div class="callout-title">Dica</div>
+                        <div class="callout-text">Não precisa fazer tudo todo dia. Mas quanto mais itens, melhor o sono.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MENSAGEM FINAL -->
+        <section class="final-section">
+            <h2 class="final-title">Mensagem Final</h2>
+
+            <p style="font-size: 17px; line-height: 1.7; margin-bottom: 16px; color: var(--text);">Se você chegou até aqui, você está pronto.</p>
+
+            <p style="font-size: 17px; line-height: 1.7; margin-bottom: 16px; color: var(--text);">Dormir bem não é luxo. É um direito básico do seu corpo. E é ciência - você não precisa de remédio caro, você precisa de <strong style="color: var(--orange)">consistência</strong>.</p>
+
+            <p style="font-size: 17px; line-height: 1.7; margin-bottom: 16px; color: var(--text);">Implementa os 7 dias com calma. Não tem que ser perfeito. Tem que ser progresso.</p>
+
+            <div class="big-quote" style="text-align: left; margin: 28px 0;">Mas vai melhorar.</div>
+
+            <div class="callout callout-info" style="text-align: left;">
+                <div class="callout-icon">🔥</div>
+                <div class="callout-content">
+                    <div class="callout-title">Última dica</div>
+                    <div class="callout-text">Não desiste no primeiro dia ruim. Vai ter dia que nada funciona. É normal. Volta pra rotina.</div>
+                </div>
+            </div>
+
+            <p style="font-size: 22px; font-weight: 800; color: var(--orange); margin: 32px 0 0; font-family: 'Fraunces', serif;">Boa noite. Durma bem.</p>
+
+            <div class="signature">
+                <div class="signature-name">Rayhan Coelho</div>
+                <div class="signature-handle">@rayhancoelho</div>
+                <div class="signature-quote">Durma melhor, viva melhor.</div>
+            </div>
+        </section>
     </div>
 
-    <!-- CAP 02 -->
-    <section class="eb-chapter" id="cap2">
-      <div class="eb-chapter-eyebrow">Capítulo</div>
-      <div class="eb-chapter-num">02</div>
-      <h2>Desaceleração.</h2>
-      <p class="lede">Quando o corpo está pronto, mas a mente não.</p>
-    </section>
-
-    <div class="eb-body">
-      <p>Seu corpo tá pronto pra dormir. Mas sua mente não para?</p>
-
-      <p>Esse capítulo é pra você.</p>
-
-      <h3>Técnica 1 · Respiração 4-6-8</h3>
-
-      <p>A mais simples e a que mais funciona. Use sempre que sua mente não desliga.</p>
-
-      <div class="eb-step">
-        <span class="eb-step-n">4s</span>
-        <div>
-          <h4>Inspire pelo nariz</h4>
-          <p>Conte mentalmente até 4, enchendo os pulmões completamente.</p>
-        </div>
-      </div>
-      <div class="eb-step">
-        <span class="eb-step-n">6s</span>
-        <div>
-          <h4>Segure a respiração</h4>
-          <p>Conte até 6 com o ar segurado. Sem pressão.</p>
-        </div>
-      </div>
-      <div class="eb-step">
-        <span class="eb-step-n">8s</span>
-        <div>
-          <h4>Solte pela boca</h4>
-          <p>Conte até 8, soltando o ar bem devagar pela boca.</p>
-        </div>
-      </div>
-
-      <p style="margin-top: 24px;">Faça <strong>10 ciclos</strong>. Sério, 10 ciclos completos.</p>
-
-      <p>O que acontece: seu corpo entende que tá tudo bem. Que não tem perigo. Que pode relaxar. <strong>É química pura.</strong></p>
-
-      <div class="eb-note alt">
-        <div class="eb-note-label">Bônus</div>
-        <p>Essa técnica também funciona pra ansiedade durante o dia. Tô estressado? 4-6-8.</p>
-      </div>
-
-      <h3>Técnica 2 · Varredura corporal</h3>
-
-      <p>Sua mente não para de pensar? Engana ela com o corpo.</p>
-
-      <p>Deita confortavelmente. Fecha os olhos. Agora:</p>
-
-      <ul class="eb-bullets">
-        <li>Foque nos seus pés. Sinta eles na cama. Como tão? Quentes? Frios?</li>
-        <li>Sobe pra panturrilha. Mesma coisa.</li>
-        <li>Coxa. Bunda. Barriga. Peito.</li>
-        <li>Braços, dedo por dedo.</li>
-        <li>Pescoço, queixo, bochechas, testa.</li>
-      </ul>
-
-      <div class="eb-note">
-        <div class="eb-note-label">Por que funciona</div>
-        <p>Enquanto você foca no corpo, sua mente não consegue pensar em trabalho. É impossível fazer as duas coisas ao mesmo tempo.</p>
-      </div>
-
-      <p><strong>90% das pessoas dormem antes de chegar na cabeça.</strong></p>
-
-      <h3>Técnica 3 · Despejo mental</h3>
-
-      <p>Sua mente fica catalogando tarefas? Preocupações? Lembrando de fazer X amanhã?</p>
-
-      <p>Tem um motivo: seu cérebro tá com medo de esquecer.</p>
-
-      <div class="eb-note">
-        <div class="eb-note-label">Solução</div>
-        <p>Escreva tudo. 30 minutos antes de dormir. Pega um caderno e despeja tudo que tá na sua cabeça.</p>
-      </div>
-
-      <p>Tarefas, preocupações, ideias, sentimentos. Quando você escreve, seu cérebro entende: "ok, ele anotou, posso descansar".</p>
-
-      <p class="eb-quote">"Funciona. Testa."</p>
-    </div>
-
-    <!-- CAP 03 -->
-    <section class="eb-chapter" id="cap3">
-      <div class="eb-chapter-eyebrow">Capítulo</div>
-      <div class="eb-chapter-num">03</div>
-      <h2>Ambiente.</h2>
-      <p class="lede">Seu quarto é um laboratório do sono.</p>
-    </section>
-
-    <div class="eb-body">
-      <p>Seu quarto é um laboratório. Vamos otimizar pra dormir.</p>
-
-      <h3>Temperatura</h3>
-
-      <p>Temperatura ideal: <strong>18–20 °C</strong>.</p>
-
-      <p>Por quê? Seu corpo precisa BAIXAR a temperatura interna pra dormir profundamente. Se o quarto tá quente, ele não consegue.</p>
-
-      <ul class="eb-bullets">
-        <li><strong>Acordando suado?</strong> Tá muito quente.</li>
-        <li><strong>Dormindo com várias cobertas?</strong> Mesma coisa.</li>
-        <li><strong>Solução:</strong> ventilador, ar condicionado ou cobertor mais fino.</li>
-      </ul>
-
-      <div class="eb-note alt">
-        <div class="eb-note-label">Princípio</div>
-        <p>Se for muito frio, melhor que muito quente. Frio você cobre. Calor não tem solução fácil.</p>
-      </div>
-
-      <h3>Som</h3>
-
-      <p>Duas opções funcionam: <strong>silêncio TOTAL</strong> ou <strong>ruído branco constante</strong>.</p>
-
-      <p>O problema é o som intermitente. Vizinho rindo às 3h. Carro passando. Cachorro latindo.</p>
-
-      <p>Cada som faz seu cérebro acordar levemente, mesmo que você nem perceba.</p>
-
-      <div class="eb-note">
-        <div class="eb-note-label">Soluções</div>
-        <p>Ruído branco no celular, ventilador, ou tampão de ouvido (se não te incomoda).</p>
-      </div>
-
-      <h3>Aromas</h3>
-
-      <p>Lavanda não é piruá. <strong>É ciência.</strong></p>
-
-      <p>Estudos mostram que o cheiro de lavanda diminui frequência cardíaca e pressão arterial. Você relaxa.</p>
-
-      <ul class="eb-bullets">
-        <li>Compre óleo essencial de lavanda.</li>
-        <li>Coloque 2–3 gotas no travesseiro.</li>
-        <li>Ou use um difusor 30 min antes de dormir.</li>
-      </ul>
-
-      <p>Outras opções que funcionam: <strong>camomila, sândalo, valeriana.</strong></p>
-    </div>
-
-    <!-- CAP 04 -->
-    <section class="eb-chapter" id="cap4">
-      <div class="eb-chapter-eyebrow">Capítulo</div>
-      <div class="eb-chapter-num">04</div>
-      <h2>Alimentação.</h2>
-      <p class="lede">Você é o que come (e como dorme).</p>
-    </section>
-
-    <div class="eb-body">
-      <p>O que você come afeta como você dorme. <strong>Ponto.</strong></p>
-
-      <h3>Quando comer</h3>
-
-      <div class="eb-note">
-        <div class="eb-note-label">Regra de ouro</div>
-        <p>Última refeição 2–3 horas antes de dormir.</p>
-      </div>
-
-      <p>Se você dorme às 22h, jante até as 19–20h.</p>
-
-      <p>Por quê? Quando você come, seu corpo trabalha pra digerir. Sangue vai pro estômago. Se isso acontece enquanto você tenta dormir, seu sono fica ruim.</p>
-
-      <p>Também é mais difícil emagrecer assim, se isso te importa.</p>
-
-      <h3>O que comer</h3>
-
-      <ul class="eb-bullets">
-        <li>Alimentos leves: frango, peixe, ovos, vegetais.</li>
-        <li>Carboidratos complexos em quantidade moderada.</li>
-        <li>Evite: muito açúcar, frituras, comida pesada.</li>
-      </ul>
-
-      <p>Se você gosta de leite antes de dormir? Pode. Mas <strong>sem açúcar</strong>.</p>
-
-      <h3>Suplementos que ajudam</h3>
-
-      <div class="eb-note alt">
-        <div class="eb-note-label">Aviso</div>
-        <p>Não sou médico, sempre consulte um. Mas algumas opções funcionam pra muita gente.</p>
-      </div>
-
-      <ul class="eb-bullets">
-        <li><strong>Magnésio glicinato:</strong> relaxa músculos e mente.</li>
-        <li><strong>Glicina:</strong> ajuda a entrar em sono profundo.</li>
-        <li><strong>Camomila ou passiflora:</strong> chás relaxantes.</li>
-        <li><strong>L-teanina:</strong> reduz ansiedade.</li>
-      </ul>
-
-      <p>Comece com um por vez. Vê o que funciona pra você.</p>
-
-      <h3>Água</h3>
-
-      <p>Beba bastante durante o dia. Mas <strong>pare 2 horas antes de dormir</strong>.</p>
-
-      <div class="eb-note">
-        <div class="eb-note-label">A realidade</div>
-        <p>Acordar pra urinar de madrugada destrói seu sono. Você até pode voltar a dormir, mas o sono nunca é mais o mesmo.</p>
-      </div>
-    </div>
-
-    <!-- CAP 05 -->
-    <section class="eb-chapter" id="cap5">
-      <div class="eb-chapter-eyebrow">Capítulo</div>
-      <div class="eb-chapter-num">05</div>
-      <h2>Movimento.</h2>
-      <p class="lede">Gaste energia hoje pra dormir melhor à noite.</p>
-    </section>
-
-    <div class="eb-body">
-      <p>Quer cair na cama como um morto? <strong>Exercite.</strong></p>
-
-      <h3>Quando treinar</h3>
-
-      <ul class="eb-bullets">
-        <li><strong>De manhã:</strong> o melhor horário. Acelera metabolismo, ajusta ciclo circadiano.</li>
-        <li><strong>À tarde (até 17h):</strong> bom também.</li>
-        <li><strong>À noite:</strong> evite. Seu corpo fica acelerado por horas.</li>
-      </ul>
-
-      <p>Se sua única opção é à noite, treine pelo menos 3 horas antes de dormir.</p>
-
-      <h3>Qual exercício</h3>
-
-      <p>Honestamente? Qualquer um.</p>
-
-      <ul class="eb-bullets">
-        <li><strong>Caminhada 30 min:</strong> já melhora sono pra caramba.</li>
-        <li><strong>Musculação:</strong> ainda melhor.</li>
-        <li><strong>Yoga ou alongamento:</strong> se quer mais relaxamento.</li>
-        <li><strong>Corrida, bike, natação:</strong> tudo funciona.</li>
-      </ul>
-
-      <p>A regra é: <strong>gastar energia física</strong>. Se você gastar energia, seu corpo vai PEDIR pra dormir.</p>
-
-      <p class="eb-quote">"Pessoas sedentárias dormem mal. É quase impossível dormir bem sem se mexer."</p>
-
-      <h3>Sol</h3>
-
-      <p>Quase ninguém fala disso, mas é importante: <strong>tome sol pela manhã</strong>.</p>
-
-      <p>10–15 minutos nos primeiros 30 minutos após acordar. Sem óculos escuros, sem janela de vidro.</p>
-
-      <div class="eb-note">
-        <div class="eb-note-label">Por que funciona</div>
-        <p>Isso "liga" seu ciclo circadiano. Seu cérebro sabe que é dia. Em 14–16 horas, ele sabe que é hora de soltar melatonina.</p>
-      </div>
-
-      <p style="text-align: center; font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--amber); margin: 32px 0 0;">Tomar sol de manhã = dormir bem à noite.<br>Simples assim.</p>
-    </div>
-
-    <!-- CAP 06 -->
-    <section class="eb-chapter" id="cap6">
-      <div class="eb-chapter-eyebrow">Capítulo</div>
-      <div class="eb-chapter-num">06</div>
-      <h2>Problemas<br>específicos.</h2>
-      <p class="lede">Quando o básico não basta.</p>
-    </section>
-
-    <div class="eb-body">
-      <p>Implementou tudo e ainda dorme mal? Aqui vão soluções pra problemas específicos.</p>
-
-      <h3>Acordo às 3 da manhã e não durmo mais</h3>
-
-      <p>Não pense. Apenas:</p>
-
-      <ul class="eb-bullets">
-        <li>Faça respiração 4-6-8 (10 ciclos).</li>
-        <li>Se não voltar a dormir em 20 minutos, levanta.</li>
-        <li>Vai pra outro cômodo, lê algo chato.</li>
-        <li>Quando der sono, volta pra cama.</li>
-      </ul>
-
-      <div class="eb-note alt">
-        <div class="eb-note-label">Não faça</div>
-        <p>Ficar olhando o relógio. Pensar "que horas falta pra acordar". Pegar o celular.</p>
-      </div>
-
-      <h3>Minha mente não para</h3>
-
-      <p>Já cobrimos isso, mas resumindo:</p>
-
-      <ul class="eb-bullets">
-        <li>Despejo mental 30 min antes de dormir.</li>
-        <li>Respiração 4-6-8.</li>
-        <li>Varredura corporal.</li>
-      </ul>
-
-      <p>Se persistir, escreva por 20 minutos antes de dormir. <strong>Sobre QUALQUER coisa.</strong> Seu cérebro precisa de espaço.</p>
-
-      <h3>Durmo bem mas acordo cansado</h3>
-
-      <p>Algumas possibilidades:</p>
-
-      <ul class="eb-bullets">
-        <li>Você não tá entrando em sono profundo (otimize ambiente).</li>
-        <li>Tá com apneia do sono (procure médico).</li>
-        <li>Tá deprimido ou ansioso (procure terapeuta).</li>
-        <li>Tá com deficiência nutricional (faça exames).</li>
-      </ul>
-
-      <div class="eb-note">
-        <div class="eb-note-label">Atenção</div>
-        <p>Se você dorme 8 h e acorda cansado todo dia há mais de um mês, isso não é normal. Investigue.</p>
-      </div>
-
-      <h3>Não consigo desligar do trabalho</h3>
-
-      <p>Crie uma transição. Quando termina o trabalho:</p>
-
-      <ul class="eb-bullets">
-        <li>Anota o que precisa fazer amanhã.</li>
-        <li>Fecha o computador (de verdade).</li>
-        <li>Sai do lugar onde trabalha.</li>
-        <li>Faz algo diferente: caminhada, banho, ligar pra alguém.</li>
-      </ul>
-
-      <p>Seu cérebro precisa entender que "<strong>acabou</strong>". Sem ritual de transição, o trabalho fica na sua cabeça.</p>
-
-      <!-- CTA -->
-      <div class="eb-cta">
-        <div class="eb-cta-label">Quando precisar de mais</div>
-        <h3>Travado em algum ponto?</h3>
-        <p>Algumas pessoas precisam de acompanhamento personalizado. Na mentoria, eu te ajudo direto.</p>
-        <a href="Mentoria.html" class="btn btn-primary">Conhecer mentoria →</a>
-      </div>
-    </div>
-
-    <!-- BÔNUS -->
-    <section class="eb-chapter" id="bonus">
-      <div class="eb-chapter-eyebrow">Bônus ★</div>
-      <div class="eb-chapter-num">★</div>
-      <h2>Checklist<br>diário.</h2>
-      <p class="lede">Imprima e use todo dia.</p>
-    </section>
-
-    <div class="eb-body">
-      <div class="eb-checklist">
-        <div class="eb-checklist-title">☀ Durante o dia</div>
-        <ul>
-          <li>Tomei sol pela manhã (10–15 min)</li>
-          <li>Bebi 2 L de água</li>
-          <li>Parei o café após as 14h</li>
-          <li>Me exercitei</li>
-        </ul>
-      </div>
-
-      <div class="eb-checklist">
-        <div class="eb-checklist-title">☾ À noite</div>
-        <ul>
-          <li>Jantei 2–3 h antes de dormir</li>
-          <li>Reduzi luzes 1 h antes</li>
-          <li>Tomei banho quente</li>
-          <li>Larguei o celular 30 min antes</li>
-        </ul>
-      </div>
-
-      <div class="eb-checklist">
-        <div class="eb-checklist-title">⌂ No quarto</div>
-        <ul>
-          <li>Quarto escuro total</li>
-          <li>Temperatura 18–20 °C</li>
-          <li>Silêncio ou ruído branco</li>
-        </ul>
-      </div>
-
-      <div class="eb-checklist">
-        <div class="eb-checklist-title">◯ Mental</div>
-        <ul>
-          <li>Escrevi as preocupações</li>
-          <li>Fiz respiração 4-6-8</li>
-          <li>Mesmo horário pra dormir</li>
-        </ul>
-      </div>
-
-      <div class="eb-note alt">
-        <div class="eb-note-label">Dica</div>
-        <p>Não precisa fazer tudo todo dia. Mas quanto mais itens, melhor o sono.</p>
-      </div>
-    </div>
-
-    <!-- FINAL -->
-    <section class="eb-final">
-      <div class="eb-final-label">Mensagem final</div>
-      <h2>Você está pronto.</h2>
-
-      <p>Se você chegou até aqui, você está pronto.</p>
-
-      <p>Dormir bem não é luxo. É um direito básico do seu corpo. E é ciência — você não precisa de remédio caro, você precisa de <strong>consistência</strong>.</p>
-
-      <p>Implementa os 7 dias com calma. Não tem que ser perfeito. Tem que ser progresso.</p>
-
-      <p class="eb-quote" style="margin: 28px 0;">"Mas vai melhorar."</p>
-
-      <div class="eb-note">
-        <div class="eb-note-label">Última dica</div>
-        <p>Não desiste no primeiro dia ruim. Vai ter dia que nada funciona. É normal. Volta pra rotina.</p>
-      </div>
-
-      <p style="font-family: var(--serif); font-style: italic; font-weight: 700; font-size: clamp(28px, 7vw, 38px); color: var(--amber); margin: 40px 0 0; letter-spacing: -0.02em;">Boa noite. Durma bem.</p>
-
-      <div class="eb-sign">
-        <div class="eb-sign-name">Rayhan Coelho</div>
-        <div class="eb-sign-handle">@rayhancoelho</div>
-        <div class="eb-sign-quote">Durma melhor, viva melhor.</div>
-      </div>
-    </section>
-
-    <footer class="foot">
-      <span>© 2025 Rayhan Coelho</span>
-      <span>Durma melhor · Viva melhor</span>
-    </footer>
-  </main>
-
-  <script>
-    function updateProgress() {
-      const top = window.scrollY;
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      const p = Math.min(100, (top / h) * 100);
-      document.getElementById("pgBar").style.width = p + "%";
-    }
-    window.addEventListener("scroll", updateProgress, { passive: true });
-    window.addEventListener("resize", updateProgress);
-    updateProgress();
-    document.addEventListener("touchstart", (e) => {
-      if (e.touches.length > 1) e.preventDefault();
-    }, { passive: false });
-  </script>
+    <script>
+        // Reading progress bar
+        function updateProgress() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+        window.addEventListener('resize', updateProgress);
+        updateProgress();
+
+        // Prevent zoom on iOS
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) e.preventDefault();
+        }, false);
+    </script>
 </body>
 </html>
