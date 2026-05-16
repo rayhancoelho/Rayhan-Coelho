@@ -536,10 +536,27 @@
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
             
-            alert(`Obrigado, ${name}! 🎉\n\nVou te chamar no WhatsApp em até 24h.\n\nMuito em breve você estará dormindo melhor!`);
+            // Montar mensagem pré-formatada
+            const mensagem = `Olá Rayhan! 👋
+
+Quero entrar na lista de espera da Mentoria 1-on-1.
+
+📝 Meus dados:
+• Nome: ${name}
+• Email: ${email}
+• WhatsApp: ${phone}
+
+Aguardo seu contato!`;
             
-            document.getElementById('waitlistForm').reset();
-            console.log({ name, email, phone });
+            // Codificar mensagem para URL
+            const mensagemCodificada = encodeURIComponent(mensagem);
+            
+            // Número do WhatsApp (formato internacional)
+            const numero = '5548996290222';
+            
+            // Abrir WhatsApp
+            const url = `https://wa.me/${numero}?text=${mensagemCodificada}`;
+            window.open(url, '_blank');
         }
     </script>
 </body>
