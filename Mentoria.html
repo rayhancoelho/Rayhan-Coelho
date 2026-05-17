@@ -4,6 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Mentoria 1-on-1 - Rayhan Coelho</title>
+
+    <!-- SEO -->
+    <meta name="description" content="Acompanhamento personalizado pra transformar seu sono. 1 sessão semanal. Vagas limitadas.">
+    <meta name="author" content="Rayhan Coelho">
+    <meta name="theme-color" content="#e8821e">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😴</text></svg>">
+    
+    <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rayhancoelho.github.io/Rayhan-Coelho/Mentoria.html">
+    <meta property="og:title" content="Mentoria 1-on-1 com Rayhan Coelho">
+    <meta property="og:description" content="Acompanhamento personalizado pra transformar seu sono. 1 sessão semanal. Vagas limitadas.">
+    <meta property="og:image" content="https://rayhancoelho.github.io/Rayhan-Coelho/capa-ebook.png">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="1100">
+    <meta property="og:site_name" content="Rayhan Coelho">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mentoria 1-on-1 com Rayhan Coelho">
+    <meta name="twitter:description" content="Acompanhamento personalizado pra transformar seu sono. 1 sessão semanal. Vagas limitadas.">
+    <meta name="twitter:image" content="https://rayhancoelho.github.io/Rayhan-Coelho/capa-ebook.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -230,6 +256,34 @@
             color: rgba(255, 255, 255, 0.85);
         }
 
+        .pricing-format {
+            font-family: 'Fraunces', serif;
+            font-size: 42px;
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+            margin-bottom: 8px;
+            letter-spacing: -1.5px;
+        }
+
+        .pricing-format-sub {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .pricing-note {
+            margin-top: 20px;
+            padding: 14px 18px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
         .price-big {
             font-size: 60px;
             font-weight: 900;
@@ -376,6 +430,35 @@
             background: rgba(0, 0, 0, 0.4);
         }
 
+        .whatsapp-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 22px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 16px 40px rgba(37, 211, 102, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-family: inherit;
+        }
+
+        .whatsapp-button:active {
+            transform: scale(0.96);
+        }
+
+        .whatsapp-icon {
+            font-size: 24px;
+        }
+
         .submit-button {
             width: 100%;
             padding: 20px;
@@ -473,53 +556,33 @@
 
         <div class="pricing-card">
             <div class="pricing-content">
-                <div class="pricing-label">Seu investimento</div>
-                <div class="price-big"><span class="price-currency">R$</span>300</div>
-                <div class="price-period">por mês • 1 sessão semanal</div>
+                <div class="pricing-label">Como funciona</div>
+                <div class="pricing-format">1 sessão semanal</div>
+                <div class="pricing-format-sub">de 50 minutos comigo</div>
                 <div class="what-included">
                     <div class="what-included-title">✓ O que você ganha</div>
                     <ul class="included-list">
-                        <li>4 sessões de 50 minutos</li>
+                        <li>4 sessões de 50 minutos por mês</li>
                         <li>Plano 100% personalizado</li>
                         <li>Suporte direto via WhatsApp</li>
                         <li>Acompanhamento do progresso</li>
                         <li>Ajustes conforme necessário</li>
                     </ul>
                 </div>
+                <div class="pricing-note">💬 Falamos sobre valores e horários no WhatsApp</div>
             </div>
         </div>
 
-        <div class="scarcity">
-            <span class="scarcity-icon">⚠️</span>
-            <div><strong>Vagas limitadas:</strong> Apenas 5 pessoas por mês para garantir qualidade no atendimento.</div>
-        </div>
-
         <div class="form-section">
-            <h2 class="form-title">Entre na lista de espera</h2>
-            <p class="form-subtitle">Vou entrar em contato pessoalmente</p>
+            <h2 class="form-title">Bora começar?</h2>
+            <p class="form-subtitle">Me chama no WhatsApp e a gente conversa</p>
             
-            <form id="waitlistForm" onsubmit="handleSubmit(event)">
-                <div class="form-group">
-                    <label for="name">Seu nome</label>
-                    <input type="text" id="name" name="name" required placeholder="João Silva">
-                </div>
+            <a href="https://wa.me/5548996290222?text=Ol%C3%A1%20Rayhan!%20%F0%9F%91%8B%0A%0AQuero%20conhecer%20a%20Mentoria%201-on-1%20de%20sono." target="_blank" class="whatsapp-button">
+                <span class="whatsapp-icon">💬</span>
+                <span>FALAR NO WHATSAPP</span>
+            </a>
 
-                <div class="form-group">
-                    <label for="email">Seu e-mail</label>
-                    <input type="email" id="email" name="email" required placeholder="seu@email.com">
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">WhatsApp</label>
-                    <input type="tel" id="phone" name="phone" required placeholder="(11) 98765-4321">
-                </div>
-
-                <button type="submit" class="submit-button">
-                    QUERO ENTRAR NA LISTA 🚀
-                </button>
-
-                <p class="form-note">Vou te chamar no WhatsApp em até 24h</p>
-            </form>
+            <p class="form-note">Resposta rápida • Sem compromisso</p>
         </div>
 
         <div class="footer">
@@ -528,36 +591,9 @@
     </div>
 
     <script>
-        function handleSubmit(event) {
-            event.preventDefault();
-            if (navigator.vibrate) navigator.vibrate(50);
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            
-            // Montar mensagem pré-formatada
-            const mensagem = `Olá Rayhan! 👋
-
-Quero entrar na lista de espera da Mentoria 1-on-1.
-
-📝 Meus dados:
-• Nome: ${name}
-• Email: ${email}
-• WhatsApp: ${phone}
-
-Aguardo seu contato!`;
-            
-            // Codificar mensagem para URL
-            const mensagemCodificada = encodeURIComponent(mensagem);
-            
-            // Número do WhatsApp (formato internacional)
-            const numero = '5548996290222';
-            
-            // Abrir WhatsApp
-            const url = `https://wa.me/${numero}?text=${mensagemCodificada}`;
-            window.open(url, '_blank');
-        }
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) e.preventDefault();
+        }, false);
     </script>
 </body>
 </html>
