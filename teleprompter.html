@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Teleprompter — Estúdio</title>
+<style>
+  :root{
+    --bg:#0a0a0c;
+    --panel:#131316;
+    --line:#232327;
+    --text:#eef0ef;
+    --dim:#8a8d93;
+    --rec:#e5484d;
+    --accent:#f2c14e;
+    --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0; height:100%; background:var(--bg); color:var(--text);
+    font-family:var(--sans); overflow:hidden;
+  }
+  #app{ position:relative; width:100vw; height:100vh; height:100dvh; display:flex; flex-direction:column; }
+
+  /* ---------- TOP BAR ---------- */
+  #topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 16px; background:var(--panel); border-bottom:1px solid var(--line);
+    z-index:20; flex-shrink:0;
+  }
+  #topbar .brand{ font-family:var(--mono); font-size:12px; letter-spacing:.12em; color:var(--dim); text-transform:uppercase; }
+  #topbar .brand b{ color:var(--text); }
+  #tabs{ display:flex; gap:4px; }
+  .tab-btn{
+    font-family:var(--mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+    background:transparent; border:1px solid var(--line); color:var(--dim);
+    padding:7px 14px; border-radius:6px; cursor:pointer; transition:.15s;
+  }
+  .tab-btn.active{ background:var(--accent); border-color:var(--accent); color:#141414; font-weight:700; }
+  .tab-btn:not(.active):hover{ color:var(--text); border-color:#3a3a40; }
+
+  /* ---------- EDITOR VIEW ---------- */
+  #editorView{ flex:1; display:flex; min-height:0; }
+  #editorView.hidden{ display:none; }
+  #scriptPane{ flex:1; display:flex; flex-direction:column; padding:20px; min-width:0; }
+  #scriptPane label{ font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:var(--dim); text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; }
+  #charCount{ color:var(--accent); }
+  #scriptInput{
+    flex:1; width:100%; resize:none; background:var(--panel); border:1px solid var(--line);
+    border-radius:10px; color:var(--text); font-size:20px; line-height:1.6; padding:20px;
+    font-family:var(--sans); outline:none;
+  }
+  #scriptInput:focus{ border-color:var(--accent); }
+
+  #settingsPane{
+    width:280px; flex-shrink:0; background:var(--panel); border-left:1px solid var(--line);
+    padding:20px; overflow-y:auto;
+  }
+  .setting{ margin-bottom:22px; }
+  .setting-label{ display:flex; justify-content:space-between; font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--dim); text-transform:uppercase; margin-bottom:8px; }
+  .setting-label span.val{ color:var(--accent); }
+  input[type=range]{ width:100%; accent-color:var(--accent); }
+  select{
+    width:100%; background:#1a1a1e; color:var(--text); border:1px solid var(--line);
+    border-radius:6px; padding:8px; font-family:var(--sans); font-size:14px;
+  }
+  .toggle-row{ display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-top:1px solid var(--line); }
+  .toggle-row span{ font-size:14px; }
+  .switch{ position:relative; width:40px; height:22px; }
+  .switch input{ opacity:0; width:0; height:0; }
+  .slider-pill{ position:absolute; inset:0; background:#2a2a2f; border-radius:22px; cursor:pointer; transition:.15s; }
+  .slider-pill:before{ content:""; position:absolute; height:16px; width:16px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.15s; }
+  input:checked + .slider-pill{ background:var(--accent); }
+  input:checked + .slider-pill:before{ transform:translateX(18px); }
+
+  #goLiveBtn{
+    width:100%; margin-top:10px; padding:14px; border:none; border-radius:8px;
+    background:var(--rec); color:#fff; font-family:var(--mono); font-weight:700;
+    letter-spacing:.08em; text-transform:uppercase; font-size:13px; cursor:pointer;
+  }
+  #goLiveBtn:hover{ filter:brightness(1.1); }
+
+  /* ---------- STUDIO VIEW ---------- */
+  #studioView{ position:relative; flex:1; background:#000; overflow:hidden; }
+  #studioView.hidden{ display:none; }
+  #camVideo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; background:#000; }
+  #camError{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    color:var(--dim); font-family:var(--mono); font-size:13px; text-align:center; padding:40px;
+  }
+
+  #prompterOverlay{
+    position:absolute; left:0; right:0; top:0; bottom:0; pointer-events:none;
+    display:flex; justify-content:center;
+  }
+  #promptWindow{
+    position:absolute; left:6%; right:6%; top:12%; bottom:22%;
+    overflow:hidden; -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+  #promptText{
+    position:absolute; width:100%; top:100%; left:0;
+    font-weight:600; color:#fff; text-align:center;
+    text-shadow: 0 2px 12px rgba(0,0,0,.85), 0 0 2px rgba(0,0,0,.6);
+    white-space:pre-wrap; word-wrap:break-word;
+  }
+  #centerLine{
+    position:absolute; left:6%; right:6%; top:50%; height:0;
+    border-top:1px dashed rgba(255,196,78,.35); pointer-events:none;
+  }
+
+  /* HUD */
+  #hud{
+    position:absolute; top:14px; left:14px; right:14px; display:flex; justify-content:space-between;
+    align-items:flex-start; z-index:10; pointer-events:none;
+  }
+  #recIndicator{
+    font-family:var(--mono); font-size:12px; background:rgba(0,0,0,.55); backdrop-filter:blur(4px);
+    padding:6px 10px; border-radius:20px; display:flex; align-items:center; gap:7px; color:#fff;
+    border:1px solid rgba(255,255,255,.15);
+  }
+  #recDot{ width:8px; height:8px; border-radius:50%; background:#555; }
+  #recIndicator.live #recDot{ background:var(--rec); animation:pulse 1.1s infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.25;} }
+  #timecode{ font-family:var(--mono); font-size:12px; background:rgba(0,0,0,.55); backdrop-filter:blur(4px); padding:6px 10px; border-radius:20px; color:#fff; border:1px solid rgba(255,255,255,.15); }
+
+  /* bottom controls */
+  #studioControls{
+    position:absolute; bottom:0; left:0; right:0; z-index:15;
+    background:linear-gradient(to top, rgba(0,0,0,.85), transparent);
+    padding:24px 20px 18px; display:flex; align-items:center; gap:14px; justify-content:center;
+    flex-wrap:wrap;
+  }
+  .ctrl-btn{
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); color:#fff;
+    font-family:var(--mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+    padding:11px 18px; border-radius:24px; cursor:pointer; backdrop-filter:blur(6px);
+  }
+  .ctrl-btn:hover{ background:rgba(255,255,255,.16); }
+  #recordBtn{ background:var(--rec); border-color:var(--rec); font-weight:700; padding:13px 26px; }
+  #recordBtn.recording{ background:#8a1216; }
+  #speedMini, #sizeMini{ display:flex; align-items:center; gap:8px; color:#fff; font-family:var(--mono); font-size:11px; }
+  #speedMini input, #sizeMini input{ width:90px; accent-color:var(--accent); }
+
+  #backToEditor{
+    position:absolute; top:14px; right:14px; z-index:20;
+    background:rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.2); color:#fff;
+    font-family:var(--mono); font-size:11px; padding:6px 12px; border-radius:20px; cursor:pointer;
+  }
+
+  #countdownScreen{
+    position:absolute; inset:0; background:rgba(0,0,0,.75); display:none;
+    align-items:center; justify-content:center; z-index:30; flex-direction:column; gap:10px;
+  }
+  #countdownNum{ font-size:120px; font-weight:800; color:var(--accent); font-family:var(--mono); }
+  #countdownLabel{ font-family:var(--mono); color:var(--dim); letter-spacing:.15em; text-transform:uppercase; font-size:12px; }
+
+  #downloadBar{
+    position:absolute; bottom:0; left:0; right:0; z-index:25; background:var(--panel);
+    border-top:1px solid var(--line); padding:14px 20px; display:none; align-items:center; justify-content:space-between; gap:12px;
+  }
+  #downloadBar.show{ display:flex; }
+  #downloadBar span{ font-family:var(--mono); font-size:12px; color:var(--dim); }
+  #downloadBar a{
+    background:var(--accent); color:#141414; text-decoration:none; font-family:var(--mono);
+    font-weight:700; font-size:12px; padding:9px 16px; border-radius:6px; letter-spacing:.06em; text-transform:uppercase;
+  }
+  #dismissDownload{ background:transparent; border:1px solid var(--line); color:var(--dim); border-radius:6px; padding:9px 12px; cursor:pointer; font-family:var(--mono); font-size:12px; }
+
+  @media (max-width:720px){
+    #settingsPane{ width:220px; }
+    #scriptInput{ font-size:16px; }
+    #countdownNum{ font-size:80px; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div id="topbar">
+    <div class="brand">TELE<b>PROMPTER</b> · sem limite de caracteres</div>
+    <div id="tabs">
+      <button class="tab-btn active" data-tab="editor">Roteiro</button>
+      <button class="tab-btn" data-tab="studio">Estúdio</button>
+    </div>
+  </div>
+
+  <!-- EDITOR -->
+  <div id="editorView">
+    <div id="scriptPane">
+      <label>Seu roteiro <span id="charCount">0 caracteres</span></label>
+      <textarea id="scriptInput" placeholder="Cole ou escreva seu roteiro aqui. Não há limite de tamanho — pode ser um parágrafo ou um discurso inteiro."></textarea>
+    </div>
+    <div id="settingsPane">
+      <div class="setting">
+        <div class="setting-label">Velocidade <span class="val" id="speedVal">40</span></div>
+        <input type="range" id="speedSlider" min="5" max="150" value="40">
+      </div>
+      <div class="setting">
+        <div class="setting-label">Tamanho do texto <span class="val" id="sizeVal">48px</span></div>
+        <input type="range" id="sizeSlider" min="20" max="100" value="48">
+      </div>
+      <div class="setting">
+        <div class="setting-label">Câmera</div>
+        <select id="cameraSelect"></select>
+      </div>
+      <div class="toggle-row">
+        <span>Modo espelhado</span>
+        <label class="switch"><input type="checkbox" id="mirrorToggle"><span class="slider-pill"></span></label>
+      </div>
+      <div class="toggle-row">
+        <span>Gravar áudio</span>
+        <label class="switch"><input type="checkbox" id="audioToggle" checked><span class="slider-pill"></span></label>
+      </div>
+      <button id="goLiveBtn">Ir para o estúdio →</button>
+    </div>
+  </div>
+
+  <!-- STUDIO -->
+  <div id="studioView" class="hidden">
+    <video id="camVideo" autoplay playsinline muted></video>
+    <div id="camError"></div>
+
+    <div id="hud">
+      <div id="recIndicator"><div id="recDot"></div><span id="recLabel">PRONTO</span></div>
+      <div id="timecode">00:00</div>
+    </div>
+
+    <button id="backToEditor">← Roteiro</button>
+
+    <div id="prompterOverlay">
+      <div id="centerLine"></div>
+      <div id="promptWindow">
+        <div id="promptText"></div>
+      </div>
+    </div>
+
+    <div id="countdownScreen">
+      <div id="countdownNum">3</div>
+      <div id="countdownLabel">Preparando gravação</div>
+    </div>
+
+    <div id="studioControls">
+      <button class="ctrl-btn" id="restartBtn">⟲ Reiniciar texto</button>
+      <button class="ctrl-btn" id="playPauseBtn">▶ Rolar</button>
+      <button class="ctrl-btn" id="recordBtn">● Gravar</button>
+      <div id="speedMini">Vel <input type="range" id="speedSliderMini" min="5" max="150" value="40"></div>
+      <div id="sizeMini">Fonte <input type="range" id="sizeSliderMini" min="20" max="100" value="48"></div>
+    </div>
+
+    <div id="downloadBar">
+      <span id="downloadInfo">Vídeo pronto.</span>
+      <div style="display:flex; gap:10px;">
+        <a id="downloadLink" download="video-teleprompter.webm">Baixar vídeo</a>
+        <button id="dismissDownload">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+
+  // ---------- Tabs ----------
+  const editorView = $('editorView'), studioView = $('studioView');
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  function showTab(name){
+    tabBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+    editorView.classList.toggle('hidden', name !== 'editor');
+    studioView.classList.toggle('hidden', name !== 'studio');
+    if(name === 'studio'){ initCamera(); syncPromptText(); }
+    else { stopEverything(false); }
+  }
+  tabBtns.forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+  $('goLiveBtn').addEventListener('click', () => showTab('studio'));
+  $('backToEditor').addEventListener('click', () => showTab('editor'));
+
+  // ---------- Script + counters ----------
+  const scriptInput = $('scriptInput');
+  const charCount = $('charCount');
+  scriptInput.addEventListener('input', () => {
+    charCount.textContent = scriptInput.value.length.toLocaleString('pt-BR') + ' caracteres';
+  });
+
+  // ---------- Settings (linked pairs) ----------
+  const speedSlider = $('speedSlider'), speedSliderMini = $('speedSliderMini'), speedVal = $('speedVal');
+  const sizeSlider = $('sizeSlider'), sizeSliderMini = $('sizeSliderMini'), sizeVal = $('sizeVal');
+  const mirrorToggle = $('mirrorToggle');
+  const promptText = $('promptText');
+
+  function setSpeed(v){ speedSlider.value = v; speedSliderMini.value = v; speedVal.textContent = v; }
+  function setSize(v){
+    sizeSlider.value = v; sizeSliderMini.value = v; sizeVal.textContent = v + 'px';
+    promptText.style.fontSize = v + 'px';
+  }
+  [speedSlider, speedSliderMini].forEach(el => el.addEventListener('input', e => setSpeed(e.target.value)));
+  [sizeSlider, sizeSliderMini].forEach(el => el.addEventListener('input', e => setSize(e.target.value)));
+  mirrorToggle.addEventListener('change', () => {
+    promptText.style.transform = mirrorToggle.checked ? 'scaleX(-1)' : 'none';
+  });
+  setSpeed(40); setSize(48);
+
+  function syncPromptText(){
+    promptText.textContent = scriptInput.value.trim() || 'Escreva seu roteiro na aba "Roteiro" para começar.';
+    promptText.style.top = '100%';
+  }
+
+  // ---------- Scrolling engine ----------
+  let scrolling = false, rafId = null, lastTs = null, posPx = 0;
+  const promptWindow = $('promptWindow');
+  const playPauseBtn = $('playPauseBtn');
+
+  function frame(ts){
+    if(!lastTs) lastTs = ts;
+    const dt = (ts - lastTs) / 1000;
+    lastTs = ts;
+    const speed = parseFloat(speedSlider.value); // px per second
+    posPx += speed * dt;
+    const winHeight = promptWindow.clientHeight;
+    promptText.style.top = (winHeight - posPx) + 'px';
+    rafId = requestAnimationFrame(frame);
+  }
+  function startScroll(){
+    if(scrolling) return;
+    scrolling = true; lastTs = null;
+    playPauseBtn.textContent = '⏸ Pausar';
+    rafId = requestAnimationFrame(frame);
+  }
+  function pauseScroll(){
+    scrolling = false;
+    playPauseBtn.textContent = '▶ Rolar';
+    if(rafId) cancelAnimationFrame(rafId);
+  }
+  function restartScroll(){
+    posPx = 0;
+    promptText.style.top = '100%';
+  }
+  playPauseBtn.addEventListener('click', () => scrolling ? pauseScroll() : startScroll());
+  $('restartBtn').addEventListener('click', () => { restartScroll(); });
+  document.addEventListener('keydown', e => {
+    if(studioView.classList.contains('hidden')) return;
+    if(e.code === 'Space'){ e.preventDefault(); scrolling ? pauseScroll() : startScroll(); }
+  });
+
+  // ---------- Camera ----------
+  const camVideo = $('camVideo'), camError = $('camError'), cameraSelect = $('cameraSelect');
+  let currentStream = null;
+
+  async function listCameras(){
+    try{
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const cams = devices.filter(d => d.kind === 'videoinput');
+      cameraSelect.innerHTML = '';
+      cams.forEach((c, i) => {
+        const opt = document.createElement('option');
+        opt.value = c.deviceId;
+        opt.textContent = c.label || ('Câmera ' + (i+1));
+        cameraSelect.appendChild(opt);
+      });
+    }catch(e){ /* ignore, permission not granted yet */ }
+  }
+
+  async function initCamera(deviceId){
+    camError.textContent = '';
+    try{
+      if(currentStream) currentStream.getTracks().forEach(t => t.stop());
+      const constraints = {
+        video: deviceId ? { deviceId: { exact: deviceId } } : { facingMode: 'user' },
+        audio: $('audioToggle').checked
+      };
+      currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+      camVideo.srcObject = currentStream;
+      await listCameras();
+    }catch(err){
+      camError.innerHTML = 'Não foi possível acessar a câmera.<br><br>Se isto estiver aberto dentro do chat, abra o arquivo diretamente no navegador (baixe o .html e abra em uma aba) e permita o acesso à câmera e ao microfone.<br><br><small>' + (err.message || err) + '</small>';
+    }
+  }
+  cameraSelect.addEventListener('change', () => initCamera(cameraSelect.value));
+
+  // ---------- Recording ----------
+  let mediaRecorder = null, chunks = [], recording = false, recStartTime = null, timeInterval = null;
+  const recordBtn = $('recordBtn'), recIndicator = $('recIndicator'), recLabel = $('recLabel'), timecode = $('timecode');
+  const countdownScreen = $('countdownScreen'), countdownNum = $('countdownNum');
+
+  function fmtTime(sec){
+    const m = Math.floor(sec/60).toString().padStart(2,'0');
+    const s = Math.floor(sec%60).toString().padStart(2,'0');
+    return m + ':' + s;
+  }
+
+  function runCountdown(cb){
+    let n = 3;
+    countdownScreen.style.display = 'flex';
+    countdownNum.textContent = n;
+    const iv = setInterval(() => {
+      n--;
+      if(n <= 0){
+        clearInterval(iv);
+        countdownScreen.style.display = 'none';
+        cb();
+      } else {
+        countdownNum.textContent = n;
+      }
+    }, 800);
+  }
+
+  function startRecording(){
+    if(!currentStream){ camError.textContent = 'Ative a câmera antes de gravar.'; return; }
+    runCountdown(() => {
+      chunks = [];
+      let mime = 'video/webm;codecs=vp9,opus';
+      if(!MediaRecorder.isTypeSupported(mime)) mime = 'video/webm;codecs=vp8,opus';
+      if(!MediaRecorder.isTypeSupported(mime)) mime = 'video/webm';
+      try{
+        mediaRecorder = new MediaRecorder(currentStream, { mimeType: mime });
+      }catch(e){
+        mediaRecorder = new MediaRecorder(currentStream);
+      }
+      mediaRecorder.ondataavailable = e => { if(e.data.size > 0) chunks.push(e.data); };
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'video/webm' });
+        const url = URL.createObjectURL(blob);
+        const link = $('downloadLink');
+        link.href = url;
+        const sizeMb = (blob.size / (1024*1024)).toFixed(1);
+        $('downloadInfo').textContent = 'Vídeo pronto (' + sizeMb + ' MB).';
+        $('downloadBar').classList.add('show');
+      };
+      mediaRecorder.start();
+      recording = true;
+      recordBtn.textContent = '■ Parar';
+      recordBtn.classList.add('recording');
+      recIndicator.classList.add('live');
+      recLabel.textContent = 'GRAVANDO';
+      recStartTime = Date.now();
+      timeInterval = setInterval(() => {
+        timecode.textContent = fmtTime((Date.now() - recStartTime)/1000);
+      }, 250);
+      restartScroll();
+      startScroll();
+    });
+  }
+
+  function stopRecording(){
+    if(mediaRecorder && recording){
+      mediaRecorder.stop();
+    }
+    recording = false;
+    recordBtn.textContent = '● Gravar';
+    recordBtn.classList.remove('recording');
+    recIndicator.classList.remove('live');
+    recLabel.textContent = 'PRONTO';
+    clearInterval(timeInterval);
+    pauseScroll();
+  }
+
+  recordBtn.addEventListener('click', () => recording ? stopRecording() : startRecording());
+  $('dismissDownload').addEventListener('click', () => $('downloadBar').classList.remove('show'));
+
+  function stopEverything(stopCamera){
+    if(recording) stopRecording();
+    pauseScroll();
+    if(stopCamera !== false && currentStream){
+      currentStream.getTracks().forEach(t => t.stop());
+      currentStream = null;
+    }
+  }
+
+  // init camera lazily first time studio tab opens
+  let camInitialized = false;
+  const originalInit = initCamera;
+  showTab('editor');
+})();
+</script>
+</body>
+</html>
