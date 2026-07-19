@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Voz que Conecta®</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,500;1,9..144,900&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0C0C0C;
+    --bg-raised:#1A1A1A;
+    --ink:#F7F2E9;
+    --ink-dim:#A6A199;
+    --coral:#EE7148;
+    --coral-ink:#0C0C0C;
+    --line:rgba(247,242,233,0.14);
+    --display:'Fraunces', serif;
+    --body:'Manrope', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--body);
+    background:var(--bg);
+    color:var(--ink);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{min-height:100vh; display:flex; flex-direction:column;}
+  .view{display:none; flex:1; flex-direction:column;}
+  .view.active{display:flex;}
+  button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit;}
+  a{color:inherit; text-decoration:none;}
+  button:focus-visible, a:focus-visible{outline:3px solid var(--coral); outline-offset:3px;}
+
+  /* ================= LANDING ================= */
+  .landing{flex:1; display:flex; flex-direction:column; position:relative; overflow:hidden;}
+  .giant-num{
+    position:absolute; top:-9vw; right:-4vw; font-family:var(--display); font-weight:900;
+    font-size:min(62vw, 620px); line-height:1; color:transparent;
+    -webkit-text-stroke:1.5px rgba(238,113,72,0.22);
+    pointer-events:none; user-select:none; z-index:0;
+  }
+  .landing-nav{
+    position:relative; z-index:2; padding:32px clamp(24px,5vw,64px) 0;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .brand-mark{font-size:14px; font-weight:800; letter-spacing:.04em;}
+  .brand-mark span{color:var(--coral);}
+  .landing-main{
+    position:relative; z-index:2; flex:1; display:flex; flex-direction:column; justify-content:center;
+    padding:6vh clamp(24px,5vw,64px) 8vh; max-width:1000px;
+  }
+  .eyebrow{
+    font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--ink); background:#000; border:1px solid rgba(247,242,233,0.22);
+    display:inline-block; padding:8px 16px; border-radius:100px; margin-bottom:24px;
+  }
+  h1.hero{
+    font-family:var(--display); font-weight:900; font-style:normal;
+    font-size:clamp(44px, 8.6vw, 108px); line-height:0.98; letter-spacing:-.01em;
+    color:var(--ink); margin-bottom:32px;
+  }
+  h1.hero .accent{font-style:italic; font-weight:500; color:var(--coral);}
+  .hero-sub{
+    font-size:clamp(17px,2vw,20px); line-height:1.55; color:var(--ink-dim); max-width:44ch;
+    margin-bottom:48px; font-weight:500;
+  }
+  .cta-row{display:flex; align-items:center; gap:22px; flex-wrap:wrap; margin-bottom:20px;}
+  .btn-primary{
+    background:var(--coral); color:var(--coral-ink); font-weight:800; font-size:18px;
+    padding:22px 44px; border-radius:100px; transition:transform .15s ease, box-shadow .15s ease;
+    display:inline-flex; align-items:center; gap:12px; box-shadow:0 0 0 0 rgba(238,113,72,0);
+  }
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 14px 34px -12px rgba(238,113,72,0.55);}
+  .btn-primary .arrow{font-size:20px; transition:transform .15s ease;}
+  .btn-primary:hover .arrow{transform:translateX(4px);}
+  .cta-meta{font-size:14px; color:var(--ink-dim); font-weight:700;}
+  .landing-foot{
+    position:relative; z-index:2; padding:0 clamp(24px,5vw,64px) 32px;
+    display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:14px;
+    border-top:1px solid var(--line); padding-top:22px; margin:0 clamp(24px,5vw,64px) 0;
+  }
+  .landing-foot{margin-top:auto;}
+  .foot-credit{font-size:13px; color:var(--ink-dim); font-weight:600;}
+  .foot-stats{display:flex; gap:28px; font-size:13px; color:var(--ink-dim); font-weight:700;}
+  .foot-stats b{color:var(--ink); font-weight:800;}
+
+  /* ================= QUIZ ================= */
+  .quiz{flex:1; display:flex; flex-direction:column; background:var(--bg); position:relative; overflow:hidden;}
+  .quiz-bg-num{
+    position:absolute; right:-2vw; bottom:-14vw; font-family:var(--display); font-weight:900;
+    font-size:min(50vw,460px); line-height:1; color:transparent;
+    -webkit-text-stroke:1.5px rgba(238,113,72,0.14); pointer-events:none; z-index:0;
+  }
+  .quiz-top{position:relative; z-index:2; padding:28px clamp(20px,5vw,56px) 0;}
+  .quiz-progress-track{
+    height:6px; background:var(--bg-raised); border-radius:3px; overflow:hidden; margin-bottom:16px;
+  }
+  .quiz-progress-fill{height:100%; background:var(--coral); border-radius:3px; transition:width .35s ease;}
+  .quiz-meta-row{
+    display:flex; justify-content:space-between; font-size:13px; color:var(--ink-dim);
+    letter-spacing:.04em; text-transform:uppercase; font-weight:800;
+  }
+  .quiz-body{
+    position:relative; z-index:2; flex:1; display:flex; align-items:center;
+    padding:32px clamp(20px,5vw,56px) 56px;
+  }
+  .quiz-card{max-width:700px; width:100%;}
+  .quiz-question{
+    font-family:var(--display); font-weight:600; font-size:clamp(26px, 4.6vw, 42px);
+    line-height:1.18; color:var(--ink); margin-bottom:40px; max-width:18ch;
+  }
+  .options{display:flex; flex-direction:column; gap:14px;}
+  .option-btn{
+    text-align:left; background:transparent; border:2px solid var(--line);
+    color:var(--ink); padding:20px 24px; border-radius:14px; font-size:17px; font-weight:700;
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .option-btn:hover{border-color:var(--coral); background:rgba(238,113,72,0.08);}
+  .option-btn .arrow{opacity:0; transition:opacity .15s ease; color:var(--coral); font-size:20px;}
+  .option-btn:hover .arrow{opacity:1;}
+  .quiz-back{
+    margin-top:30px; font-size:14px; color:var(--ink-dim); font-weight:700;
+  }
+
+  /* ================= RESULTS ================= */
+  .results{flex:1; display:flex; flex-direction:column; background:var(--bg);}
+  .results-hero{
+    position:relative; overflow:hidden; padding:72px clamp(24px,5vw,64px) 8px;
+  }
+  .results-hero-inner{position:relative; z-index:1; max-width:760px;}
+  .results-eyebrow{
+    font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink);
+    background:#000; border:1px solid rgba(247,242,233,0.22); font-weight:800;
+    display:inline-block; padding:8px 16px; border-radius:100px; margin-bottom:24px;
+  }
+  .results-pillar-name{
+    font-family:var(--display); font-style:normal; font-weight:600;
+    font-size:clamp(30px, 5.4vw, 54px); color:var(--ink); margin-bottom:22px; line-height:1.12;
+  }
+  .results-desc{font-size:17px; line-height:1.65; color:var(--ink-dim); max-width:56ch; font-weight:500; margin-bottom:8px;}
+
+  .narrative{max-width:640px; margin:0 auto; padding:8px clamp(24px,5vw,64px) 8px;}
+  .narrative-line{
+    font-family:var(--display); font-weight:500; font-size:clamp(20px,2.8vw,28px);
+    line-height:1.45; color:var(--ink-dim); max-width:34ch; margin-bottom:20px;
+  }
+  .narrative-punch{
+    color:var(--coral); font-weight:700; font-size:clamp(22px,3.2vw,32px); max-width:30ch;
+  }
+
+  .value-section{max-width:640px; margin:0 auto; padding:16px clamp(24px,5vw,64px) 40px;}
+  .value-label{
+    font-size:13px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--coral); margin-bottom:16px;
+  }
+  .value-title{
+    font-family:var(--display); font-weight:900; font-size:clamp(34px,5.4vw,50px); color:var(--ink);
+    line-height:1.05; margin-bottom:12px;
+  }
+  .value-tagline{font-size:18px; color:var(--ink-dim); line-height:1.55; margin-bottom:8px; font-weight:600; max-width:46ch;}
+
+  .value-block{margin-bottom:26px; max-width:52ch;}
+  .value-block-label{
+    font-family:var(--display); font-style:italic; font-weight:600; letter-spacing:0;
+    text-transform:none; font-size:clamp(19px,2.4vw,23px);
+    color:var(--ink); margin-bottom:8px;
+  }
+  .value-block p{font-size:17px; line-height:1.6; color:var(--ink-dim); font-weight:500;}
+  .hl{color:var(--coral); font-weight:700;}
+
+  .value-bullets{list-style:none; margin:14px 0 8px;}
+  .value-bullets li{
+    font-size:clamp(16px,1.8vw,18px); color:var(--ink); font-weight:600; padding:16px 0 16px 32px;
+    position:relative; line-height:1.4; border-bottom:1px solid var(--line);
+  }
+  .value-bullets li:first-child{border-top:1px solid var(--line);}
+  .value-bullets li::before{
+    content:'✓'; position:absolute; left:0; top:16px; color:var(--coral); font-weight:900;
+  }
+
+  .value-reveal{
+    margin-top:30px;
+  }
+  .value-reveal-label{
+    font-size:13px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--coral); margin-bottom:14px;
+  }
+
+  .value-divider{height:3px; background:var(--coral); width:56px; margin:38px 0 30px; border-radius:2px;}
+
+  .value-price-row{display:flex; align-items:baseline; gap:12px; margin-bottom:26px; flex-wrap:wrap;}
+  .value-price-prefix{font-size:15px; color:var(--ink-dim); font-weight:700;}
+  .value-price{font-family:var(--display); font-size:clamp(38px,8vw,52px); color:var(--coral); font-weight:900; line-height:1.15;}
+  .value-price-note{font-size:14px; color:var(--ink-dim); font-weight:700;}
+  .btn-primary-offer{
+    background:var(--coral); color:var(--bg); font-weight:800; font-size:20px;
+    padding:25px 50px; border-radius:100px; display:inline-flex; align-items:center; gap:12px;
+    box-shadow:0 0 0 0 rgba(238,113,72,0.5); transition:transform .15s ease, box-shadow .15s ease;
+    animation:pulseGlow 2.4s ease-in-out infinite;
+  }
+  .btn-primary-offer:hover{transform:translateY(-2px) scale(1.02); animation-play-state:paused; box-shadow:0 20px 48px -12px rgba(238,113,72,0.7);}
+  @keyframes pulseGlow{
+    0%   { box-shadow:0 10px 30px -10px rgba(238,113,72,0.45); }
+    50%  { box-shadow:0 14px 44px -8px rgba(238,113,72,0.75); }
+    100% { box-shadow:0 10px 30px -10px rgba(238,113,72,0.45); }
+  }
+  .value-trust{font-size:13px; color:var(--ink-dim); font-weight:700; margin-top:18px;}
+
+  .btn-whatsapp{
+    background:#25D366; color:#0C0C0C; font-weight:800; font-size:20px;
+    padding:25px 50px; border-radius:100px; display:inline-flex; align-items:center; gap:12px;
+    transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 16px 40px -14px rgba(37,211,102,0.55);
+  }
+  .btn-whatsapp:hover{transform:translateY(-2px) scale(1.02); box-shadow:0 20px 48px -12px rgba(37,211,102,0.7);}
+
+  .pillar-list{list-style:none; margin:14px 0 40px; border-top:1px solid var(--line);}
+  .pillar-list li{
+    display:flex; align-items:center; gap:16px; font-size:clamp(16px,1.8vw,19px); font-weight:700;
+    color:var(--ink); padding:16px 0; border-bottom:1px solid var(--line);
+  }
+  .pillar-list li span{
+    font-family:var(--display); font-weight:900; font-size:15px; color:var(--coral);
+    width:28px; flex-shrink:0;
+  }
+
+  .secondary-offer{max-width:760px; margin:8px auto 80px; padding:0 clamp(24px,5vw,64px); text-align:left;}
+  .secondary-offer-inner{
+    border:2px solid var(--coral); border-radius:20px; padding:clamp(26px,4vw,36px); background:var(--bg-raised);
+  }
+  .secondary-offer-title{
+    font-family:var(--display); font-weight:600; font-size:clamp(20px,2.4vw,26px); color:var(--ink);
+    margin-bottom:12px !important; line-height:1.3;
+  }
+  .secondary-offer p{font-size:15px; color:var(--ink-dim); line-height:1.6; margin-bottom:20px; font-weight:500;}
+  .btn-secondary{
+    display:inline-flex; align-items:center; gap:10px; font-size:16px; font-weight:800; color:var(--bg);
+    background:var(--coral); border:2px solid var(--coral); padding:16px 30px; border-radius:100px;
+    transition:transform .15s ease, box-shadow .15s ease; box-shadow:0 10px 26px -12px rgba(238,113,72,0.55);
+  }
+  .btn-secondary:hover{transform:translateY(-2px); box-shadow:0 14px 32px -10px rgba(238,113,72,0.65);}
+
+  .btn-back{
+    display:block; margin-top:28px; font-size:14px; font-weight:700; color:var(--ink-dim);
+    background:none;
+  }
+  .btn-back:hover{color:var(--ink);}
+
+  @media (max-width:640px){
+    .giant-num, .quiz-bg-num{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============ LANDING ============ -->
+  <section class="view active" id="view-landing">
+    <div class="landing">
+      <div class="giant-num" aria-hidden="true">7</div>
+      <div class="landing-nav">
+        <div class="brand-mark">VOZ QUE <span>CONECTA®</span></div>
+      </div>
+      <div class="landing-main">
+        <div class="eyebrow">Diagnóstico gratuito</div>
+        <h1 class="hero">Qual é o <span class="accent">problema real</span> da sua comunicação?</h1>
+        <p class="hero-sub">Um diagnóstico rápido pra descobrir onde sua comunicação trava hoje, e qual é o próximo passo.</p>
+        <div class="cta-row">
+          <button class="btn-primary" onclick="startQuiz()">
+            Fazer meu diagnóstico
+            <span class="arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+        <span class="cta-meta">Leva cerca de 3 minutos · resultado na hora</span>
+      </div>
+      <div class="landing-foot">
+        <div class="foot-credit">Rayhan Coelho</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="view" id="view-quiz">
+    <div class="quiz">
+      <div class="quiz-bg-num" id="quizBgNum" aria-hidden="true">1</div>
+      <div class="quiz-top">
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill" id="progressFill" style="width:0%"></div>
+        </div>
+        <div class="quiz-meta-row">
+          <span id="questionCounter">Pergunta 1 de 9</span>
+        </div>
+      </div>
+      <div class="quiz-body">
+        <div class="quiz-card">
+          <div class="quiz-question" id="questionText">Carregando...</div>
+          <div class="options" id="optionsWrap"></div>
+          <button class="quiz-back" id="backBtn" onclick="goBack()" style="visibility:hidden;">← voltar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section class="view" id="view-results">
+    <div class="results">
+      <div class="results-hero">
+        <div class="results-hero-inner">
+          <div class="results-eyebrow">O que suas respostas mostraram</div>
+          <div class="results-pillar-name" id="resultPillarName">Dor</div>
+          <p class="results-desc" id="resultPillarDesc">Descrição.</p>
+        </div>
+      </div>
+
+      <div class="narrative">
+        <p class="narrative-line" id="narrativeReacao">Reação.</p>
+        <p class="narrative-line narrative-punch" id="narrativeConsequencia">Consequência.</p>
+      </div>
+
+      <div class="value-section">
+        <div class="value-block">
+          <div class="value-block-label">Por que isso acontece:</div>
+          <p id="offerPorque"></p>
+        </div>
+
+        <div class="value-block">
+          <div class="value-block-label">O que você precisa agora:</div>
+          <p id="offerPrecisa">Necessidade.</p>
+        </div>
+
+        <div class="value-block">
+          <div class="value-block-label">Como isso se resolve:</div>
+          <p id="offerComo"></p>
+        </div>
+
+        <div class="value-block">
+          <div class="value-block-label">Na prática:</div>
+          <p id="offerExemplo"></p>
+        </div>
+
+        <div class="value-block-label">O que sai diferente:</div>
+        <ul class="value-bullets" id="offerBullets"></ul>
+
+        <div class="value-reveal">
+          <div class="value-reveal-label">É exatamente isso que você recebe na:</div>
+          <div class="value-title" id="offerTitle">Nome do produto</div>
+          <p class="value-tagline" id="offerSub">Tagline do produto.</p>
+        </div>
+
+        <div class="value-divider"></div>
+
+        <div class="value-price-row">
+          <span class="value-price-prefix">3x de</span>
+          <span class="value-price">R$ 32,33</span>
+          <span class="value-price-note">ou R$ 97 à vista</span>
+        </div>
+        <a class="btn-primary-offer" id="offerCheckoutLink" href="#" target="_blank" rel="noopener">
+          Quero resolver isso agora
+        </a>
+        <p class="value-trust">Acesso liberado na hora, direto no seu e-mail.</p>
+      </div>
+
+      <div class="secondary-offer">
+        <div class="secondary-offer-inner">
+          <p class="secondary-offer-title">Quer resolver de vez, não só esse ponto?</p>
+          <p id="secondaryOfferText">O <strong>Método Voz que Conecta®</strong> é a junção das 7 masterclasses completas, cobrindo tudo que sustenta uma comunicação segura, do jeito que você fala até como você se porta na frente das pessoas.</p>
+          <button class="btn-secondary" onclick="showFullCourse()">Ver o método completo <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CURSO COMPLETO ============ -->
+  <section class="view" id="view-full-course">
+    <div class="results">
+      <div class="results-hero">
+        <div class="results-hero-inner">
+          <div class="results-eyebrow">Método completo</div>
+          <div class="results-pillar-name">Os 7 pilares. Uma comunicação só sua.</div>
+          <p class="results-desc">O diagnóstico te mostrou onde você trava mais hoje. Mas comunicação de verdade depende dos 7 pilares trabalhando juntos, não só de um.</p>
+        </div>
+      </div>
+
+      <div class="narrative">
+        <p class="narrative-line">Resolver só um pilar cala um alarme, mas os outros 6 continuam tocando.</p>
+        <p class="narrative-line narrative-punch">E o resultado é: você melhora uma parte, mas a comunicação como um todo ainda trava.</p>
+      </div>
+
+      <div class="value-section">
+        <div class="value-label">O que está incluso:</div>
+        <ul class="pillar-list">
+          <li><span>01</span>Presença e Calma</li>
+          <li><span>02</span>Voz e Dicção</li>
+          <li><span>03</span>Escuta e Empatia</li>
+          <li><span>04</span>Mensagem que Gruda</li>
+          <li><span>05</span>Linguagem Corporal</li>
+          <li><span>06</span>Falar em Público</li>
+          <li><span>07</span>Comunicação no Dia a Dia</li>
+        </ul>
+
+        <div class="value-block">
+          <div class="value-block-label">Como funciona:</div>
+          <p>São 7 masterclasses de 1 hora, uma pra cada pilar, no seu ritmo. Você não precisa fazer todas de uma vez: pode começar pelo pilar que o diagnóstico já te mostrou, e seguir pros outros quando quiser.</p>
+        </div>
+
+        <div class="value-block">
+          <div class="value-block-label">Por que o completo, e não só um pilar:</div>
+          <p>Os 7 pilares sustentam um ao outro. Presença e calma seguram sua base, voz e dicção carregam a mensagem, corpo confirma o que a voz diz, escuta e estrutura fazem a mensagem chegar e ficar. Resolver um sem os outros deixa você com um ponto forte cercado de pontos que ainda travam.</p>
+        </div>
+
+        <div class="value-block-label">O que muda com os 7 juntos:</div>
+        <ul class="value-bullets">
+          <li>Você para de reforçar só um ponto e vê a comunicação melhorar como um todo</li>
+          <li>Acesso às 7 masterclasses completas, sem precisar comprar uma de cada vez</li>
+          <li>A mesma estrutura prática de 1 hora por pilar, sem enrolação</li>
+          <li>Você aprende no seu ritmo, revisita quando quiser, sem prazo pra acabar</li>
+        </ul>
+
+        <div class="value-reveal">
+          <div class="value-reveal-label">É exatamente isso que você recebe no:</div>
+          <div class="value-title">Método Voz que Conecta®</div>
+          <p class="value-tagline">A junção das 7 masterclasses completas, pra uma comunicação que não depende de sorte.</p>
+        </div>
+
+        <div class="value-divider"></div>
+
+        <div class="value-price-row">
+          <span class="value-price-prefix">12x de</span>
+          <span class="value-price">R$ 51,58</span>
+          <span class="value-price-note">ou R$ 497 à vista · os 7 pilares completos</span>
+        </div>
+        <a class="btn-primary-offer" id="fullCourseCheckoutLink" href="#" target="_blank" rel="noopener">
+          Quero o método completo
+        </a>
+        <p class="value-trust">Acesso liberado na hora, direto no seu e-mail.</p>
+
+        <button class="btn-back" onclick="showView('view-results')">← voltar pro meu resultado</button>
+      </div>
+
+      <div class="secondary-offer">
+        <div class="secondary-offer-inner">
+          <p class="secondary-offer-title">Quer ir além, com acompanhamento direto?</p>
+          <p>A <strong>mentoria</strong> é pra quem já sabe a teoria e quer alguém acompanhando de perto a aplicação, no seu contexto real.</p>
+          <button class="btn-secondary" onclick="showMentoria()">Conhecer a mentoria <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MENTORIA ============ -->
+  <section class="view" id="view-mentoria">
+    <div class="results">
+      <div class="results-hero">
+        <div class="results-hero-inner">
+          <div class="results-eyebrow">Mentoria</div>
+          <div class="results-pillar-name">Quando o problema não é técnica, é aplicação.</div>
+          <p class="results-desc">Você pode saber exatamente o que fazer e mesmo assim travar na hora H. A mentoria existe pra isso: alguém acompanhando de perto enquanto você aplica, no seu contexto, não num exemplo genérico.</p>
+        </div>
+      </div>
+
+      <div class="value-section">
+        <div class="value-block">
+          <div class="value-block-label">Pra quem é:</div>
+          <p>Pra quem já entende os 7 pilares (ou já fez o curso) e sente que falta alguém acompanhando de perto: ajustando, corrigindo e cobrando aplicação real, não só mais conteúdo.</p>
+        </div>
+
+        <div class="value-block">
+          <div class="value-block-label">Como funciona:</div>
+          <p>Acompanhamento direto comigo, no seu ritmo e no seu contexto: apresentações reais, reuniões reais, conversas reais. Não é mais um curso pra assistir, é alguém junto enquanto você aplica.</p>
+        </div>
+
+        <div class="value-block-label">O que muda:</div>
+        <ul class="value-bullets">
+          <li>Feedback direto no que você está vivendo agora, não em exemplos genéricos</li>
+          <li>Correção de rota antes que o padrão errado vire hábito de novo</li>
+          <li>Alguém acompanhando sua evolução pilar por pilar, no seu ritmo</li>
+        </ul>
+
+        <div class="value-divider"></div>
+
+        <p class="value-tagline" style="margin-bottom:26px;">As vagas são limitadas e o valor é definido depois de entender seu momento. Chama no WhatsApp pra conversar.</p>
+
+        <a class="btn-whatsapp" id="mentoriaWhatsappLink" href="#" target="_blank" rel="noopener">
+          Falar com Rayhan no WhatsApp
+        </a>
+
+        <button class="btn-back" onclick="showView('view-full-course')">← voltar pro método completo</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* =========================================================
+   CONFIGURAÇÃO: troque pelos links reais do Kiwify
+   ========================================================= */
+const CHECKOUT_LINKS = {
+  presenca:  "https://kiwify.com.br/SEU-LINK-PRESENCA-CALMA",
+  voz:       "https://kiwify.com.br/SEU-LINK-VOZ-DICCAO",
+  escuta:    "https://kiwify.com.br/SEU-LINK-ESCUTA-EMPATIA",
+  mensagem:  "https://kiwify.com.br/SEU-LINK-MENSAGEM-GRUDA",
+  corporal:  "https://kiwify.com.br/SEU-LINK-LINGUAGEM-CORPORAL",
+  publico:   "https://kiwify.com.br/SEU-LINK-FALAR-EM-PUBLICO",
+  diaadia:   "https://kiwify.com.br/SEU-LINK-COMUNICACAO-DIA-A-DIA",
+  completo:  "https://kiwify.com.br/SEU-LINK-CURSO-COMPLETO"
+};
+
+// Troque pelo seu número real (formato: 55 + DDD + número, só dígitos)
+const WHATSAPP_NUMBER = "55SEUNUMEROAQUI";
+const WHATSAPP_MESSAGE = "Oi Rayhan! Fiz o diagnóstico do Voz que Conecta e quero saber mais sobre a mentoria.";
+const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+
+/* =========================================================
+   DADOS DOS 7 PILARES
+   ========================================================= */
+const PILLARS = [
+  {
+    id: "presenca", numero: 1, nome: "Presença e Calma",
+    oQueE: "Como o seu estado interno aparece por fora, a base que sustenta todos os outros pilares.",
+    perguntas: [
+      "Seu coração acelera antes de você começar a falar?",
+      "Sua voz sai tremida ou engasgada logo no início da fala?",
+      "Sua mente trava ou fica em branco bem na hora que você mais precisa de clareza?"
+    ],
+    trabalha: ["Seu coração para de disparar só de pensar em falar", "Sua voz para de tremer nos primeiros segundos", "Sua mente para de apagar bem na hora que você mais precisa dela"],
+    dorHeadline: "Seu corpo trava antes da sua boca abrir.",
+    sintomas: ["o coração acelera antes de você começar a falar", "a voz sai tremida logo no início", "a mente apaga bem na hora que você mais precisa de clareza"],
+    dorSub: "O coração acelera, a voz sai tremida logo no início, e às vezes a mente apaga bem na hora que você mais precisa de clareza.",
+    reacao: "Pra compensar, você tenta controlar tudo por fora, só que o nervosismo aparece de um jeito ou de outro.",
+    consequencia: "E o resultado é uma versão mais insegura de você do que a que você realmente é.",
+    porque: "Isso acontece porque **seu corpo interpreta o momento de falar como uma ameaça real**, mesmo sem nenhum perigo. O sistema nervoso dispara antes da sua razão conseguir intervir.",
+    como: "Você aprende a reconhecer os primeiros sinais do gatilho e **desarmar essa resposta do corpo antes que ela tome conta**, com respiração, ancoragem física e uma forma diferente de interpretar o nervosismo.",
+    exemplo: "Na prática: aquele coração disparando antes de uma reunião importante. Em vez de travar, **você reconhece o sinal e aplica a técnica em segundos**, entrando na sala já mais estável.",
+    precisa: "Você precisa aprender a acalmar o corpo antes de falar, não só a controlar o que vai dizer.",
+    produtoTag: "1 hora pra encarar o momento de falar sem o corpo entrar em pânico antes de você."
+  },
+  {
+    id: "voz", numero: 2, nome: "Voz e Dicção",
+    oQueE: "Entonação, ritmo e presença sonora: o instrumento que faz sua mensagem chegar.",
+    perguntas: [
+      "Você fala rápido demais quando fica ansiosa(o)?",
+      "Sua voz soa monótona, sem variação de entonação?",
+      "Sua voz \"morre\" no final das frases, ou você fala sem pausa pra respirar?"
+    ],
+    trabalha: ["Sua voz para de morrer no fim das frases", "Você para de acelerar a fala quando fica ansiosa(o)", "Sua voz ganha variação e sai do modo monótono"],
+    dorHeadline: "Sua voz não segura quem te escuta até o fim.",
+    sintomas: ["você fala rápido demais quando fica ansiosa(o)", "a voz sai monótona", "a voz morre no final das frases"],
+    dorSub: "Você fala rápido demais quando fica ansiosa(o), a voz sai monótona ou morre no final das frases, e a mensagem se perde no caminho.",
+    reacao: "Você tenta compensar falando mais, repetindo o ponto, se esforçando mais. Mas o problema não é o conteúdo, é como ele chega.",
+    consequencia: "E o resultado é: sua mensagem vale mais do que a atenção que ela recebe.",
+    porque: "Isso acontece porque a ansiedade tira o controle da respiração, e **sem ar suficiente, a voz perde força e ritmo** naturalmente.",
+    como: "Você treina a projeção pelo diafragma e aprende a **usar volume, velocidade, tom e pausa de propósito**, não no automático.",
+    exemplo: "Na prática: numa apresentação de 10 minutos, em vez da voz cair no meio, **ela se mantém firme do início ao fim**, prendendo quem ouve até a última frase.",
+    precisa: "Você precisa que sua voz sustente a mensagem inteira, não só o começo dela.",
+    produtoTag: "1 hora pra sua voz carregar a mensagem inteira, do início ao fim da frase."
+  },
+  {
+    id: "escuta", numero: 3, nome: "Escuta e Empatia",
+    oQueE: "Ouvir de verdade, não só esperar a vez de falar: a diferença entre conversa e atrito.",
+    perguntas: [
+      "Você monta a resposta na cabeça enquanto o outro ainda está falando?",
+      "Você interrompe sem perceber, no meio da fala de alguém?",
+      "Suas conversas viram atrito porque ninguém se sentiu ouvido primeiro?"
+    ],
+    trabalha: ["Você para de montar a resposta enquanto o outro ainda fala", "Você para de interromper sem perceber", "As conversas param de virar atrito por falta de escuta"],
+    dorHeadline: "Você ouve esperando a vez de falar, não pra entender.",
+    sintomas: ["a resposta já está montada na sua cabeça antes do outro terminar", "você interrompe sem perceber", "as conversas acabam virando atrito"],
+    dorSub: "A resposta já está montada na sua cabeça antes do outro terminar, você interrompe sem perceber, e as conversas acabam virando atrito.",
+    reacao: "Você nem percebe fazendo isso, parece só um jeito de participar da conversa mais rápido.",
+    consequencia: "E o resultado é conversas que deveriam aproximar, mas terminam em desgaste.",
+    porque: "Isso acontece porque o cérebro tenta resolver a conversa rápido demais, **montando a resposta antes de terminar de processar** o que o outro disse.",
+    como: "Você pratica escuta ativa e a técnica de parafrasear antes de responder, **criando um intervalo entre ouvir e reagir**.",
+    exemplo: "Na prática: numa discussão tensa, em vez de interromper e escalar, **você escuta até o fim e devolve o que entendeu**, e a conversa esfria em vez de virar briga.",
+    precisa: "Você precisa aprender a ouvir antes de responder, não só esperar a vez de falar.",
+    produtoTag: "1 hora pra ouvir de um jeito que a conversa para de virar disputa."
+  },
+  {
+    id: "mensagem", numero: 4, nome: "Mensagem que Gruda",
+    oQueE: "A estrutura da sua fala: começo, meio, fim. Não é sobre ter mais conteúdo, é sobre ter uma ideia central.",
+    perguntas: [
+      "Você fica indo e voltando quando está explicando algo?",
+      "Você perde o fio da meada no meio da fala?",
+      "Depois que você fala bastante, as pessoas não lembram do ponto principal?"
+    ],
+    trabalha: ["Você para de ir e voltar quando explica algo", "Sua fala ganha um fio que não se perde no meio", "As pessoas passam a lembrar do seu ponto principal"],
+    dorHeadline: "Você fala bastante, mas ninguém lembra do que você disse.",
+    sintomas: ["você vai e volta na explicação", "perde o fio no meio da fala", "a ideia principal se perde em vez de grudar na cabeça de quem ouve"],
+    dorSub: "Vai e volta na explicação, perde o fio no meio da fala, e a ideia principal se perde em vez de grudar na cabeça de quem ouve.",
+    reacao: "Você tenta resolver isso falando mais, dando mais exemplos, e sem querer dilui ainda mais o ponto principal.",
+    consequencia: "E o resultado é: todo esforço que você faz pra ser entendida(o) não vira lembrança nenhuma.",
+    porque: "Isso acontece porque, sem uma estrutura clara, **cada informação nova compete com a anterior** na cabeça de quem ouve, e nada fica.",
+    como: "Você aprende a estrutura de 3 tempos: gancho, no máximo 3 pontos, fechamento, pra **sua ideia central sobreviver à conversa**.",
+    exemplo: "Na prática: depois de uma reunião de 30 minutos, em vez de ouvir 'qual era mesmo o ponto?', **as pessoas repetem sua ideia central de cabeça**, sem esforço.",
+    precisa: "Você precisa de uma estrutura que segure sua ideia central, não de mais conteúdo pra explicar.",
+    produtoTag: "1 hora pra sua ideia central finalmente ficar na cabeça de quem ouve."
+  },
+  {
+    id: "corporal", numero: 5, nome: "Linguagem Corporal",
+    oQueE: "O corpo contando a mesma história que a voz: entender o corpo do outro e controlar o próprio.",
+    perguntas: [
+      "Você não sabe o que fazer com as mãos enquanto fala?",
+      "Você evita contato visual em conversas ou apresentações?",
+      "Seu corpo entrega o nervosismo mesmo quando sua voz tenta parecer segura?"
+    ],
+    trabalha: ["Suas mãos param de ser um problema na hora de falar", "Você sustenta contato visual sem desviar o olhar", "Seu corpo para de entregar o nervosismo que sua voz tenta esconder"],
+    dorHeadline: "Seu corpo entrega o nervosismo antes da sua voz.",
+    sintomas: ["você não sabe o que fazer com as mãos", "evita contato visual", "a postura fecha e conta uma história diferente da que sua voz tenta contar"],
+    dorSub: "Você não sabe o que fazer com as mãos, evita contato visual, a postura fecha, e isso conta uma história diferente da que sua voz tenta contar.",
+    reacao: "Você tenta se policiar conscientemente, mas na hora H o corpo age no automático.",
+    consequencia: "E o resultado é: as pessoas confiam mais no que seu corpo mostra do que no que sua boca diz.",
+    porque: "Isso acontece porque **o corpo reage ao nervosismo antes da mente conseguir ajustar a postura**, e quem está na sua frente lê isso antes de você perceber.",
+    como: "Você aprende onde colocar as mãos, como sustentar contato visual, e **como alinhar postura e voz na mesma mensagem**.",
+    exemplo: "Na prática: numa negociação importante, em vez do corpo entregar a insegurança que sua voz tenta esconder, **ele reforça exatamente o que você está dizendo**.",
+    precisa: "Você precisa que seu corpo confirme o que sua voz está dizendo, não que a contradiga.",
+    produtoTag: "1 hora pra seu corpo parar de denunciar o que sua voz tenta esconder."
+  },
+  {
+    id: "publico", numero: 6, nome: "Falar em Público",
+    oQueE: "O pânico do palco: plateia, apresentação, câmera. O momento em que tudo trava mais.",
+    perguntas: [
+      "Você trava com decoreba e, quando sai do script, não sabe voltar?",
+      "Seu foco vai pra própria ansiedade em vez de ir pro público?",
+      "Você não sabe como recuperar quando dá um branco no meio da apresentação?"
+    ],
+    trabalha: ["Você para de travar quando sai do script", "Seu foco sai da própria ansiedade e vai pro público", "Quando der branco, você sabe exatamente como voltar"],
+    dorHeadline: "Na hora do palco, o pânico assume o lugar da sua mensagem.",
+    sintomas: ["você trava com decoreba e não sabe voltar quando sai do script", "o foco vai pra própria ansiedade em vez do público", "quando dá branco, não tem plano B"],
+    dorSub: "Sai do script e não sabe voltar, o foco vai pra própria ansiedade em vez do público, e quando dá branco, não tem plano B.",
+    reacao: "Você tenta decorar mais, treinar mais. Mas decoreba quebra fácil assim que algo sai do previsto.",
+    consequencia: "E o resultado é: a apresentação que podia abrir portas vira a que você só quer esquecer.",
+    porque: "Isso acontece porque decoreba quebra fácil: **no primeiro imprevisto, o foco vai direto pra própria ansiedade**.",
+    como: "Você aprende a estrutura de abertura, condução e fechamento de uma apresentação, e **um plano B pronto pra quando der branco**.",
+    exemplo: "Na prática: quando alguém interrompe com uma pergunta fora do script, em vez de travar, **você retoma o fio em segundos**, sem que a plateia perceba o tropeço.",
+    precisa: "Você precisa de um plano pra quando sair do script, não de mais decoreba.",
+    produtoTag: "1 hora pra ter o palco na mão mesmo quando o script sai da linha."
+  },
+  {
+    id: "diaadia", numero: 7, nome: "Comunicação no Dia a Dia",
+    oQueE: "Aplicar o que você já sabe: o gargalo não é conhecimento, é execução.",
+    perguntas: [
+      "Você sabe o que precisa fazer, mas esquece bem na hora H?",
+      "Você já fez curso ou leu sobre comunicação, mas repete o mesmo padrão?",
+      "Você não percebe os próprios gatilhos em tempo real, só depois?"
+    ],
+    trabalha: ["O que você já sabe começa a aparecer na hora H", "Você identifica seus próprios gatilhos antes de reagir a eles", "Você para de repetir o mesmo padrão de sempre"],
+    dorHeadline: "Você sabe o que fazer, mas esquece bem na hora H.",
+    sintomas: ["você sabe o que precisa fazer mas esquece bem na hora H", "repete o mesmo padrão mesmo depois de já ter estudado sobre", "não percebe os próprios gatilhos em tempo real"],
+    dorSub: "Já fez curso, já leu sobre o assunto, mas repete o mesmo padrão porque não percebe os próprios gatilhos em tempo real.",
+    reacao: "Você tenta se lembrar na hora, se cobra depois. Mas sem perceber o gatilho em tempo real, o padrão sempre volta.",
+    consequencia: "E o resultado é: todo o conhecimento que você já tem não vira mudança nenhuma no dia a dia.",
+    porque: "Isso acontece porque, sem perceber o próprio gatilho no momento em que ele acontece, **o cérebro volta pro padrão automático antigo**, mesmo depois de aprender algo novo.",
+    como: "Você treina identificar seus gatilhos específicos e faz micro-práticas que **criam memória pro momento real, não só pra teoria**.",
+    exemplo: "Na prática: na próxima conversa difícil, em vez de perceber o padrão só depois que já aconteceu, **você o reconhece na hora e ajusta o rumo ali mesmo**.",
+    precisa: "Você precisa reconhecer o gatilho na hora que ele acontece, não só entender ele depois.",
+    produtoTag: "1 hora pra colocar em prática o que você já sabe, sem esquecer na hora H."
+  }
+];
+
+const OPTIONS = [
+  { label: "Quase nunca", points: 0 },
+  { label: "Às vezes", points: 1 },
+  { label: "Quase sempre", points: 2 }
+];
+
+/* =========================================================
+   ESTADO DO QUIZ, 21 perguntas (3 por pilar)
+   ========================================================= */
+const TOTAL_Q = PILLARS.length * 3; // 21
+
+let questions = [];
+let currentIndex = 0;
+let answers = [];
+
+function buildQuestions(){
+  const list = [];
+  PILLARS.forEach(p => {
+    p.perguntas.forEach((texto, localIndex) => {
+      list.push({ pillarId: p.id, texto, localIndex });
+    });
+  });
+  return list;
+}
+
+function showView(id){
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function startQuiz(){
+  currentIndex = 0;
+  answers = [];
+  questions = buildQuestions();
+  showView('view-quiz');
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q = questions[currentIndex];
+  document.getElementById('questionCounter').textContent = `Pergunta ${currentIndex + 1} de ${TOTAL_Q}`;
+  document.getElementById('questionText').textContent = q.texto;
+  document.getElementById('progressFill').style.width = `${(currentIndex / TOTAL_Q) * 100}%`;
+  document.getElementById('backBtn').style.visibility = currentIndex === 0 ? 'hidden' : 'visible';
+  document.getElementById('quizBgNum').textContent = String(currentIndex + 1);
+
+  const wrap = document.getElementById('optionsWrap');
+  wrap.innerHTML = '';
+  OPTIONS.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span>${opt.label}</span><span class="arrow">→</span>`;
+    btn.onclick = () => selectAnswer(q.pillarId, q.localIndex, opt.points);
+    wrap.appendChild(btn);
+  });
+}
+
+function selectAnswer(pillarId, localIndex, points){
+  answers[currentIndex] = { pillarId, localIndex, points };
+
+  if(currentIndex < TOTAL_Q - 1){
+    currentIndex++;
+    renderQuestion();
+  } else {
+    finishQuiz();
+  }
+}
+
+function goBack(){
+  if(currentIndex > 0){
+    currentIndex--;
+    renderQuestion();
+  }
+}
+
+function finishQuiz(){
+  const scores = {};
+  PILLARS.forEach(p => scores[p.id] = 0);
+  answers.forEach(a => { scores[a.pillarId] += a.points; });
+
+  const ranked = PILLARS.slice().sort((a, b) => scores[b.id] - scores[a.id]);
+  const weakestId = ranked[0].id;
+
+  // Quantos outros pilares (além do principal) também são um problema forte de verdade
+  const HIGH_THRESHOLD = 4; // de 0 a 6 (3 perguntas x 2 pontos)
+  const otherStrongPillars = ranked.slice(1).filter(p => scores[p.id] >= HIGH_THRESHOLD);
+
+  // Regra: com 1 outro pilar forte, menciona ele pelo nome.
+  // Com 2 ou mais, generaliza em vez de virar uma lista de defeitos.
+  let secondaryId = null;
+  let multipleWeak = false;
+  if(otherStrongPillars.length === 1){
+    secondaryId = otherStrongPillars[0].id;
+  } else if(otherStrongPillars.length >= 2){
+    multipleWeak = true;
+  }
+
+  renderResults(weakestId, secondaryId, multipleWeak, answers);
+  showView('view-results');
+}
+
+function renderHighlighted(text){
+  return text.replace(/\*\*(.+?)\*\*/g, '<span class="hl">$1</span>');
+}
+
+function joinNatural(arr){
+  if(arr.length === 0) return '';
+  if(arr.length === 1) return arr[0];
+  if(arr.length === 2) return `${arr[0]} e ${arr[1]}`;
+  return `${arr.slice(0, -1).join(', ')} e ${arr[arr.length - 1]}`;
+}
+
+function capitalize(str){
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function getConfirmedIndexes(pillar, allAnswers){
+  const pillarAnswers = allAnswers.filter(a => a.pillarId === pillar.id);
+  const idx = pillar.perguntas.map((_, i) => i).filter(i => {
+    const a = pillarAnswers.find(ans => ans.localIndex === i);
+    return a && a.points >= 1;
+  });
+  return idx.length > 0 ? idx : pillar.perguntas.map((_, i) => i); // fallback: mostra tudo
+}
+
+function renderResults(weakestId, secondaryId, multipleWeak, allAnswers){
+  const pillar = PILLARS.find(p => p.id === weakestId);
+  const confirmedIdx = getConfirmedIndexes(pillar, allAnswers);
+
+  document.getElementById('resultPillarName').textContent = pillar.dorHeadline;
+  document.getElementById('resultPillarDesc').textContent =
+    capitalize(joinNatural(confirmedIdx.map(i => pillar.sintomas[i]))) + '.';
+  document.getElementById('narrativeReacao').textContent = pillar.reacao;
+  document.getElementById('narrativeConsequencia').textContent = pillar.consequencia;
+
+  document.getElementById('offerTitle').textContent = `Masterclass ${pillar.nome}`;
+  document.getElementById('offerSub').textContent = pillar.produtoTag;
+  document.getElementById('offerPrecisa').textContent = pillar.precisa;
+  document.getElementById('offerPorque').innerHTML = renderHighlighted(pillar.porque);
+  document.getElementById('offerComo').innerHTML = renderHighlighted(pillar.como);
+  document.getElementById('offerExemplo').innerHTML = renderHighlighted(pillar.exemplo);
+
+  const bullets = document.getElementById('offerBullets');
+  bullets.innerHTML = '';
+  confirmedIdx.forEach(i => {
+    const li = document.createElement('li');
+    li.textContent = pillar.trabalha[i];
+    bullets.appendChild(li);
+  });
+
+  document.getElementById('offerCheckoutLink').href = CHECKOUT_LINKS[weakestId] || '#';
+
+  // Reforça o convite pro método completo: nomeia 1 segundo pilar forte,
+  // generaliza com 2+ (pra não virar lista de defeitos), ou fica no texto padrão
+  const secondaryEl = document.getElementById('secondaryOfferText');
+  if(secondaryId){
+    const second = PILLARS.find(p => p.id === secondaryId);
+    secondaryEl.innerHTML = `Suas respostas também mostraram bastante dificuldade em <span class="hl">${second.nome}</span>. Resolver os dois juntos (e os outros 5) é exatamente o que o <strong>Método Voz que Conecta®</strong> completo faz.`;
+  } else if(multipleWeak){
+    secondaryEl.innerHTML = `Suas respostas mostraram dificuldade em mais de um ponto, não só nesse. É exatamente pra isso que existe o <strong>Método Voz que Conecta®</strong> completo: resolver os 7 juntos, não um de cada vez.`;
+  } else {
+    secondaryEl.innerHTML = `O <strong>Método Voz que Conecta®</strong> é a junção das 7 masterclasses completas, cobrindo tudo que sustenta uma comunicação segura, do jeito que você fala até como você se porta na frente das pessoas.`;
+  }
+}
+
+function showFullCourse(){
+  document.getElementById('fullCourseCheckoutLink').href = CHECKOUT_LINKS.completo || '#';
+  showView('view-full-course');
+}
+
+function showMentoria(){
+  document.getElementById('mentoriaWhatsappLink').href = WHATSAPP_LINK;
+  showView('view-mentoria');
+}
+</script>
+
+</body>
+</html>
