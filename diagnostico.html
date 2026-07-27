@@ -211,13 +211,52 @@
   }
   .value-trust{font-size:13px; color:var(--ink-dim); font-weight:700; margin-top:18px;}
 
+  .testimonials{margin:36px 0;}
+  .testimonial-card{
+    background:var(--bg-raised); border-radius:14px; padding:22px 24px; margin-bottom:14px;
+  }
+  .testimonial-card p{
+    font-family:var(--display); font-style:italic; font-weight:500; font-size:17px;
+    color:var(--ink); line-height:1.5; margin-bottom:12px;
+  }
+  .testimonial-name{font-size:13px; color:var(--ink-dim); font-weight:700;}
+
+  .author-block{
+    margin:30px 0 0; padding-top:26px; border-top:1px solid var(--line); max-width:52ch;
+  }
+  .author-block p{font-size:16px; line-height:1.6; color:var(--ink-dim); font-weight:500;}
+  .author-block em{color:var(--ink); font-style:italic;}
+
+  .guarantee-badge{
+    font-size:14px; color:var(--ink); font-weight:700; margin-top:20px;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+
+  .faq{margin-top:52px; max-width:56ch;}
+  .faq-item{margin-bottom:22px; padding-bottom:22px; border-bottom:1px solid var(--line);}
+  .faq-item:last-child{border-bottom:none;}
+  .faq-q{
+    font-family:var(--display); font-weight:600; font-size:18px; color:var(--ink);
+    margin-bottom:8px; line-height:1.4;
+  }
+  .faq-a{font-size:15px; color:var(--ink-dim); line-height:1.6; font-weight:500;}
+
+
+  .whatsapp-options{display:flex; flex-direction:column; gap:14px; align-items:flex-start;}
+
   .btn-whatsapp{
-    background:#25D366; color:#0C0C0C; font-weight:800; font-size:20px;
-    padding:25px 50px; border-radius:100px; display:inline-flex; align-items:center; gap:12px;
+    background:#25D366; color:#0C0C0C; font-weight:800; font-size:18px;
+    padding:22px 42px; border-radius:100px; display:inline-flex; align-items:center; gap:12px;
     transition:transform .15s ease, box-shadow .15s ease;
     box-shadow:0 16px 40px -14px rgba(37,211,102,0.55);
   }
   .btn-whatsapp:hover{transform:translateY(-2px) scale(1.02); box-shadow:0 20px 48px -12px rgba(37,211,102,0.7);}
+
+  .btn-whatsapp-outline{
+    background:transparent; color:#25D366; border:2px solid #25D366;
+    box-shadow:none; padding:20px 40px;
+  }
+  .btn-whatsapp-outline:hover{background:rgba(37,211,102,0.1); box-shadow:none;}
 
   .pillar-list{list-style:none; margin:14px 0 40px; border-top:1px solid var(--line);}
   .pillar-list li{
@@ -347,10 +386,27 @@
         <div class="value-block-label">O que sai diferente:</div>
         <ul class="value-bullets" id="offerBullets"></ul>
 
+        <div class="value-block-label">O que vem exatamente:</div>
+        <ul class="value-bullets">
+          <li>O módulo completo em vídeo, no seu ritmo</li>
+          <li>Material de apoio em PDF, pra consultar quando quiser</li>
+          <li>1 ano de acesso, incluindo as aulas novas que esse módulo for ganhando</li>
+        </ul>
+
+        <div class="testimonials" id="testimonialsSection">
+          <div class="value-block-label">Quem já fez:</div>
+          <div id="testimonialsList"></div>
+        </div>
+
         <div class="value-reveal">
           <div class="value-reveal-label">É exatamente isso que você recebe na:</div>
           <div class="value-title" id="offerTitle">Nome do produto</div>
           <p class="value-tagline" id="offerSub">Tagline do produto.</p>
+        </div>
+
+        <div class="author-block">
+          <div class="value-block-label">Quem ensina isso:</div>
+          <p>Rayhan Coelho é o criador do Método Voz que Conecta®, um sistema estruturado pra destravar pontos específicos da comunicação. <em>[espaço pra completar: sua trajetória, formação, quantas pessoas já ajudou]</em>.</p>
         </div>
 
         <div class="value-divider"></div>
@@ -363,14 +419,23 @@
         <a class="btn-primary-offer" id="offerCheckoutLink" href="#" target="_blank" rel="noopener">
           Quero resolver isso agora
         </a>
+        <p class="guarantee-badge">🛡️ 7 dias de garantia incondicional — não sentiu valor, devolvemos 100%</p>
         <p class="value-trust">Acesso liberado na hora, direto no seu e-mail.</p>
-      </div>
 
-      <div class="secondary-offer">
-        <div class="secondary-offer-inner">
-          <p class="secondary-offer-title">Quer resolver de vez, não só esse ponto?</p>
-          <p id="secondaryOfferText">O <strong>Método Voz que Conecta®</strong> é a junção das 7 masterclasses completas, cobrindo tudo que sustenta uma comunicação segura, do jeito que você fala até como você se porta na frente das pessoas.</p>
-          <button class="btn-secondary" onclick="showFullCourse()">Ver o método completo <span aria-hidden="true">→</span></button>
+        <div class="faq">
+          <div class="value-block-label">Perguntas frequentes:</div>
+          <div class="faq-item">
+            <p class="faq-q">Funciona mesmo?</p>
+            <p class="faq-a">O método foi construído a partir de padrões reais de comunicação, não teoria genérica. Aqui você trabalha direto no ponto que o diagnóstico identificou como seu principal travamento.</p>
+          </div>
+          <div class="faq-item">
+            <p class="faq-q">Por quanto tempo eu tenho acesso?</p>
+            <p class="faq-a">1 ano. Você assiste quando quiser e revisita sempre que precisar dentro desse período, incluindo as aulas novas que o módulo for ganhando.</p>
+          </div>
+          <div class="faq-item">
+            <p class="faq-q">E se eu não gostar?</p>
+            <p class="faq-a">Você tem 7 dias de garantia incondicional. Se não sentir valor, devolvemos 100% do seu dinheiro, sem perguntas.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -406,7 +471,7 @@
 
         <div class="value-block">
           <div class="value-block-label">Como funciona:</div>
-          <p>São 7 masterclasses de 1 hora, uma pra cada pilar, no seu ritmo. Você não precisa fazer todas de uma vez: pode começar pelo pilar que o diagnóstico já te mostrou, e seguir pros outros quando quiser.</p>
+          <p>São os 7 produtos do método, um pra cada pilar, no seu ritmo. Você não precisa fazer todos de uma vez: pode começar pelo pilar que o diagnóstico já te mostrou, e seguir pros outros quando quiser.</p>
         </div>
 
         <div class="value-block">
@@ -417,15 +482,15 @@
         <div class="value-block-label">O que muda com os 7 juntos:</div>
         <ul class="value-bullets">
           <li>Você para de reforçar só um ponto e vê a comunicação melhorar como um todo</li>
-          <li>Acesso às 7 masterclasses completas, sem precisar comprar uma de cada vez</li>
-          <li>A mesma estrutura prática de 1 hora por pilar, sem enrolação</li>
-          <li>Você aprende no seu ritmo, revisita quando quiser, sem prazo pra acabar</li>
+          <li>Acesso aos 7 produtos completos, sem precisar comprar um de cada vez</li>
+          <li>A mesma estrutura prática em cada pilar, sem enrolação</li>
+          <li>Você aprende no seu ritmo, com 1 ano de acesso pra revisitar quando quiser</li>
         </ul>
 
         <div class="value-reveal">
           <div class="value-reveal-label">É exatamente isso que você recebe no:</div>
           <div class="value-title">Método Voz que Conecta®</div>
-          <p class="value-tagline">A junção das 7 masterclasses completas, pra uma comunicação que não depende de sorte.</p>
+          <p class="value-tagline">A junção dos 7 produtos completos, pra uma comunicação que não depende de sorte.</p>
         </div>
 
         <div class="value-divider"></div>
@@ -484,13 +549,46 @@
 
         <div class="value-divider"></div>
 
-        <p class="value-tagline" style="margin-bottom:26px;">As vagas são limitadas e o valor é definido depois de entender seu momento. Chama no WhatsApp pra conversar.</p>
+        <p class="value-tagline" style="margin-bottom:22px;">As vagas são limitadas e o valor é definido depois de entender seu momento. Escolhe abaixo o que faz mais sentido agora:</p>
 
-        <a class="btn-whatsapp" id="mentoriaWhatsappLink" href="#" target="_blank" rel="noopener">
-          Falar com Rayhan no WhatsApp
-        </a>
+        <div class="whatsapp-options">
+          <a class="btn-whatsapp" id="whatsappDuvida" href="#" target="_blank" rel="noopener">
+            Quero entender melhor como funciona
+          </a>
+          <a class="btn-whatsapp btn-whatsapp-outline" id="whatsappDecidido" href="#" target="_blank" rel="noopener">
+            Já decidi, quero começar
+          </a>
+        </div>
 
         <button class="btn-back" onclick="showView('view-full-course')">← voltar pro método completo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SEM PROBLEMA CLARO (score zero em tudo) ============ -->
+  <section class="view" id="view-no-issues">
+    <div class="results">
+      <div class="results-hero">
+        <div class="results-hero-inner">
+          <div class="results-eyebrow">Seu resultado</div>
+          <div class="results-pillar-name">Suas respostas não mostraram nenhum ponto de alerta forte.</div>
+          <p class="results-desc">Isso é um ótimo sinal. Mas se quiser ir além, seja pra afinar ainda mais sua comunicação ou aprofundar em algum pilar específico, aqui vão dois caminhos:</p>
+        </div>
+      </div>
+
+      <div class="value-section">
+        <div class="value-block">
+          <div class="value-block-label">Se quiser ir mais fundo:</div>
+          <p>O método completo cobre os 7 pilares, e serve bem pra quem já tem uma base boa e quer refinar de vez, não só corrigir um problema pontual.</p>
+        </div>
+
+        <button class="btn-primary-offer" onclick="showFullCourse()" style="border:none; cursor:pointer;">
+          Conhecer o método completo
+        </button>
+
+        <p class="value-tagline" style="margin-top:34px; margin-bottom:14px;">Ou, se preferir, chama a gente direto pra conversar:</p>
+
+        <button class="btn-secondary" onclick="showMentoria()">Falar sobre a mentoria <span aria-hidden="true">→</span></button>
       </div>
     </div>
   </section>
@@ -502,20 +600,40 @@
    CONFIGURAÇÃO: troque pelos links reais do Kiwify
    ========================================================= */
 const CHECKOUT_LINKS = {
-  presenca:  "https://kiwify.com.br/SEU-LINK-PRESENCA-CALMA",
-  voz:       "https://kiwify.com.br/SEU-LINK-VOZ-DICCAO",
-  escuta:    "https://kiwify.com.br/SEU-LINK-ESCUTA-EMPATIA",
-  mensagem:  "https://kiwify.com.br/SEU-LINK-MENSAGEM-GRUDA",
-  corporal:  "https://kiwify.com.br/SEU-LINK-LINGUAGEM-CORPORAL",
-  publico:   "https://kiwify.com.br/SEU-LINK-FALAR-EM-PUBLICO",
-  diaadia:   "https://kiwify.com.br/SEU-LINK-COMUNICACAO-DIA-A-DIA",
-  completo:  "https://kiwify.com.br/SEU-LINK-CURSO-COMPLETO"
+  presenca:  "https://pay.kiwify.com.br/3Do6yJS",
+  voz:       "https://pay.kiwify.com.br/loLhffj",
+  escuta:    "https://pay.kiwify.com.br/rMug2I9",
+  mensagem:  "https://pay.kiwify.com.br/lXmkMu0",
+  corporal:  "https://pay.kiwify.com.br/yqgfeG3",
+  publico:   "https://pay.kiwify.com.br/OLfH8OV",
+  diaadia:   "https://pay.kiwify.com.br/Elcs08a",
+  completo:  "https://pay.kiwify.com.br/djmplsv"
 };
 
-// Troque pelo seu número real (formato: 55 + DDD + número, só dígitos)
-const WHATSAPP_NUMBER = "55SEUNUMEROAQUI";
-const WHATSAPP_MESSAGE = "Oi Rayhan! Fiz o diagnóstico do Voz que Conecta e quero saber mais sobre a mentoria.";
-const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+/* =========================================================
+   QUAIS PILARES JÁ TÊM PRODUTO INDIVIDUAL PRONTO PRA VENDER
+   Pilar que não estiver aqui como "true" manda a pessoa
+   direto pro curso completo, em vez de um produto que não existe.
+   Assim que lançar o próximo produto, só mudar pra true aqui.
+   ========================================================= */
+const PRODUCTS_READY = {
+  presenca: true,
+  voz: true,
+  escuta: true,
+  mensagem: true,
+  corporal: true,
+  publico: true,
+  diaadia: true
+};
+
+const WHATSAPP_NUMBER = "5548996290222";
+const WHATSAPP_MESSAGES = {
+  duvida: "Oi Rayhan! Fiz o diagnóstico do Voz que Conecta e quero entender melhor como funciona a mentoria.",
+  decidido: "Oi Rayhan! Fiz o diagnóstico do Voz que Conecta, já decidi e quero começar a mentoria."
+};
+function whatsappLink(messageKey){
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGES[messageKey])}`;
+}
 
 /* =========================================================
    DADOS DOS 7 PILARES
@@ -523,30 +641,37 @@ const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponen
 const PILLARS = [
   {
     id: "presenca", numero: 1, nome: "Presença e Calma",
+    produtoNome: "Voz que Conecta · Fale Sem Travar",
     oQueE: "Como o seu estado interno aparece por fora, a base que sustenta todos os outros pilares.",
     perguntas: [
       "Seu coração acelera antes de você começar a falar?",
       "Sua voz sai tremida ou engasgada logo no início da fala?",
-      "Sua mente trava ou fica em branco bem na hora que você mais precisa de clareza?"
+      "Sua mente trava ou fica em branco bem na hora que você mais precisa de clareza?",
+      "Sua respiração fica curta, presa no peito, quando você fica nervoso(a) pra falar?"
     ],
-    trabalha: ["Seu coração para de disparar só de pensar em falar", "Sua voz para de tremer nos primeiros segundos", "Sua mente para de apagar bem na hora que você mais precisa dela"],
+    trabalha: ["Seu coração para de disparar só de pensar em falar", "Sua voz para de tremer nos primeiros segundos", "Sua mente para de apagar bem na hora que você mais precisa dela", "Sua respiração para de ficar presa no peito, mesmo com o corpo em alerta"],
     dorHeadline: "Seu corpo trava antes da sua boca abrir.",
-    sintomas: ["o coração acelera antes de você começar a falar", "a voz sai tremida logo no início", "a mente apaga bem na hora que você mais precisa de clareza"],
+    sintomas: ["o coração acelera antes de você começar a falar", "a voz sai tremida logo no início", "a mente apaga bem na hora que você mais precisa de clareza", "a respiração fica curta, presa no peito"],
     dorSub: "O coração acelera, a voz sai tremida logo no início, e às vezes a mente apaga bem na hora que você mais precisa de clareza.",
     reacao: "Pra compensar, você tenta controlar tudo por fora, só que o nervosismo aparece de um jeito ou de outro.",
     consequencia: "E o resultado é uma versão mais insegura de você do que a que você realmente é.",
     porque: "Isso acontece porque **seu corpo interpreta o momento de falar como uma ameaça real**, mesmo sem nenhum perigo. O sistema nervoso dispara antes da sua razão conseguir intervir.",
-    como: "Você aprende a reconhecer os primeiros sinais do gatilho e **desarmar essa resposta do corpo antes que ela tome conta**, com respiração, ancoragem física e uma forma diferente de interpretar o nervosismo.",
+    como: "Você aprende a reconhecer os primeiros sinais e **desarmar essa resposta do corpo antes que ela tome conta**, com respiração, ancoragem física e uma forma diferente de interpretar o nervosismo.",
     exemplo: "Na prática: aquele coração disparando antes de uma reunião importante. Em vez de travar, **você reconhece o sinal e aplica a técnica em segundos**, entrando na sala já mais estável.",
     precisa: "Você precisa aprender a acalmar o corpo antes de falar, não só a controlar o que vai dizer.",
-    produtoTag: "1 hora pra encarar o momento de falar sem o corpo entrar em pânico antes de você."
+    produtoTag: "Coração acelerado, voz tremida na abertura, respiração presa no peito, mente em branco na hora que você mais precisa de clareza. Isso não é falta de talento. É fisiologia, e fisiologia se regula com técnica. Nesse módulo você aprende ferramentas práticas pra regular o corpo antes de qualquer situação que exija presença, com aulas que só crescem. Sai sabendo exatamente o que fazer, o que treinar nos próximos dias e o que fazer se travar na hora H.",
+    depoimentos: [
+      { texto: "Consegui conversar bem, não me atrapalhei. Consegui responder só o que foi perguntado, sem falar demais.", nome: "Jéssica" },
+      { texto: "Estou evoluindo, parando de ter medo da câmera em reuniões. Era meu pesadelo, e consegui ficar bem na frente dela.", nome: "Jéssica" }
+    ]
   },
   {
     id: "voz", numero: 2, nome: "Voz e Dicção",
+    produtoNome: "Voz que Conecta · Voz Que Sustenta",
     oQueE: "Entonação, ritmo e presença sonora: o instrumento que faz sua mensagem chegar.",
     perguntas: [
       "Você fala rápido demais quando fica ansiosa(o)?",
-      "Sua voz soa monótona, sem variação de entonação?",
+      "Sua voz soa sempre no mesmo tom, sem subir ou descer?",
       "Sua voz \"morre\" no final das frases, ou você fala sem pausa pra respirar?"
     ],
     trabalha: ["Sua voz para de morrer no fim das frases", "Você para de acelerar a fala quando fica ansiosa(o)", "Sua voz ganha variação e sai do modo monótono"],
@@ -559,10 +684,12 @@ const PILLARS = [
     como: "Você treina a projeção pelo diafragma e aprende a **usar volume, velocidade, tom e pausa de propósito**, não no automático.",
     exemplo: "Na prática: numa apresentação de 10 minutos, em vez da voz cair no meio, **ela se mantém firme do início ao fim**, prendendo quem ouve até a última frase.",
     precisa: "Você precisa que sua voz sustente a mensagem inteira, não só o começo dela.",
-    produtoTag: "1 hora pra sua voz carregar a mensagem inteira, do início ao fim da frase."
+    produtoTag: "Fala rápida demais quando a ansiedade sobe, tom que nunca varia, voz que morre no final das frases antes da mensagem chegar inteira. Isso não é falta de talento vocal. É respiração sem controle, e respiração se treina. Nesse módulo você aprende a projetar pelo diafragma e a usar volume, velocidade, tom e pausa de propósito, com aulas que só crescem. Sai com uma voz que sustenta a apresentação inteira, do início à última frase, sem cair no meio.",
+    depoimentos: []
   },
   {
     id: "escuta", numero: 3, nome: "Escuta e Empatia",
+    produtoNome: "Voz que Conecta · Escute Antes de Reagir",
     oQueE: "Ouvir de verdade, não só esperar a vez de falar: a diferença entre conversa e atrito.",
     perguntas: [
       "Você monta a resposta na cabeça enquanto o outro ainda está falando?",
@@ -579,10 +706,12 @@ const PILLARS = [
     como: "Você pratica escuta ativa e a técnica de parafrasear antes de responder, **criando um intervalo entre ouvir e reagir**.",
     exemplo: "Na prática: numa discussão tensa, em vez de interromper e escalar, **você escuta até o fim e devolve o que entendeu**, e a conversa esfria em vez de virar briga.",
     precisa: "Você precisa aprender a ouvir antes de responder, não só esperar a vez de falar.",
-    produtoTag: "1 hora pra ouvir de um jeito que a conversa para de virar disputa."
+    produtoTag: "A resposta já pronta na cabeça antes do outro terminar de falar, a interrupção que sai sem perceber, a conversa que vira atrito porque ninguém se sentiu ouvido primeiro. Isso não é falta de paciência, é um hábito automático do cérebro, e hábito se substitui por técnica. Nesse módulo você pratica escuta ativa e a técnica de parafrasear, com aulas que só crescem, criando um intervalo real entre ouvir e reagir. Sai sabendo escutar de um jeito que esfria a conversa em vez de escalar ela.",
+    depoimentos: []
   },
   {
     id: "mensagem", numero: 4, nome: "Mensagem que Gruda",
+    produtoNome: "Voz que Conecta · Fale Pra Ficar",
     oQueE: "A estrutura da sua fala: começo, meio, fim. Não é sobre ter mais conteúdo, é sobre ter uma ideia central.",
     perguntas: [
       "Você fica indo e voltando quando está explicando algo?",
@@ -599,10 +728,12 @@ const PILLARS = [
     como: "Você aprende a estrutura de 3 tempos: gancho, no máximo 3 pontos, fechamento, pra **sua ideia central sobreviver à conversa**.",
     exemplo: "Na prática: depois de uma reunião de 30 minutos, em vez de ouvir 'qual era mesmo o ponto?', **as pessoas repetem sua ideia central de cabeça**, sem esforço.",
     precisa: "Você precisa de uma estrutura que segure sua ideia central, não de mais conteúdo pra explicar.",
-    produtoTag: "1 hora pra sua ideia central finalmente ficar na cabeça de quem ouve."
+    produtoTag: "A explicação que vai e volta, o fio que se perde no meio da fala, a ideia principal que evapora em vez de grudar na cabeça de quem ouve. Isso não é falta do que dizer, é falta de estrutura, e estrutura se aprende. Nesse módulo você aprende a construção de 3 tempos, gancho, no máximo 3 pontos, fechamento, com aulas que só crescem. Sai sabendo estruturar qualquer fala pra que a ideia central sobreviva à conversa e continue na cabeça de quem ouviu.",
+    depoimentos: []
   },
   {
     id: "corporal", numero: 5, nome: "Linguagem Corporal",
+    produtoNome: "Voz que Conecta · O Corpo Confirma",
     oQueE: "O corpo contando a mesma história que a voz: entender o corpo do outro e controlar o próprio.",
     perguntas: [
       "Você não sabe o que fazer com as mãos enquanto fala?",
@@ -619,47 +750,52 @@ const PILLARS = [
     como: "Você aprende onde colocar as mãos, como sustentar contato visual, e **como alinhar postura e voz na mesma mensagem**.",
     exemplo: "Na prática: numa negociação importante, em vez do corpo entregar a insegurança que sua voz tenta esconder, **ele reforça exatamente o que você está dizendo**.",
     precisa: "Você precisa que seu corpo confirme o que sua voz está dizendo, não que a contradiga.",
-    produtoTag: "1 hora pra seu corpo parar de denunciar o que sua voz tenta esconder."
+    produtoTag: "As mãos que não sabem onde ficar, o olhar que desvia, a postura que fecha e conta uma história diferente da que a voz tenta contar. Isso não é falta de jeito, é o corpo reagindo antes da mente conseguir ajustar, e postura se treina. Nesse módulo você aprende onde colocar as mãos, como sustentar contato visual e como alinhar corpo e voz na mesma mensagem, com aulas que só crescem. Sai com um corpo que reforça o que você diz, em vez de denunciar o que esconde.",
+    depoimentos: []
   },
   {
     id: "publico", numero: 6, nome: "Falar em Público",
+    produtoNome: "Voz que Conecta · Domine o Palco",
     oQueE: "O pânico do palco: plateia, apresentação, câmera. O momento em que tudo trava mais.",
     perguntas: [
-      "Você trava com decoreba e, quando sai do script, não sabe voltar?",
+      "Você trava quando decora tudo e, se esquece uma parte, não sabe como continuar?",
       "Seu foco vai pra própria ansiedade em vez de ir pro público?",
       "Você não sabe como recuperar quando dá um branco no meio da apresentação?"
     ],
-    trabalha: ["Você para de travar quando sai do script", "Seu foco sai da própria ansiedade e vai pro público", "Quando der branco, você sabe exatamente como voltar"],
+    trabalha: ["Você para de travar quando esquece uma parte do que preparou", "Seu foco sai da própria ansiedade e vai pro público", "Quando der branco, você sabe exatamente como voltar"],
     dorHeadline: "Na hora do palco, o pânico assume o lugar da sua mensagem.",
-    sintomas: ["você trava com decoreba e não sabe voltar quando sai do script", "o foco vai pra própria ansiedade em vez do público", "quando dá branco, não tem plano B"],
-    dorSub: "Sai do script e não sabe voltar, o foco vai pra própria ansiedade em vez do público, e quando dá branco, não tem plano B.",
-    reacao: "Você tenta decorar mais, treinar mais. Mas decoreba quebra fácil assim que algo sai do previsto.",
+    sintomas: ["você trava quando decora tudo e esquece uma parte", "o foco vai pra própria ansiedade em vez do público", "quando dá branco, não tem plano B"],
+    dorSub: "Esquece uma parte do que decorou e não sabe voltar, o foco vai pra própria ansiedade em vez do público, e quando dá branco, não tem plano B.",
+    reacao: "Você tenta decorar mais, treinar mais. Mas decoreba quebra fácil assim que algo foge do que você esperava.",
     consequencia: "E o resultado é: a apresentação que podia abrir portas vira a que você só quer esquecer.",
-    porque: "Isso acontece porque decoreba quebra fácil: **no primeiro imprevisto, o foco vai direto pra própria ansiedade**.",
+    porque: "Isso acontece porque decoreba quebra fácil: **na primeira coisa inesperada, o foco vai direto pra própria ansiedade**.",
     como: "Você aprende a estrutura de abertura, condução e fechamento de uma apresentação, e **um plano B pronto pra quando der branco**.",
-    exemplo: "Na prática: quando alguém interrompe com uma pergunta fora do script, em vez de travar, **você retoma o fio em segundos**, sem que a plateia perceba o tropeço.",
-    precisa: "Você precisa de um plano pra quando sair do script, não de mais decoreba.",
-    produtoTag: "1 hora pra ter o palco na mão mesmo quando o script sai da linha."
+    exemplo: "Na prática: quando alguém interrompe com uma pergunta que você não esperava, em vez de travar, **você retoma o fio em segundos**, sem que a plateia perceba o tropeço.",
+    precisa: "Você precisa de um plano pra quando algo sair diferente do esperado, não de mais decoreba.",
+    produtoTag: "O branco que trava quando esquece parte do que decorou, o foco que foge pra ansiedade em vez do público, o pânico no lugar da mensagem na hora do palco. Não é falta de preparo, é decoreba sem plano B, e plano B se constrói. Nesse módulo você aprende abertura, condução e fechamento de qualquer apresentação, com aulas que só crescem, e um plano pra quando der branco. Sai sabendo retomar o fio em segundos, sem a plateia perceber o tropeço.",
+    depoimentos: []
   },
   {
     id: "diaadia", numero: 7, nome: "Comunicação no Dia a Dia",
+    produtoNome: "Voz que Conecta · Na Hora H",
     oQueE: "Aplicar o que você já sabe: o gargalo não é conhecimento, é execução.",
     perguntas: [
       "Você sabe o que precisa fazer, mas esquece bem na hora H?",
-      "Você já fez curso ou leu sobre comunicação, mas repete o mesmo padrão?",
-      "Você não percebe os próprios gatilhos em tempo real, só depois?"
+      "Mesmo tentando mudar, você sente que sempre acaba fazendo do mesmo jeito?",
+      "Você só percebe o que te fez reagir errado depois que já passou, e não na hora?"
     ],
-    trabalha: ["O que você já sabe começa a aparecer na hora H", "Você identifica seus próprios gatilhos antes de reagir a eles", "Você para de repetir o mesmo padrão de sempre"],
+    trabalha: ["O que você já sabe começa a aparecer na hora H", "Você percebe o que te faz reagir errado antes de reagir", "Você para de repetir o mesmo padrão de sempre"],
     dorHeadline: "Você sabe o que fazer, mas esquece bem na hora H.",
-    sintomas: ["você sabe o que precisa fazer mas esquece bem na hora H", "repete o mesmo padrão mesmo depois de já ter estudado sobre", "não percebe os próprios gatilhos em tempo real"],
-    dorSub: "Já fez curso, já leu sobre o assunto, mas repete o mesmo padrão porque não percebe os próprios gatilhos em tempo real.",
-    reacao: "Você tenta se lembrar na hora, se cobra depois. Mas sem perceber o gatilho em tempo real, o padrão sempre volta.",
+    sintomas: ["você sabe o que precisa fazer mas esquece bem na hora H", "mesmo tentando mudar, sempre acaba repetindo o mesmo padrão", "não percebe na hora o que te faz reagir errado"],
+    dorSub: "Você sabe o que precisa fazer, mas mesmo tentando mudar, acaba repetindo o mesmo padrão porque não percebe na hora o que te faz reagir errado.",
+    reacao: "Você tenta se lembrar na hora, se cobra depois. Mas sem perceber na hora o que te faz reagir errado, o padrão sempre volta.",
     consequencia: "E o resultado é: todo o conhecimento que você já tem não vira mudança nenhuma no dia a dia.",
-    porque: "Isso acontece porque, sem perceber o próprio gatilho no momento em que ele acontece, **o cérebro volta pro padrão automático antigo**, mesmo depois de aprender algo novo.",
-    como: "Você treina identificar seus gatilhos específicos e faz micro-práticas que **criam memória pro momento real, não só pra teoria**.",
+    porque: "Isso acontece porque, sem perceber na hora o que te faz reagir errado, **o cérebro volta pro padrão automático antigo**, mesmo depois de aprender algo novo.",
+    como: "Você treina perceber, na hora, o que te faz reagir errado, e faz pequenos exercícios que **criam memória pro momento real, não só pra teoria**.",
     exemplo: "Na prática: na próxima conversa difícil, em vez de perceber o padrão só depois que já aconteceu, **você o reconhece na hora e ajusta o rumo ali mesmo**.",
-    precisa: "Você precisa reconhecer o gatilho na hora que ele acontece, não só entender ele depois.",
-    produtoTag: "1 hora pra colocar em prática o que você já sabe, sem esquecer na hora H."
+    precisa: "Você precisa perceber, na hora, o que te faz reagir errado, não só entender depois.",
+    produtoTag: "Saber exatamente o que fazer e mesmo assim esquecer bem na hora H, tentar mudar e sempre acabar no mesmo padrão, perceber o que te fez reagir errado só depois que já passou. Isso não é falta de conhecimento, é falta de execução, e execução se treina no momento real. Nesse módulo você aprende a reconhecer, em tempo real, o que te faz reagir errado, com aulas e exercícios que só crescem. Sai sabendo ajustar o rumo na hora H, não só entender o padrão depois que ele já aconteceu.",
+    depoimentos: []
   }
 ];
 
@@ -670,9 +806,9 @@ const OPTIONS = [
 ];
 
 /* =========================================================
-   ESTADO DO QUIZ, 21 perguntas (3 por pilar)
+   ESTADO DO QUIZ (número de perguntas varia por pilar — Presença e Calma tem 4)
    ========================================================= */
-const TOTAL_Q = PILLARS.length * 3; // 21
+const TOTAL_Q = PILLARS.reduce((sum, p) => sum + p.perguntas.length, 0); // soma real (agora 22, com a 4ª pergunta de Presença e Calma)
 
 let questions = [];
 let currentIndex = 0;
@@ -747,21 +883,21 @@ function finishQuiz(){
   const ranked = PILLARS.slice().sort((a, b) => scores[b.id] - scores[a.id]);
   const weakestId = ranked[0].id;
 
-  // Quantos outros pilares (além do principal) também são um problema forte de verdade
-  const HIGH_THRESHOLD = 4; // de 0 a 6 (3 perguntas x 2 pontos)
-  const otherStrongPillars = ranked.slice(1).filter(p => scores[p.id] >= HIGH_THRESHOLD);
-
-  // Regra: com 1 outro pilar forte, menciona ele pelo nome.
-  // Com 2 ou mais, generaliza em vez de virar uma lista de defeitos.
-  let secondaryId = null;
-  let multipleWeak = false;
-  if(otherStrongPillars.length === 1){
-    secondaryId = otherStrongPillars[0].id;
-  } else if(otherStrongPillars.length >= 2){
-    multipleWeak = true;
+  // Se a pessoa respondeu "quase nunca" pra tudo, não tem pilar fraco de verdade —
+  // não faz sentido apontar um só porque ele "ganhou" um empate em zero
+  if(scores[weakestId] === 0){
+    showView('view-no-issues');
+    return;
   }
 
-  renderResults(weakestId, secondaryId, multipleWeak, answers);
+  // Se o pilar mais fraco ainda não tem produto individual pronto,
+  // não faz sentido oferecer algo que não existe — manda pro curso completo
+  if(!PRODUCTS_READY[weakestId]){
+    showFullCourse();
+    return;
+  }
+
+  renderResults(weakestId, answers);
   showView('view-results');
 }
 
@@ -789,7 +925,7 @@ function getConfirmedIndexes(pillar, allAnswers){
   return idx.length > 0 ? idx : pillar.perguntas.map((_, i) => i); // fallback: mostra tudo
 }
 
-function renderResults(weakestId, secondaryId, multipleWeak, allAnswers){
+function renderResults(weakestId, allAnswers){
   const pillar = PILLARS.find(p => p.id === weakestId);
   const confirmedIdx = getConfirmedIndexes(pillar, allAnswers);
 
@@ -799,7 +935,7 @@ function renderResults(weakestId, secondaryId, multipleWeak, allAnswers){
   document.getElementById('narrativeReacao').textContent = pillar.reacao;
   document.getElementById('narrativeConsequencia').textContent = pillar.consequencia;
 
-  document.getElementById('offerTitle').textContent = `Masterclass ${pillar.nome}`;
+  document.getElementById('offerTitle').textContent = pillar.produtoNome || `Voz que Conecta · ${pillar.nome}`;
   document.getElementById('offerSub').textContent = pillar.produtoTag;
   document.getElementById('offerPrecisa').textContent = pillar.precisa;
   document.getElementById('offerPorque').innerHTML = renderHighlighted(pillar.porque);
@@ -816,16 +952,20 @@ function renderResults(weakestId, secondaryId, multipleWeak, allAnswers){
 
   document.getElementById('offerCheckoutLink').href = CHECKOUT_LINKS[weakestId] || '#';
 
-  // Reforça o convite pro método completo: nomeia 1 segundo pilar forte,
-  // generaliza com 2+ (pra não virar lista de defeitos), ou fica no texto padrão
-  const secondaryEl = document.getElementById('secondaryOfferText');
-  if(secondaryId){
-    const second = PILLARS.find(p => p.id === secondaryId);
-    secondaryEl.innerHTML = `Suas respostas também mostraram bastante dificuldade em <span class="hl">${second.nome}</span>. Resolver os dois juntos (e os outros 5) é exatamente o que o <strong>Método Voz que Conecta®</strong> completo faz.`;
-  } else if(multipleWeak){
-    secondaryEl.innerHTML = `Suas respostas mostraram dificuldade em mais de um ponto, não só nesse. É exatamente pra isso que existe o <strong>Método Voz que Conecta®</strong> completo: resolver os 7 juntos, não um de cada vez.`;
+  // Depoimentos reais: só mostra a seção se esse pilar já tiver algum cadastrado
+  const testimonialsSection = document.getElementById('testimonialsSection');
+  const testimonialsList = document.getElementById('testimonialsList');
+  testimonialsList.innerHTML = '';
+  if(pillar.depoimentos && pillar.depoimentos.length > 0){
+    testimonialsSection.style.display = '';
+    pillar.depoimentos.forEach(d => {
+      const card = document.createElement('div');
+      card.className = 'testimonial-card';
+      card.innerHTML = `<p>"${d.texto}"</p><span class="testimonial-name">— ${d.nome}</span>`;
+      testimonialsList.appendChild(card);
+    });
   } else {
-    secondaryEl.innerHTML = `O <strong>Método Voz que Conecta®</strong> é a junção das 7 masterclasses completas, cobrindo tudo que sustenta uma comunicação segura, do jeito que você fala até como você se porta na frente das pessoas.`;
+    testimonialsSection.style.display = 'none';
   }
 }
 
@@ -835,7 +975,8 @@ function showFullCourse(){
 }
 
 function showMentoria(){
-  document.getElementById('mentoriaWhatsappLink').href = WHATSAPP_LINK;
+  document.getElementById('whatsappDuvida').href = whatsappLink('duvida');
+  document.getElementById('whatsappDecidido').href = whatsappLink('decidido');
   showView('view-mentoria');
 }
 </script>
