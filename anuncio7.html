@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voz que Conecta · Na Hora H</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,500;1,9..144,900&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0C0C0C; --bg-raised:#1A1A1A; --ink:#F7F2E9; --ink-dim:#A6A199;
+  --coral:#EE7148; --coral-ink:#0C0C0C; --line:rgba(247,242,233,0.14);
+  --display:'Fraunces', serif; --body:'Manrope', sans-serif;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--body); background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased;}
+img{max-width:100%;}
+a{color:inherit; text-decoration:none;}
+.wrap{max-width:640px; margin:0 auto; padding:0 22px;}
+.pad{padding:64px 0;}
+
+.topbar{padding:20px 0; border-bottom:1px solid var(--line);}
+.brand{font-family:var(--display); font-weight:900; font-size:15px; letter-spacing:.02em;}
+.brand span{color:var(--coral);}
+
+.hero{padding:56px 0 40px; position:relative; overflow:hidden;}
+.eyebrow{display:inline-flex; align-items:center; gap:8px; background:rgba(238,113,72,.12); border:1px solid rgba(238,113,72,.35); color:var(--coral); font-weight:800; font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; padding:8px 16px; border-radius:30px; margin-bottom:22px;}
+h1.hero{font-family:var(--display); font-weight:600; font-size:clamp(30px,7vw,46px); line-height:1.14; margin-bottom:20px;}
+h1.hero .accent{font-style:italic; font-weight:500; color:var(--coral);}
+.hero-sub{font-size:17px; color:var(--ink-dim); max-width:520px; margin-bottom:32px; line-height:1.55;}
+.cta-btn{display:flex; align-items:center; justify-content:center; gap:10px; background:var(--coral); color:var(--coral-ink); font-weight:900; font-size:19px; padding:22px 34px; border-radius:14px; transition:.15s; width:100%; box-shadow:0 10px 34px rgba(238,113,72,.45), 0 0 0 2px rgba(238,113,72,.15); letter-spacing:-.01em;}
+.cta-btn:hover{transform:translateY(-1px); box-shadow:0 14px 40px rgba(238,113,72,.55), 0 0 0 2px rgba(238,113,72,.2);}
+.cta-btn:active{transform:scale(.98);}
+.trust-badge{margin-top:16px; text-align:center; font-size:13px; font-weight:700; color:var(--ink-dim);}
+
+.section-label{font-family:var(--body); font-size:12.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--coral); margin-bottom:14px;}
+h2.sec{font-family:var(--display); font-weight:600; font-size:clamp(24px,5vw,32px); line-height:1.22; margin-bottom:18px;}
+.sec-body{font-size:16px; color:var(--ink-dim); line-height:1.65; margin-bottom:14px;}
+.sec-body b{color:var(--ink); font-weight:700;}
+.divider{height:1px; background:var(--line); margin:0;}
+
+.sintomas{list-style:none; margin:22px 0;}
+.sintomas li{display:flex; gap:14px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line);}
+.sintomas li:last-child{border-bottom:none;}
+.sintomas .ic{color:var(--coral); font-size:18px; flex:0 0 20px; line-height:1.5;}
+.sintomas .tx{font-size:15.5px; color:var(--ink);}
+
+.depo{background:var(--bg-raised); border-left:3px solid var(--coral); border-radius:0 14px 14px 0; padding:20px 24px; margin-bottom:14px;}
+.depo p{font-size:15px; color:var(--ink); font-style:italic; margin-bottom:10px; line-height:1.55;}
+.depo .nome{font-size:13px; color:var(--ink-dim); font-weight:700;}
+
+.price-card{background:var(--bg-raised); border:1px solid rgba(238,113,72,.4); border-radius:20px; padding:36px 30px; text-align:center; position:relative; overflow:hidden;}
+.price-card::before{content:""; position:absolute; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle, rgba(238,113,72,.16), transparent 65%); top:-100px; right:-90px;}
+.price-tag{font-family:var(--body); font-size:12.5px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--coral); margin-bottom:14px; position:relative; z-index:2;}
+.price-row{display:flex; align-items:baseline; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; position:relative; z-index:2;}
+.price-prefix{font-size:15px; color:var(--ink-dim); font-weight:700;}
+.price-val{font-family:var(--display); font-size:clamp(38px,8vw,50px); color:var(--coral); font-weight:900; line-height:1;}
+.price-note{font-size:13.5px; color:var(--ink-dim); position:relative; z-index:2; margin-bottom:26px;}
+.price-cta{display:flex; align-items:center; justify-content:center; gap:10px; background:var(--coral); color:var(--coral-ink); font-weight:900; font-size:18px; padding:20px 30px; border-radius:12px; width:100%; position:relative; z-index:2; box-shadow:0 10px 30px rgba(238,113,72,.4);}
+.mid-cta-wrap{padding:0 0 8px;}
+.mid-cta{display:flex; align-items:center; justify-content:center; gap:10px; background:var(--coral); color:var(--coral-ink); font-weight:900; font-size:18px; padding:20px 30px; border-radius:14px; width:100%; box-shadow:0 10px 30px rgba(238,113,72,.4);}
+.mid-cta-note{text-align:center; font-size:12.5px; color:var(--ink-dim); margin-top:12px;}
+.price-trust{margin-top:16px; font-size:12.5px; color:var(--ink-dim); position:relative; z-index:2;}
+
+.inclui{list-style:none; margin:20px 0;}
+.inclui li{display:flex; gap:12px; align-items:flex-start; padding:9px 0;}
+.inclui .ck{color:var(--coral); font-weight:900; flex:0 0 18px;}
+.inclui .tx{font-size:15px; color:var(--ink);}
+
+details{background:var(--bg-raised); border:1px solid var(--line); border-radius:14px; padding:0 20px; margin-bottom:10px;}
+summary{font-weight:700; font-size:15px; padding:17px 0; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px;}
+summary::-webkit-details-marker{display:none;}
+summary::after{content:"+"; font-size:20px; color:var(--coral); font-weight:400;}
+details[open] summary::after{content:"–";}
+.faq-a{font-size:14px; color:var(--ink-dim); padding:0 0 17px; line-height:1.55;}
+
+.foot{padding:40px 0 100px; text-align:center; font-size:12px; color:var(--ink-dim); border-top:1px solid var(--line); margin-top:20px;}
+.buybar{position:fixed; bottom:0; left:0; right:0; background:var(--bg-raised); border-top:1px solid var(--line); padding:12px 18px; padding-bottom:calc(12px + env(safe-area-inset-bottom)); display:flex; align-items:center; gap:14px; z-index:50;}
+.bb-price{display:flex; flex-direction:column; line-height:1.15;}
+.bb-price b{font-family:var(--display); font-size:19px; color:var(--ink);}
+.bb-price small{font-size:11px; color:var(--ink-dim);}
+.bb-cta{flex:1; text-align:center; background:var(--coral); color:var(--coral-ink); font-weight:800; font-size:15px; padding:14px; border-radius:10px;}
+
+.pillar-num{font-family:var(--display); font-size:min(140px, 26vw); font-weight:900; color:transparent; -webkit-text-stroke:1.5px rgba(238,113,72,.35); position:absolute; top:8px; right:14px; line-height:1; pointer-events:none; z-index:0;}
+
+@media(max-width:480px){ .pad{padding:44px 0;} }
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap"><div class="brand">VOZ QUE <span>CONECTA®</span></div></div></div>
+
+<div class="hero">
+  <div class="pillar-num">07</div>
+  <div class="wrap" style="position:relative; z-index:2;">
+    <div class="eyebrow">Pilar 7 · Comunicação no Dia a Dia</div>
+    <h1 class="hero">Você sabe o que fazer, mas esquece bem na hora H.</h1>
+    <p class="hero-sub">Você sabe o que precisa fazer, mas mesmo tentando mudar, acaba repetindo o mesmo padrão porque não percebe na hora o que te faz reagir errado.</p>
+    <a class="cta-btn" href="https://pay.kiwify.com.br/Elcs08a" target="_blank" rel="noopener">Quero começar agora →</a>
+    <div class="trust-badge">✅ Garantia de 7 dias</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="divider"></div>
+  <div class="pad">
+    <div class="section-label">Você se identifica?</div>
+    <h2 class="sec">Isso acontece com você:</h2>
+    <ul class="sintomas"><li><span class="ic">→</span><span class="tx">Você sabe o que precisa fazer mas esquece bem na hora H</span></li><li><span class="ic">→</span><span class="tx">Mesmo tentando mudar, sempre acaba repetindo o mesmo padrão</span></li><li><span class="ic">→</span><span class="tx">Não percebe na hora o que te faz reagir errado</span></li></ul>
+  </div>
+
+  <div class="divider"></div>
+  
+    <div class="pad" style="padding-top:0">
+      <div class="section-label">Por que isso acontece</div>
+      <h2 class="sec">Não é falta de talento.</h2>
+      <p class="sec-body">Isso acontece porque, sem perceber na hora o que te faz reagir errado, <b>o cérebro volta pro padrão automático antigo</b>, mesmo depois de aprender algo novo.</p>
+      <div class="divider" style="margin:26px 0"></div>
+      <div class="section-label">O que muda</div>
+      <h2 class="sec">Como o módulo resolve isso.</h2>
+      <p class="sec-body">Você treina perceber, na hora, o que te faz reagir errado, e faz pequenos exercícios que <b>criam memória pro momento real, não só pra teoria</b>.</p>
+      <p class="sec-body">Na prática: na próxima conversa difícil, em vez de perceber o padrão só depois que já aconteceu, <b>você o reconhece na hora e ajusta o rumo ali mesmo</b>.</p>
+    </div>
+  
+
+  <div class="divider"></div>
+    <div class="pad" style="padding-top:0">
+      <div class="section-label">O resultado</div>
+      <h2 class="sec">Depois desse módulo, você:</h2>
+      <ul class="sintomas">
+        <li><span class="ic">✓</span><span class="tx">O que você já sabe começa a aparecer na hora H</span></li><li><span class="ic">✓</span><span class="tx">Você percebe o que te faz reagir errado antes de reagir</span></li><li><span class="ic">✓</span><span class="tx">Você para de repetir o mesmo padrão de sempre</span></li>
+      </ul>
+    </div>
+  
+
+  <div class="pad" style="padding-top:0">
+    <div class="mid-cta-wrap">
+      <a class="mid-cta" href="https://pay.kiwify.com.br/Elcs08a" target="_blank" rel="noopener">Quero começar agora →</a>
+      <div class="mid-cta-note">Acesso liberado na hora, direto no seu e-mail.</div>
+    </div>
+  </div>
+
+  
+
+  <div class="divider"></div>
+  <div class="pad" style="padding-top:0">
+    <div class="section-label">O investimento</div>
+    <h2 class="sec">Quanto custa</h2>
+    <div class="price-card">
+      <div class="price-tag">Voz que Conecta · Na Hora H</div>
+      <div class="price-row"><span class="price-prefix">3x de</span><span class="price-val">R$ 32,33</span></div>
+      <div class="price-note">ou R$ 97 à vista</div>
+      <ul class="inclui" style="text-align:left; max-width:420px; margin:0 auto 24px;">
+        
+    <li><span class="ck">✓</span><span class="tx">O módulo completo em vídeo, no seu ritmo</span></li>
+    <li><span class="ck">✓</span><span class="tx">Material de apoio em PDF, pra consultar quando quiser</span></li>
+    <li><span class="ck">✓</span><span class="tx">1 ano de acesso, incluindo as aulas novas que esse módulo for ganhando</span></li>
+  
+      </ul>
+      <a class="price-cta" href="https://pay.kiwify.com.br/Elcs08a" target="_blank" rel="noopener">Quero começar agora →</a>
+      <div class="price-trust">Garantia incondicional de 7 dias.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="pad" style="padding-top:0">
+    <div class="section-label">Perguntas frequentes</div>
+    <h2 class="sec">Ainda com dúvida?</h2>
+    <details><summary>Funciona mesmo?</summary><p class="faq-a">O método foi construído a partir de padrões reais de comunicação, não teoria genérica. Você trabalha direto no ponto que mais te trava.</p></details><details><summary>Por quanto tempo eu tenho acesso?</summary><p class="faq-a">1 ano. Você assiste quando quiser e revisita sempre que precisar dentro desse período, incluindo as aulas novas que o módulo for ganhando.</p></details><details><summary>E se eu não gostar?</summary><p class="faq-a">Você tem 7 dias de garantia incondicional. Se não sentir valor, devolvemos 100% do seu dinheiro, sem perguntas.</p></details><details><summary>Esse módulo resolve tudo da minha comunicação?</summary><p class="faq-a">Ele resolve o ponto específico que ele promete. Se você sentir que trava em mais de uma frente, o Método Completo com os 7 pilares pode valer mais a pena.</p></details>
+  </div>
+
+  <div class="foot">
+    <div>Voz que Conecta® · Rayhan Coelho</div>
+    <div style="margin-top:6px">Dúvidas? <a href="https://wa.me/5548996290222" target="_blank" rel="noopener" style="color:var(--coral); font-weight:700;">Fala comigo no WhatsApp</a></div>
+  </div>
+</div>
+
+<div class="buybar">
+  <div class="bb-price"><b>R$ 97</b><small>3x de R$ 32,33</small></div>
+  <a class="bb-cta" href="https://pay.kiwify.com.br/Elcs08a" target="_blank" rel="noopener">Quero começar agora</a>
+</div>
+
+</body>
+</html>
