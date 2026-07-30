@@ -96,8 +96,9 @@ button{font-family:inherit; border:none; background:none; cursor:pointer; color:
 .podcast-thumb{width:88px; flex:0 0 88px; border-radius:10px; object-fit:cover; border:1px solid rgba(255,255,255,.15); align-self:stretch;}
 .podcast-right-col{flex:1; min-width:0; display:flex; flex-direction:column; justify-content:center; gap:5px;}
 .podcast-title-scroll{overflow:hidden; white-space:nowrap; width:100%; padding-right:32px; margin-bottom:12px;}
-.podcast-big-title{display:inline-block; font-size:14px; font-weight:700; color:#fff; white-space:nowrap; animation:podcastBounce 7s ease-in-out infinite alternate;}
-@keyframes podcastBounce{0%{transform:translateX(0);} 100%{transform:translateX(-55%);}}
+.podcast-big-title{display:inline-block; font-size:14px; font-weight:700; color:#fff; white-space:nowrap;}
+.podcast-big-title.bounce-active{animation:podcastBounce 7s ease-in-out infinite alternate;}
+@keyframes podcastBounce{0%{transform:translateX(0);} 100%{transform:translateX(var(--bounce-dist, 0px));}}
 .podcast-big-date{font-size:11.5px; color:rgba(255,255,255,.65);}
 .podcast-skip{position:relative; width:30px; height:30px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.9); flex:0 0 30px; z-index:1;}
 .podcast-skip svg{width:30px; height:30px;}
@@ -776,6 +777,22 @@ function closeQuiz(){ quizOverlay.classList.remove('open'); }
 document.getElementById('quizCta').addEventListener('click', openQuiz);
 document.getElementById('quizClose').addEventListener('click', closeQuiz);
 quizOverlay.addEventListener('click', (e)=>{ if(e.target === quizOverlay) closeQuiz(); });
+
+function setupPodcastMarquee(){
+  document.querySelectorAll('.podcast-title-scroll').forEach(container=>{
+    const title = container.querySelector('.podcast-big-title');
+    if(!title) return;
+    title.classList.remove('bounce-active');
+    title.style.removeProperty('--bounce-dist');
+    const overflow = title.scrollWidth - container.clientWidth;
+    if(overflow > 4){
+      title.style.setProperty('--bounce-dist', (-overflow)+'px');
+      title.classList.add('bounce-active');
+    }
+  });
+}
+setupPodcastMarquee();
+window.addEventListener('resize', setupPodcastMarquee);
 </script>
 </body>
 </html>
