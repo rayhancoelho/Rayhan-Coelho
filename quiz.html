@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Voz que Conecta · Teste rápido</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1B1E20; --bg-2:#22262A; --ink:#F7F2E9; --ink-dim:#9AA0A6;
+  --coral:#EE7148; --coral-ink:#0C0C0C; --line:rgba(247,242,233,0.14);
+  --body:'Manrope', sans-serif;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html,body{height:100%;}
+body{font-family:var(--body); background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; overflow:hidden;}
+a,button{color:inherit; text-decoration:none; font-family:inherit;}
+button{border:none; background:none; cursor:pointer;}
+
+.app{max-width:520px; margin:0 auto; height:100vh; height:100dvh; display:flex; flex-direction:column; background:var(--bg);}
+
+/* chrome do topo, estilo navegador in-app */
+.chrome{padding:14px 16px 0;}
+.chrome-row{display:flex; align-items:center; justify-content:center; gap:8px; position:relative;}
+.chrome-close{position:absolute; left:0; width:30px; height:30px; border-radius:50%; background:var(--bg-2); display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--ink-dim);}
+.chrome-url{display:flex; flex-direction:column; align-items:center; line-height:1.2;}
+.chrome-url .site{display:flex; align-items:center; gap:6px; font-size:14px; font-weight:700; color:var(--ink);}
+.chrome-url .site .lock{font-size:11px; opacity:.6;}
+.chrome-url .sub{font-size:11.5px; color:var(--ink-dim); margin-top:1px;}
+.chrome-more{position:absolute; right:0; width:30px; height:30px; border-radius:50%; background:var(--bg-2); display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--ink-dim);}
+
+.progress-track{height:3px; background:rgba(247,242,233,.12); margin-top:14px; border-radius:3px; overflow:hidden;}
+.progress-fill{height:100%; width:20%; background:var(--coral); transition:width .35s ease;}
+
+/* corpo */
+.body-area{flex:1; padding:40px 26px 20px; display:flex; flex-direction:column; justify-content:center; overflow-y:auto;}
+.q-step{display:none; animation:fadeIn .3s ease;}
+.q-step.active{display:block;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+
+.q-title{font-size:23px; font-weight:800; line-height:1.32; margin-bottom:26px; letter-spacing:-.01em;}
+.q-options{display:flex; flex-direction:column; gap:12px; margin-bottom:28px;}
+.q-opt{display:flex; align-items:center; gap:14px; text-align:left; padding:16px 18px; border:1px solid var(--line); border-radius:10px; font-size:15.5px; font-weight:700; background:transparent; transition:.15s;}
+.q-opt:hover{border-color:var(--coral);}
+.q-opt:active{transform:scale(.98);}
+.q-badge{width:26px; height:26px; border-radius:50%; background:var(--bg-2); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:var(--ink-dim); flex:0 0 auto;}
+
+.q-input{width:100%; background:transparent; border:none; border-bottom:2px solid var(--line); padding:12px 2px; font-size:19px; color:var(--ink); font-family:var(--body); margin-bottom:30px;}
+.q-input:focus{outline:none; border-color:var(--coral);}
+.q-input::placeholder{color:var(--ink-dim); opacity:.55;}
+
+.q-advance{display:inline-flex; align-items:center; justify-content:center; background:var(--coral); color:var(--coral-ink); font-weight:800; font-size:15px; padding:14px 30px; border-radius:8px;}
+.q-advance:disabled{opacity:.3; pointer-events:none;}
+
+/* telas finais */
+.end-tag{font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--coral); margin-bottom:12px;}
+.end-title{font-size:24px; font-weight:800; line-height:1.34; margin-bottom:14px;}
+.end-body{font-size:15px; color:var(--ink-dim); line-height:1.6; margin-bottom:26px;}
+.wa-btn{display:flex; align-items:center; justify-content:center; gap:10px; background:var(--coral); color:var(--coral-ink); font-weight:800; font-size:16px; padding:17px; border-radius:10px; width:100%; box-shadow:0 10px 26px rgba(238,113,72,.35);}
+.wa-note{margin-top:14px; text-align:center; font-size:12px; color:var(--ink-dim);}
+.restart-link{display:block; margin-top:22px; text-align:center; font-size:13px; color:var(--ink-dim); font-weight:700; text-decoration:underline; text-underline-offset:3px;}
+
+/* nav inferior, estilo formulário in-app */
+.bottom-nav{display:flex; align-items:center; justify-content:space-around; padding:14px 20px calc(14px + env(safe-area-inset-bottom)); border-top:1px solid var(--line);}
+.bottom-nav .ic{width:40px; height:40px; border-radius:50%; background:var(--bg-2); display:flex; align-items:center; justify-content:center; font-size:15px; color:var(--ink-dim); opacity:.5;}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="chrome">
+    <div class="chrome-row">
+      <div class="chrome-close">✕</div>
+      <div class="chrome-more">⋯</div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div class="body-area">
+
+    <!-- Passo 1 -->
+    <div class="q-step active" data-step="1">
+      <div class="q-title">Você quer melhorar sua comunicação?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerStep1(true)"><span class="q-badge">A</span>SIM</button>
+        <button class="q-opt" onclick="answerStep1(false)"><span class="q-badge">B</span>NÃO</button>
+      </div>
+    </div>
+
+    <!-- Passo 2: nome -->
+    <div class="q-step" data-step="2">
+      <div class="q-title">Digite seu nome completo</div>
+      <input class="q-input" id="nomeInput" type="text" placeholder="Sua resposta..." oninput="toggleNomeBtn()">
+      <button class="q-advance" id="nomeBtn" disabled onclick="goToStep(3)">Avançar</button>
+    </div>
+
+    <!-- Passo 3: dinheiro -->
+    <div class="q-step" data-step="3">
+      <div class="q-title">Você tem R$15,30 por mês pra investir na sua comunicação?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="answerStep3(true)"><span class="q-badge">A</span>SIM, TENHO</button>
+        <button class="q-opt" onclick="answerStep3(false)"><span class="q-badge">B</span>NÃO, NO MOMENTO NÃO</button>
+      </div>
+    </div>
+
+    <!-- Tela de encerramento (Não no passo 1 ou passo 3) -->
+    <div class="q-step" data-step="end">
+      <div class="end-tag">Tudo bem</div>
+      <div class="end-title">Esse produto é pra quem quer melhorar a comunicação.</div>
+      <div class="end-body">Quando fizer sentido pra você, a gente vai estar aqui.</div>
+      <a class="restart-link" href="#" onclick="restartQuiz(); return false;">Fazer o teste de novo</a>
+    </div>
+
+  </div>
+
+  <div class="bottom-nav">
+    <div class="ic">‹</div>
+    <div class="ic">›</div>
+    <div class="ic">▽</div>
+    <div class="ic">◔</div>
+    <div class="ic">↺</div>
+  </div>
+
+</div>
+
+<script>
+const WA_NUMBER = "5548996290222";
+let nome = "";
+
+function toggleNomeBtn(){
+  const val = document.getElementById('nomeInput').value.trim();
+  document.getElementById('nomeBtn').disabled = val.length < 2;
+}
+
+function answerStep1(quer){
+  if(!quer){ showEnd(); return; }
+  goToStep(2);
+}
+
+function answerStep3(tem){
+  if(!tem){ showEnd(); return; }
+  const msg = "Tenho interesse no método de comunicação do Rayhan Coelho!";
+  window.location.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
+
+function showEnd(){
+  document.querySelectorAll('.q-step').forEach(el => el.classList.remove('active'));
+  document.querySelector('.q-step[data-step="end"]').classList.add('active');
+  document.getElementById('progressFill').style.width = '100%';
+}
+
+function goToStep(step){
+  document.querySelectorAll('.q-step').forEach(el => el.classList.remove('active'));
+  document.querySelector(`.q-step[data-step="${step}"]`).classList.add('active');
+  document.getElementById('progressFill').style.width = (step / 3 * 100) + '%';
+}
+
+function restartQuiz(){
+  document.getElementById('nomeInput').value = '';
+  toggleNomeBtn();
+  goToStep(1);
+}
+</script>
+
+</body>
+</html>
