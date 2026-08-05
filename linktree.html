@@ -197,6 +197,16 @@ button{font-family:inherit; border:none; background:none; cursor:pointer; color:
 .send-btn svg{width:17px; height:17px;}
 
 .rec-wrap{align-self:stretch; margin-top:4px; opacity:0; transform:translateY(8px); animation:rise .4s ease forwards;}
+.diag-wrap{align-self:stretch; margin-top:4px; opacity:0; transform:translateY(8px); animation:rise .4s ease forwards;}
+.diag-card{background:var(--bg-raised); border:1px solid rgba(238,113,72,.35); border-radius:16px; padding:18px;}
+.diag-header{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+.diag-icon{width:32px; height:32px; border-radius:50%; background:rgba(238,113,72,.15); display:flex; align-items:center; justify-content:center; color:var(--coral); flex:0 0 32px;}
+.diag-icon svg{width:16px; height:16px;}
+.diag-title{font-size:14.5px; font-weight:800;}
+.diag-list{list-style:none; margin-bottom:14px;}
+.diag-list li{display:flex; gap:9px; align-items:flex-start; padding:6px 0; font-size:13px; color:var(--ink-dim); line-height:1.5;}
+.diag-list li svg{width:14px; height:14px; color:var(--coral); flex:0 0 14px; margin-top:2px;}
+.diag-conclusion{background:rgba(238,113,72,.08); border-left:3px solid var(--coral); border-radius:0 10px 10px 0; padding:11px 14px; font-size:13.5px; color:#fff; font-weight:600; line-height:1.5;}
 .rec-card{position:relative; background:var(--bg-raised); border:1px solid rgba(255,255,255,.15); border-radius:16px; overflow:hidden;}
 .rec-cover{height:150px; background:linear-gradient(155deg,#EE7148,#3a1a10); display:flex; align-items:flex-end; padding:14px;}
 .rec-tag{font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:rgba(247,242,233,.85); background:rgba(0,0,0,.25); padding:4px 10px; border-radius:20px;}
@@ -257,14 +267,14 @@ button{font-family:inherit; border:none; background:none; cursor:pointer; color:
     <a class="social-btn" href="https://www.linkedin.com/in/rayhan-coelho-882200426/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3A2 2 0 0121 5v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14zM8.34 18.34V10.13H5.67v8.21h2.67zM7 8.94a1.55 1.55 0 100-3.1 1.55 1.55 0 000 3.1zM18.34 18.34v-4.45c0-2.38-1.27-3.49-2.96-3.49a2.55 2.55 0 00-2.31 1.27h-.03V10.13H10.4c.03.7 0 8.21 0 8.21h2.64v-4.58c0-.24.02-.49.09-.66.2-.49.65-1 1.4-1 1 0 1.4.75 1.4 1.86v4.38h2.41z"/></svg></a>
   </div>
 
-  <button class="quiz-card" id="quizCta">
+  <a class="quiz-card" id="quizCta" href="quiz.html">
     <div class="quiz-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
     <div class="quiz-text">
       <div class="quiz-q-inline">Qual pilar está te travando agora?</div>
       <div class="quiz-sub-inline">Responda e eu te indico o caminho certo pro seu momento.</div>
     </div>
     <div class="quiz-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-  </button>
+  </a>
 
   <a class="link-card" href="livros.html" target="_blank" rel="noopener" id="booksLink">
     <div class="link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
@@ -605,14 +615,32 @@ function question4(){
 
 async function finish(){
   const key = pickResult();
+  const p = PRODUCTS[key];
   const insight = { presenca:'seu corpo trava antes mesmo de você abrir a boca', voz:'sua voz não segura quem te escuta até o fim',
       escuta:'você ouve esperando a vez de falar, não pra entender', mensagem:'você fala bastante, mas ninguém lembra do que disse',
       corpo:'seu corpo entrega o nervosismo antes da sua voz', palco:'na hora do palco, o pânico assume o lugar da sua mensagem',
       diaadia:'você sabe o que fazer, mas esquece bem na hora H' }[key];
 
-  const resumo = userAnswers.slice(0,3).join(', ') + ' e ' + userAnswers[3];
-  await addBotLine(userName+', juntando o que você me contou: '+resumo+'.');
-  await addBotLine('Dá pra ver um padrão bem claro aí: '+insight+'. Isso aponta direto pro seu pilar de maior dificuldade agora.');
+  await addBotLine(userName+', montei seu diagnóstico com base em tudo que você me contou 👇');
+
+  const diagWrap = document.createElement('div');
+  diagWrap.className = 'diag-wrap';
+  const itemsHtml = userAnswers.map(a => `
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>${a.charAt(0).toUpperCase()+a.slice(1)}</span></li>
+  `).join('');
+  diagWrap.innerHTML = `
+    <div class="diag-card">
+      <div class="diag-header">
+        <div class="diag-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11H5a2 2 0 00-2 2v7a2 2 0 002 2h4m0-11v11m0-11h6m-6 11h6m0-11h4a2 2 0 012 2v7a2 2 0 01-2 2h-4m0-11v11"/></svg></div>
+        <div class="diag-title">Seu diagnóstico, ${userName}</div>
+      </div>
+      <ul class="diag-list">${itemsHtml}</ul>
+      <div class="diag-conclusion">Juntando tudo isso, o padrão é bem claro: ${insight}. Esse é o pilar que mais está travando sua comunicação agora.</div>
+    </div>`;
+  chatBody.appendChild(diagWrap);
+  scrollDown();
+
+  await addBotLine('Separei o pilar certo pra destravar exatamente isso 👇');
   showRecommendation(key);
 }
 
@@ -622,7 +650,6 @@ function openQuiz(){
 }
 function closeQuiz(){ quizOverlay.classList.remove('open'); }
 
-document.getElementById('quizCta').addEventListener('click', openQuiz);
 document.getElementById('quizClose').addEventListener('click', closeQuiz);
 quizOverlay.addEventListener('click', (e)=>{ if(e.target === quizOverlay) closeQuiz(); });
 
