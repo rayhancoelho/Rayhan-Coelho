@@ -81,28 +81,37 @@ button{border:none; background:none; cursor:pointer;}
 
   <div class="body-area">
 
-    <!-- Passo 1 -->
+    <!-- Passo 1: dor -->
     <div class="q-step active" data-step="1">
-      <div class="q-title">Você quer melhorar sua comunicação?</div>
+      <div class="q-title">Você trava, gagueja ou esquece o que ia falar bem na hora que mais precisa?</div>
       <div class="q-options">
-        <button class="q-opt" onclick="answerStep1(true)"><span class="q-badge">A</span>SIM</button>
-        <button class="q-opt" onclick="answerStep1(false)"><span class="q-badge">B</span>NÃO</button>
+        <button class="q-opt" onclick="answerStep1(true)"><span class="q-badge">A</span>SIM, ACONTECE</button>
+        <button class="q-opt" onclick="answerStep1(false)"><span class="q-badge">B</span>NÃO, QUASE NUNCA</button>
       </div>
     </div>
 
-    <!-- Passo 2: nome -->
+    <!-- Passo 2: custo do problema -->
     <div class="q-step" data-step="2">
-      <div class="q-title">Digite seu nome completo</div>
-      <input class="q-input" id="nomeInput" type="text" placeholder="Sua resposta..." oninput="toggleNomeBtn()">
-      <button class="q-advance" id="nomeBtn" disabled onclick="goToStep(3)">Avançar</button>
+      <div class="q-title">Isso já te custou uma oportunidade — entrevista, venda, apresentação, conversa importante?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="goToStep(3)"><span class="q-badge">A</span>JÁ PERDI ALGO</button>
+        <button class="q-opt" onclick="goToStep(3)"><span class="q-badge">B</span>AINDA NÃO, MAS TENHO MEDO</button>
+      </div>
     </div>
 
-    <!-- Passo 3: dinheiro -->
+    <!-- Passo 3: nome -->
     <div class="q-step" data-step="3">
-      <div class="q-title">Você tem R$15,30 por mês pra investir na sua comunicação?</div>
+      <div class="q-title">Digite seu nome completo</div>
+      <input class="q-input" id="nomeInput" type="text" placeholder="Sua resposta..." oninput="toggleNomeBtn()">
+      <button class="q-advance" id="nomeBtn" disabled onclick="goToStep(4)">Avançar</button>
+    </div>
+
+    <!-- Passo 4: dinheiro, reforçada pelo contraste -->
+    <div class="q-step" data-step="4">
+      <div class="q-title">Sabendo que já te custou isso, vale R$15,30 por mês pra nunca mais passar por isso?</div>
       <div class="q-options">
-        <button class="q-opt" onclick="answerStep3(true)"><span class="q-badge">A</span>SIM, TENHO</button>
-        <button class="q-opt" onclick="answerStep3(false)"><span class="q-badge">B</span>NÃO, NO MOMENTO NÃO</button>
+        <button class="q-opt" onclick="answerStep4(true)"><span class="q-badge">A</span>SIM, VALE</button>
+        <button class="q-opt" onclick="answerStep4(false)"><span class="q-badge">B</span>NÃO, NO MOMENTO NÃO</button>
       </div>
     </div>
 
@@ -135,13 +144,13 @@ function toggleNomeBtn(){
   document.getElementById('nomeBtn').disabled = val.length < 2;
 }
 
-function answerStep1(quer){
-  if(!quer){ showEnd(); return; }
+function answerStep1(acontece){
+  if(!acontece){ showEnd(); return; }
   goToStep(2);
 }
 
-function answerStep3(tem){
-  if(!tem){ showEnd(); return; }
+function answerStep4(vale){
+  if(!vale){ showEnd(); return; }
   const msg = "Tenho interesse no método de comunicação do Rayhan Coelho!";
   window.location.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
 }
@@ -155,7 +164,7 @@ function showEnd(){
 function goToStep(step){
   document.querySelectorAll('.q-step').forEach(el => el.classList.remove('active'));
   document.querySelector(`.q-step[data-step="${step}"]`).classList.add('active');
-  document.getElementById('progressFill').style.width = (step / 3 * 100) + '%';
+  document.getElementById('progressFill').style.width = (step / 4 * 100) + '%';
 }
 
 function restartQuiz(){
