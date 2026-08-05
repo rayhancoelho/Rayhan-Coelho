@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -173,13 +172,23 @@ button{border:none; background:none; cursor:pointer;}
       <div class="q-title" style="font-size:22px;">Pra fechar seu diagnóstico</div>
       <div class="q-label">Seu nome</div>
       <input class="q-input" id="nomeInput" type="text" placeholder="Digite seu nome" oninput="checkFinalReady()">
+      <p style="font-size:12px; color:var(--ink-dim); margin-top:-14px; margin-bottom:22px;">Seus dados ficam só entre você e o Rayhan.</p>
       <div class="q-label">Com que frequência você precisa falar em público, reuniões ou apresentações importantes?</div>
       <div class="q-options">
         <button class="q-opt freq-opt" onclick="setFreq('Quase todo dia', this)"><span class="q-badge">A</span>Quase todo dia</button>
         <button class="q-opt freq-opt" onclick="setFreq('Algumas vezes por semana', this)"><span class="q-badge">B</span>Algumas vezes por semana</button>
         <button class="q-opt freq-opt" onclick="setFreq('Raramente, mas quando acontece é decisivo', this)"><span class="q-badge">C</span>Raramente, mas quando acontece é decisivo</button>
       </div>
-      <button class="q-advance" id="finalBtn" disabled onclick="showResult()" style="margin-top:22px;">Ver meu resultado →</button>
+      <button class="q-advance" id="finalBtn" disabled onclick="goToStep(9)" style="margin-top:22px;">Continuar →</button>
+    </div>
+
+    <div class="q-step" data-step="9">
+      <div class="q-title">Última pergunta: você estaria disposto(a) a investir pra resolver isso agora?</div>
+      <div class="q-options">
+        <button class="q-opt" onclick="setInvest('Sim, sem pensar duas vezes')"><span class="q-badge">A</span>Sim, sem pensar duas vezes</button>
+        <button class="q-opt" onclick="setInvest('Depende do que vem junto')"><span class="q-badge">B</span>Depende do que vem junto</button>
+        <button class="q-opt" onclick="setInvest('Não, prefiro tentar sozinho por enquanto')"><span class="q-badge">C</span>Não, prefiro tentar sozinho por enquanto</button>
+      </div>
     </div>
 
     <div class="q-step" data-step="result">
@@ -205,6 +214,8 @@ button{border:none; background:none; cursor:pointer;}
         <a class="wa-btn" id="waBtn" href="#" target="_blank" rel="noopener">Falar com o Rayhan agora →</a>
         <div class="wa-note">Sem compromisso. Você tira suas dúvidas antes de decidir.</div>
       </div>
+
+      <p style="text-align:center; font-size:12px; color:var(--ink-dim); margin-top:20px;">Mais de 5 mil pessoas já aplicaram alguma técnica do método, através do conteúdo gratuito do Rayhan.</p>
     </div>
 
   </div>
@@ -227,12 +238,18 @@ const PILLAR_ORDER = ["presenca","voz","escuta","mensagem","corporal","publico",
 
 let scores = {};
 let freq = "";
+let invest = "";
 let history = ["intro"];
 
 function answer(pillar, val){
   scores[pillar] = val;
   const nextIndex = PILLAR_ORDER.indexOf(pillar) + 2;
   goToStep(nextIndex <= 7 ? nextIndex : 8);
+}
+
+function setInvest(label){
+  invest = label;
+  showResult();
 }
 
 function setFreq(label, el){
@@ -263,7 +280,7 @@ function render(step){
   document.querySelectorAll('.q-step').forEach(el => el.classList.remove('active'));
   document.querySelector(`.q-step[data-step="${step}"]`).classList.add('active');
 
-  const totalSteps = 8;
+  const totalSteps = 9;
   let stepNum = (step === 'intro' || step === 'result') ? null : step;
   document.getElementById('stepCounter').textContent = stepNum ? `${stepNum} / ${totalSteps}` : '';
   document.getElementById('progressFill').style.width = step === 'intro' ? '0%' : (step === 'result' ? '100%' : (stepNum/totalSteps*100) + '%');
@@ -329,9 +346,9 @@ function showResult(){
   });
 
   document.getElementById('weakTitle').textContent = `Seu ponto mais fraco: ${weakestLabel}`;
-  document.getElementById('weakBody').textContent = `Foi aqui que você pontuou mais baixo. Não é falta de talento — é um padrão específico que o Método Completo (os 7 pilares) foi feito pra corrigir, começando exatamente por aqui.`;
+  document.getElementById('weakBody').textContent = `Foi aqui que você pontuou mais baixo. Não é falta de talento, é um padrão específico que o Método Completo (os 7 pilares) foi feito pra corrigir, começando exatamente por aqui.`;
 
-  const msg = `Oi Rayhan! Fiz o diagnóstico de comunicação e minha nota foi ${avg}/100 (${stage.replace('Estágio: ','')}). Meu ponto mais fraco é: ${weakestLabel}. Meu nome é ${nome}. Quero saber como resolver isso com o Método Completo.`;
+  const msg = `Oi Rayhan! Fiz o diagnóstico de comunicação e minha nota foi ${avg}/100 (${stage.replace('Estágio: ','')}). Meu ponto mais fraco é: ${weakestLabel}. Meu nome é ${nome}. Quero saber como resolver isso com o Método Completo.${invest === 'Sim, sem pensar duas vezes' ? ' Já estou pronto(a) pra investir nisso.' : ''}`;
   document.getElementById('waBtn').href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
 
   goToStep('result');
