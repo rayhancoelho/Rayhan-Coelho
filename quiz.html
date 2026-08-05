@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -95,11 +96,9 @@ button{border:none; background:none; cursor:pointer;}
       <p style="color:var(--ink-dim); font-size:15px; line-height:1.6; margin-bottom:26px;">Você trava, gagueja ou perde a linha de raciocínio na hora de falar? Em 3 minutos, descubra seu nível de maturidade em comunicação e quais dos 7 pilares você precisa destravar primeiro.</p>
       <button class="q-advance" onclick="goToStep(1)">Começar diagnóstico →</button>
       <p style="text-align:center; font-size:12.5px; color:var(--ink-dim); margin-top:14px;">7 perguntas · resultado na hora · gratuito</p>
-      <p style="text-align:center; font-size:12px; color:var(--ink-dim); margin-top:18px;">Baseado no Método Voz que Conecta®, já aplicado com mais de 5 mil pessoas.</p>
     </div>
 
     <div class="q-step" data-step="1">
-      <div class="q-pillar-tag">Pilar 1 · Presença e Calma</div>
       <div class="q-title">Quando você precisa falar em um momento importante, o que acontece com seu corpo?</div>
       <div class="q-options">
         <button class="q-opt" onclick="answer('presenca',0)"><span class="q-badge">A</span>Coração dispara, voz treme, e às vezes a mente apaga.</button>
@@ -110,7 +109,6 @@ button{border:none; background:none; cursor:pointer;}
     </div>
 
     <div class="q-step" data-step="2">
-      <div class="q-pillar-tag">Pilar 2 · Voz e Dicção</div>
       <div class="q-title">Como está sua voz numa apresentação ou conversa mais longa?</div>
       <div class="q-options">
         <button class="q-opt" onclick="answer('voz',0)"><span class="q-badge">A</span>Acelero, fico monótono(a) ou a voz morre no final das frases.</button>
@@ -121,7 +119,6 @@ button{border:none; background:none; cursor:pointer;}
     </div>
 
     <div class="q-step" data-step="3">
-      <div class="q-pillar-tag">Pilar 3 · Escuta e Empatia</div>
       <div class="q-title">O que geralmente acontece quando alguém está falando com você?</div>
       <div class="q-options">
         <button class="q-opt" onclick="answer('escuta',0)"><span class="q-badge">A</span>Já estou montando minha resposta antes da pessoa terminar.</button>
@@ -132,7 +129,6 @@ button{border:none; background:none; cursor:pointer;}
     </div>
 
     <div class="q-step" data-step="4">
-      <div class="q-pillar-tag">Pilar 4 · Mensagem que Gruda</div>
       <div class="q-title">Depois que você explica algo importante, o que costuma acontecer?</div>
       <div class="q-options">
         <button class="q-opt" onclick="answer('mensagem',0)"><span class="q-badge">A</span>As pessoas esquecem ou perguntam "qual era mesmo o ponto?"</button>
@@ -143,7 +139,6 @@ button{border:none; background:none; cursor:pointer;}
     </div>
 
     <div class="q-step" data-step="5">
-      <div class="q-pillar-tag">Pilar 5 · Linguagem Corporal</div>
       <div class="q-title">O que seu corpo faz enquanto você fala?</div>
       <div class="q-options">
         <button class="q-opt" onclick="answer('corporal',0)"><span class="q-badge">A</span>Não sei o que fazer com as mãos, evito contato visual.</button>
@@ -154,7 +149,6 @@ button{border:none; background:none; cursor:pointer;}
     </div>
 
     <div class="q-step" data-step="6">
-      <div class="q-pillar-tag">Pilar 6 · Falar em Público</div>
       <div class="q-title">O que acontece quando você esquece uma parte do que preparou, em público?</div>
       <div class="q-options">
         <button class="q-opt" onclick="answer('publico',0)"><span class="q-badge">A</span>Travo. O foco vai todo pra própria ansiedade.</button>
@@ -165,7 +159,6 @@ button{border:none; background:none; cursor:pointer;}
     </div>
 
     <div class="q-step" data-step="7">
-      <div class="q-pillar-tag">Pilar 7 · Comunicação no Dia a Dia</div>
       <div class="q-title">No dia a dia, você consegue aplicar o que já sabe sobre comunicação?</div>
       <div class="q-options">
         <button class="q-opt" onclick="answer('diaadia',0)"><span class="q-badge">A</span>Sei o que fazer, mas esqueço bem na hora H.</button>
@@ -208,7 +201,7 @@ button{border:none; background:none; cursor:pointer;}
 
       <div class="cta-card">
         <h3>Receba seu plano completo</h3>
-        <p>Mais de 5 mil pessoas já aplicaram alguma técnica do meu método. Chama no WhatsApp que eu te explico como destravar o seu ponto mais fraco.</p>
+        <p>Chama no WhatsApp que eu te explico como destravar o seu ponto mais fraco.</p>
         <a class="wa-btn" id="waBtn" href="#" target="_blank" rel="noopener">Falar com o Rayhan agora →</a>
         <div class="wa-note">Sem compromisso. Você tira suas dúvidas antes de decidir.</div>
       </div>
@@ -279,10 +272,26 @@ function render(step){
   window.scrollTo(0,0);
 }
 
+function computeBlendedScores(raw){
+  const keys = PILLAR_ORDER;
+  const blended = {};
+  keys.forEach(k => {
+    const own = raw[k] || 0;
+    const others = keys.filter(x => x !== k).map(x => raw[x] || 0);
+    const othersAvg = others.reduce((a,b) => a+b, 0) / others.length;
+    // 70% peso na própria resposta do pilar, 30% influenciado pelas respostas dos outros pilares
+    const val = 0.7 * own + 0.3 * othersAvg;
+    blended[k] = Math.round(val);
+  });
+  return blended;
+}
+
 function showResult(){
   const nome = document.getElementById('nomeInput').value.trim();
 
-  const total = PILLAR_ORDER.reduce((sum,k) => sum + (scores[k] || 0), 0);
+  const blended = computeBlendedScores(scores);
+
+  const total = PILLAR_ORDER.reduce((sum,k) => sum + blended[k], 0);
   const avg = Math.round(total / PILLAR_ORDER.length);
 
   let stage, desc;
@@ -296,13 +305,13 @@ function showResult(){
   document.getElementById('stageDesc').textContent = desc;
 
   let weakestKey = PILLAR_ORDER[0];
-  PILLAR_ORDER.forEach(k => { if((scores[k]||0) < (scores[weakestKey]||0)) weakestKey = k; });
+  PILLAR_ORDER.forEach(k => { if(blended[k] < blended[weakestKey]) weakestKey = k; });
   const weakestLabel = PILLAR_LABELS[weakestKey];
 
   const list = document.getElementById('pillarsList');
   list.innerHTML = '';
   PILLAR_ORDER.forEach(k => {
-    const val = scores[k] || 0;
+    const val = blended[k];
     const isWeak = k === weakestKey;
     const row = document.createElement('div');
     row.className = 'pillar-row';
