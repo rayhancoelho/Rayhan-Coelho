@@ -97,7 +97,7 @@ button{border:none; background:none; cursor:pointer;}
       <div class="q-pillar-tag">Ferramenta gratuita</div>
       <div class="q-title" style="font-size:28px;">Diagnóstico de Comunicação</div>
       <p style="color:var(--ink-dim); font-size:15px; line-height:1.6; margin-bottom:26px;">Você trava, gagueja ou perde a linha de raciocínio na hora de falar? Em 3 minutos, descubra seu nível de maturidade em comunicação e quais dos 7 pilares você precisa destravar primeiro.</p>
-      <button class="q-advance" onclick="goToStep(1)">Começar diagnóstico →</button>
+      <button class="q-advance" onclick="startQuiz()">Começar diagnóstico →</button>
       <p style="text-align:center; font-size:12.5px; color:var(--ink-dim); margin-top:14px;">7 perguntas · resultado na hora · gratuito</p>
     </div>
 
@@ -244,14 +244,58 @@ const WA_NUMBER = "5548996290222";
 // Cole aqui a URL do seu Google Apps Script depois de publicar (veja instruções que te passei)
 const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzL3Sw_ToJfa2myFZ0_1b1vyiy5SRYzXaCateTRtN9aqpd-A3Ic9t3e1Mp03opOrNE/exec";
 
-function sendToSheet(data){
+// ID único por visitante/sessão do quiz — é o que permite atualizar a MESMA linha
+// na planilha conforme a pessoa avança, em vez de criar uma linha nova a cada envio.
+const SESSION_ID = 'q_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
+
+// Guarda o último status enviado, pra não mandar "saiu" depois que a pessoa já completou.
+let currentStatus = 'nao_iniciado';
+
+function sendToSheet(data, useBeacon){
   if(!SHEET_WEBHOOK_URL || SHEET_WEBHOOK_URL.indexOf('COLE_AQUI') !== -1) return;
+
+  // sendBeacon é usado quando a pessoa está saindo da página — funciona mesmo que
+  // a aba feche antes de uma requisição fetch normal terminar.
+  if(useBeacon && navigator.sendBeacon){
+    try{
+      navigator.sendBeacon(SHEET_WEBHOOK_URL, new Blob([JSON.stringify(data)], {type: 'text/plain'}));
+      return;
+    }catch(err){ /* cai pro fetch abaixo se o beacon falhar */ }
+  }
+
   fetch(SHEET_WEBHOOK_URL, {
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify(data)
   }).catch(() => {});
+}
+
+// Monta o payload atual com tudo que já se sabe sobre a pessoa até este ponto,
+// mesmo que ela nunca chegue ao resultado final.
+function buildPayload(status, extra){
+  extra = extra || {};
+  const nomeEl = document.getElementById('nomeInput');
+  const telEl = document.getElementById('telInput');
+  const answeredCount = Object.keys(scores).length;
+
+  return Object.assign({
+    session_id: SESSION_ID,
+    status: status,
+    etapa_atual: `${currentStepGlobal} (${answeredCount}/7 perguntas respondidas)`,
+    nome: nomeEl ? nomeEl.value.trim() : '',
+    whatsapp: telEl ? telEl.value.trim() : '',
+    score: '',
+    estagio: '',
+    pilar_mais_fraco: '',
+    disposicao: invest
+  }, extra);
+}
+
+// Ponto único de tracking: atualiza o status atual e dispara o envio pra planilha.
+function track(status, extra, useBeacon){
+  currentStatus = status;
+  sendToSheet(buildPayload(status, extra), useBeacon);
 }
 
 const PILLAR_LABELS = {
@@ -298,15 +342,24 @@ let scores = {};
 let freq = "";
 let invest = "";
 let history = ["intro"];
+let currentStepGlobal = "intro";
+let contactTracked = false; // evita mandar "preencheu_contato" repetidas vezes a cada tecla
+
+function startQuiz(){
+  track('iniciou');
+  goToStep(1);
+}
 
 function answer(pillar, val){
   scores[pillar] = val;
+  track('respondendo');
   const nextIndex = PILLAR_ORDER.indexOf(pillar) + 2;
   goToStep(nextIndex <= 7 ? nextIndex : 8);
 }
 
 function setInvest(label){
   invest = label;
+  track('respondeu_disposicao');
   goToStep('loading');
 
   const msgs = [
@@ -353,11 +406,21 @@ function checkFinalReady(){
   const tel = document.getElementById('telInput').value.trim();
   const telValid = isValidBrazilPhone(tel);
   document.getElementById('telError').style.display = (tel.length > 0 && !telValid) ? 'block' : 'none';
-  document.getElementById('finalBtn').disabled = !(nome.length >= 2 && telValid && freq);
+  const ready = nome.length >= 2 && telValid && freq;
+  document.getElementById('finalBtn').disabled = !ready;
+
+  // Assim que nome + whatsapp válidos existem, já registra na planilha —
+  // esse é o momento mais valioso pra recuperar quem abandona, porque já dá pra
+  // chamar a pessoa no WhatsApp mesmo que ela nunca termine o quiz.
+  if(nome.length >= 2 && telValid && !contactTracked){
+    contactTracked = true;
+    track('preencheu_contato');
+  }
 }
 
 function goToStep(step){
   history.push(step);
+  currentStepGlobal = step;
   render(step);
 }
 
@@ -365,6 +428,7 @@ function goBack(){
   if(history.length <= 1) return;
   history.pop();
   const prev = history[history.length - 1];
+  currentStepGlobal = prev;
   render(prev);
 }
 
@@ -460,13 +524,10 @@ function showResult(){
 
   const salesUrl = PILLAR_SALES_URL[weakestKey];
 
-  sendToSheet({
-    nome: nome,
-    whatsapp: tel,
+  track('completo', {
     score: avg,
     estagio: stage.replace('Estágio: ',''),
-    pilar_mais_fraco: weakestLabel,
-    disposicao: invest
+    pilar_mais_fraco: weakestLabel
   });
 
   const params = new URLSearchParams({
@@ -480,6 +541,18 @@ function showResult(){
 
   goToStep('result');
 }
+
+// Se a pessoa fecha a aba, troca de app ou sai no meio do quiz, registra o
+// último estado dela como "saiu" — assim ela não desaparece da planilha.
+function handlePossibleExit(){
+  if(currentStatus !== 'completo' && currentStatus !== 'nao_iniciado'){
+    track('saiu', {}, true);
+  }
+}
+document.addEventListener('visibilitychange', () => {
+  if(document.visibilityState === 'hidden') handlePossibleExit();
+});
+window.addEventListener('pagehide', handlePossibleExit);
 </script>
 
 </body>
