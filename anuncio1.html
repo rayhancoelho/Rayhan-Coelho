@@ -27,7 +27,7 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
 <style>
 :root{
   --bg:#4B4B4D; --bg-raised:#101012; --ink:#FFFFFF; --ink-dim:rgba(255,255,255,.65);
-  --coral:#4FA88A; --coral-ink:#0C0C0C; --line:rgba(255,255,255,0.14);
+  --coral:#EE7148; --coral-ink:#0C0C0C; --line:rgba(255,255,255,0.14);
   --green:#25D366; --green-ink:#052013;
   --display:'Fraunces', serif; --body:'Manrope', sans-serif;
 }
@@ -124,7 +124,7 @@ details[open] summary::after{content:"–";}
   <div class="eyebrow">Pilar 1 · Presença e Calma</div>
   <h1 class="hero-title">A Presença</h1>
   <p class="hero-sub-text">O primeiro pilar pra parar de travar antes mesmo de abrir a boca.</p>
-  <a class="cta-green" href="https://pay.kiwify.com.br/3Do6yJS" target="_blank" rel="noopener">Quero começar agora →</a>
+  <a class="cta-green" href="https://pay.kiwify.com.br/3Do6yJS" target="_blank" rel="noopener" onclick="fbq('track','InitiateCheckout')">Quero começar agora →</a>
 </div>
 
 <div class="block-agitate">
@@ -132,7 +132,7 @@ details[open] summary::after{content:"–";}
     <p class="agit-lead">Na hora de falar, <b>seu corpo trava antes da sua boca abrir</b>, e isso não tem nada a ver com preparo ou talento.</p>
     <p class="agit-body">O coração acelera, a voz sai tremida logo no início, e às vezes a mente apaga bem na hora que você mais precisa de clareza. Você sente isso em reuniões, em conversas importantes, na frente da câmera.</p>
     <p class="agit-body">Isso acontece porque <b>seu corpo interpreta o momento de falar como uma ameaça real</b>, mesmo sem nenhum perigo. O sistema nervoso dispara antes da sua razão conseguir intervir.</p>
-    <a class="cta-green" href="https://pay.kiwify.com.br/3Do6yJS" target="_blank" rel="noopener">Quero começar agora →</a>
+    <a class="cta-green" href="https://pay.kiwify.com.br/3Do6yJS" target="_blank" rel="noopener" onclick="fbq('track','InitiateCheckout')">Quero começar agora →</a>
   </div>
 </div>
 
@@ -240,7 +240,7 @@ details[open] summary::after{content:"–";}
         <li><span class="ck">✓</span><span class="tx">Material de apoio em PDF</span></li>
         <li><span class="ck">✓</span><span class="tx">1 ano de acesso, com as aulas novas do módulo</span></li>
       </ul>
-      <a class="cta-green" href="https://pay.kiwify.com.br/3Do6yJS" target="_blank" rel="noopener">Quero começar agora →</a>
+      <a class="cta-green" href="https://pay.kiwify.com.br/3Do6yJS" target="_blank" rel="noopener" onclick="fbq('track','InitiateCheckout')">Quero começar agora →</a>
       <div class="price-note" style="margin-top:14px; margin-bottom:0">Garantia incondicional de 7 dias.</div>
     </div>
   </div>
@@ -271,5 +271,24 @@ details[open] summary::after{content:"–";}
   </div>
 </div>
 
+<script>
+/* ======= COLE AQUI A URL DO SEU APPS SCRIPT (ver instruções enviadas) ======= */
+const SHEET_WEBHOOK_URL = 'COLE_AQUI_A_URL_DO_SEU_WEB_APP';
+/* ============================================================================ */
+
+function logToSheet(evento){
+  if(!SHEET_WEBHOOK_URL || SHEET_WEBHOOK_URL.indexOf('COLE_AQUI') !== -1) return;
+  fetch(SHEET_WEBHOOK_URL, {
+    method:'POST', mode:'no-cors', headers:{ 'Content-Type':'text/plain' },
+    body: JSON.stringify({ evento, pagina:'anuncio1', data:new Date().toISOString() }),
+  }).catch(()=>{});
+}
+
+logToSheet('PageView');
+
+document.querySelectorAll('.cta-green').forEach(btn=>{
+  btn.addEventListener('click', ()=> logToSheet('InitiateCheckout'));
+});
+</script>
 </body>
 </html>
