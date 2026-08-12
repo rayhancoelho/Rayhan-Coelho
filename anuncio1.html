@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2161305631446853');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VOC — O minicurso de presença e calma para quem trava por timidez</title>
@@ -423,7 +441,7 @@
         <span class="to">R$47,90</span>
       </div>
 
-      <a href="https://pay.kiwify.com.br/3Do6yJS" class="btn">Quero destravar minha presença agora</a>
+      <a href="https://pay.kiwify.com.br/3Do6yJS" class="btn" onclick="fbq('track','InitiateCheckout')">Quero destravar minha presença agora</a>
       <p class="btn-sub">Acesso imediato · pagamento único</p>
 
       <div class="mockup">
@@ -575,7 +593,7 @@
           está cansado de perder oportunidades por causa da timidez
         </li>
       </ul>
-      <a href="https://pay.kiwify.com.br/3Do6yJS" class="btn">Quero destravar minha presença agora</a>
+      <a href="https://pay.kiwify.com.br/3Do6yJS" class="btn" onclick="fbq('track','InitiateCheckout')">Quero destravar minha presença agora</a>
     </div>
   </section>
 
@@ -599,7 +617,7 @@
         <div class="price-line" style="margin:6px 0 20px;">
           <span class="to">R$47,90</span>
         </div>
-        <a href="https://pay.kiwify.com.br/3Do6yJS" class="btn">Quero destravar minha presença agora</a>
+        <a href="https://pay.kiwify.com.br/3Do6yJS" class="btn" onclick="fbq('track','InitiateCheckout')">Quero destravar minha presença agora</a>
         <p class="btn-sub">Pagamento único · acesso imediato ao minicurso e a todos os bônus</p>
       </div>
     </div>
@@ -660,7 +678,7 @@
       </ul>
       <p class="no">Não deixe pra depois.</p>
       <p class="closer">Clique abaixo e garanta seu acesso ao VOC hoje mesmo.</p>
-      <a href="https://pay.kiwify.com.br/3Do6yJS" class="btn">Quero destravar minha presença agora</a>
+      <a href="https://pay.kiwify.com.br/3Do6yJS" class="btn" onclick="fbq('track','InitiateCheckout')">Quero destravar minha presença agora</a>
     </div>
   </section>
 
@@ -668,5 +686,25 @@
     Todos os direitos reservados. Voz que Conecta®
   </footer>
 
+
+<script>
+/* ======= URL do Apps Script (planilha) ======= */
+const SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzii4mp3EPFPfo-8O6ZRHQpvvllPo2UODqZvzBRnNME7KMtejzHVRF1-IZEM1iMOg/exec';
+/* ============================================== */
+
+function logToSheet(evento){
+  if(!SHEET_WEBHOOK_URL || SHEET_WEBHOOK_URL.indexOf('COLE_AQUI') !== -1) return;
+  fetch(SHEET_WEBHOOK_URL, {
+    method:'POST', mode:'no-cors', headers:{ 'Content-Type':'text/plain' },
+    body: JSON.stringify({ evento, pagina:'voc-vendas', data:new Date().toISOString() }),
+  }).catch(()=>{});
+}
+
+logToSheet('PageView');
+
+document.querySelectorAll('a[href="https://pay.kiwify.com.br/3Do6yJS"]').forEach(btn=>{
+  btn.addEventListener('click', ()=> logToSheet('InitiateCheckout'));
+});
+</script>
 </body>
 </html>
