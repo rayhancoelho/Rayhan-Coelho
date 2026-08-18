@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2161305631446853');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Voz que Conecta — Diagnóstico</title>
-<meta name="description" content="Descubra qual pilar da comunicação está travando sua fala. Diagnóstico gratuito de 3 minutos, por Rayhan Coelho.">
+<meta name="description" content="Descubra o que está travando sua fala por timidez. Diagnóstico gratuito de 3 minutos, por Rayhan Coelho.">
 <meta name="theme-color" content="#0C0C0C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,8 +34,8 @@
     --bg-elevated-2:#141414;
     --text:#F7F2E9;
     --text-secondary:#A6A199;
-    --accent:#EE7148;
-    --accent-dim:#8a4128;
+    --accent:#FF8500;
+    --accent-dim:#914C00;
     --line:#2B2B2B;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -62,11 +80,11 @@
     border:none;
     cursor:pointer;
     transition:transform .15s ease, box-shadow .15s ease;
-    box-shadow:0 8px 24px -8px rgba(238,113,72,0.5);
+    box-shadow:0 8px 24px -8px rgba(255,133,0,0.5);
   }
   .btn:active{transform:scale(.98);}
   @media (hover:hover){
-    .btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(238,113,72,0.6);}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(255,133,0,0.6);}
   }
   .btn-black{background:#000;color:var(--text);border:1px solid var(--line);box-shadow:none;}
 
@@ -116,7 +134,7 @@
   .glow{
     position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);
     width:340px;height:340px;border-radius:50%;
-    background:radial-gradient(circle at 35% 35%, rgba(238,113,72,0.28), rgba(238,113,72,0) 70%);
+    background:radial-gradient(circle at 35% 35%, rgba(255,133,0,0.28), rgba(255,133,0,0) 70%);
     filter:blur(2px);
     animation:breathe 6s ease-in-out infinite;
     pointer-events:none;
@@ -162,7 +180,7 @@
     transition:border-color .15s ease, background .15s ease, transform .1s ease;
   }
   @media (hover:hover){
-    .option:hover{border-color:rgba(238,113,72,0.4);background:#1f1f1f;}
+    .option:hover{border-color:rgba(255,133,0,0.4);background:#1f1f1f;}
   }
   .option.selected{border-color:var(--accent);background:#1f1f1f;transform:scale(.98);}
   .options.locked{pointer-events:none;}
@@ -189,7 +207,7 @@
   #verdict-body{color:var(--text-secondary);font-size:14.5px;line-height:1.65;max-width:440px;margin:0 auto 12px;}
   #result-stat{font-size:11px;color:var(--text-secondary);opacity:.75;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:30px;}
   .meter{max-width:340px;margin:0 auto;}
-  .meter-bar{height:6px;border-radius:999px;position:relative;background:linear-gradient(90deg,#EE7148 0%,#EE7148 35%,#c98a3f 60%,#7a2318 100%);}
+  .meter-bar{height:6px;border-radius:999px;position:relative;background:linear-gradient(90deg,#FF8500 0%,#FF8500 35%,#c98a3f 60%,#7a2318 100%);}
   #meter-marker{position:absolute;top:-4px;width:2px;height:14px;background:var(--text);border-radius:1px;transition:left .9s cubic-bezier(.16,1,.3,1);}
   .meter-labels{display:flex;justify-content:space-between;margin-top:10px;font-size:9px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);opacity:.7;}
 
@@ -281,13 +299,6 @@
 </head>
 <body>
 
-<nav id="main-nav">
-  <div class="wrap nav-inner">
-    <span class="nav-logo">Voz que Conecta<span style="color:var(--accent);">®</span></span>
-    <button id="nav-cta" class="nav-cta" data-mode="start">Começar diagnóstico</button>
-  </div>
-</nav>
-
 <main>
 
   <!-- INTRO -->
@@ -296,11 +307,8 @@
     <div class="intro-inner">
       <p class="eyebrow reveal active">Diagnóstico · 3 minutos</p>
       <h1 class="reveal active" style="transition-delay:80ms">Qual é a <em>raiz</em> da sua timidez?</h1>
-      <p class="lead reveal active" style="transition-delay:150ms">9 perguntas rápidas pra identificar exatamente onde a sua comunicação trava, e qual pilar do método <strong style="color:var(--text);font-weight:700;">Voz que Conecta</strong> destrava isso primeiro. <span class="light">(Spoiler: não é falta de coragem.)</span></p>
-      <p class="social-proof reveal active" style="transition-delay:200ms"><strong id="social-proof-count">58</strong> mil pessoas acompanham esse conteúdo sobre comunicação no Instagram</p>
-      <div class="intro-actions reveal active" style="transition-delay:250ms">
+      <div class="intro-actions reveal active" style="transition-delay:150ms">
         <button id="btn-start" class="btn">Começar diagnóstico →</button>
-        <span class="microcopy">Sem cadastro · leva menos de 3 minutos</span>
       </div>
     </div>
     <div id="wave-intro-wrap"><canvas id="wave-intro" width="280" height="48" style="width:260px;height:44px;"></canvas></div>
@@ -340,7 +348,7 @@
 
     <div class="quote-block reveal">
       <div class="wrap">
-        <p>Isso normalmente não é falta de conteúdo ou de personalidade: é a <em>timidez travando esse pilar específico</em> antes dos outros.</p>
+        <p>Isso normalmente não é falta de conteúdo ou de personalidade: é a <em>timidez travando esse ponto específico</em> antes dos outros.</p>
       </div>
     </div>
 
@@ -355,7 +363,7 @@
           <span class="eyebrow">Por onde começar</span>
           <h3 id="solve-title"></h3>
           <p id="solve-body"></p>
-          <a id="cta-pilar" data-cta class="btn btn-black" style="margin-top:18px;">Ver esse pilar →</a>
+          <a id="cta-pilar" data-cta class="btn btn-black" style="margin-top:18px;">Ver como resolver →</a>
         </div>
       </div>
     </div>
@@ -365,7 +373,7 @@
     <section class="final-block">
       <div class="wrap">
         <p id="cta-microcopy"></p>
-        <button data-cta class="btn" style="max-width:340px;margin:0 auto;">Quero destravar esse pilar →</button>
+        <button data-cta class="btn" style="max-width:340px;margin:0 auto;">Quero resolver isso agora →</button>
         <p class="guarantee">Garantia incondicional de 7 dias</p>
         <button id="btn-retake">Refazer o diagnóstico</button>
       </div>
@@ -374,30 +382,32 @@
   </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <div class="brand-mark">VOZ QUE CONECTA®</div>
-    <div class="links">
-      <a href="#">Instagram</a>
-      <a href="#">TikTok</a>
-      <a href="#">YouTube</a>
-      <a href="#">Rayhan Talks · Spotify</a>
-    </div>
-  </div>
-</footer>
-
 <div id="sticky-cta">
-  <button data-cta class="btn">Ver meu pilar →</button>
+  <button data-cta class="btn">Ver meu resultado →</button>
 </div>
 
 <script>
 (function(){
   "use strict";
 
+  /* ======= URL do Apps Script (planilha) ======= */
+  const SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzii4mp3EPFPfo-8O6ZRHQpvvllPo2UODqZvzBRnNME7KMtejzHVRF1-IZEM1iMOg/exec';
+  /* ============================================== */
+
+  function logToSheet(evento){
+    if(!SHEET_WEBHOOK_URL || SHEET_WEBHOOK_URL.indexOf('COLE_AQUI') !== -1) return;
+    fetch(SHEET_WEBHOOK_URL, {
+      method:'POST', mode:'no-cors', headers:{ 'Content-Type':'text/plain' },
+      body: JSON.stringify({ evento, pagina:'voc-quiz', data:new Date().toISOString() }),
+    }).catch(()=>{});
+  }
+
+  logToSheet('PageView');
+
   var pillars = {
     presenca: {
-      eyebrow: "Pilar 1 · Presença e Calma",
-      title: "A Presença",
+      eyebrow: "Dá um branco bem na hora que você mais precisa",
+      title: "Deu Branco",
       page: "anuncio1.html",
       body: "Você chega em casa depois de mais um dia em que engoliu o que queria dizer. A ideia boa que não virou palavra. A promoção que foi pra outra pessoa que \u201csabe se vender\u201d. Seu corpo trava antes da boca abrir, o coração acelera, a mente apaga bem na hora que você mais precisa de clareza. Não é falta de conteúdo: é o corpo reagindo como se falar fosse um perigo real.",
       sintomas: [
@@ -406,13 +416,13 @@
         "A mente apaga na hora que você mais precisa de clareza",
         "A respiração fica curta, presa no peito"
       ],
-      solveTitle: "Como o pilar Presença resolve isso",
+      solveTitle: "Como isso se resolve",
       solveBody: "Você aprende a reconhecer os primeiros sinais e desarmar essa resposta do corpo antes que ela tome conta, com respiração e ancoragem física.",
-      cta: "A Presença é o pilar que sustenta todos os outros. É por aqui que você destrava primeiro."
+      cta: "Isso é o que sustenta tudo o resto. É por aqui que você destrava primeiro."
     },
     voz: {
-      eyebrow: "Pilar 2 · Voz e Dicção",
-      title: "A Voz",
+      eyebrow: "Sua voz trava, treme ou fica baixa demais",
+      title: "Sua Voz Trava",
       page: "anuncio2.html",
       body: "Você está numa reunião importante e sente sua voz sumir bem na hora de defender sua ideia. Alguém repete o que você quis dizer, só que mais alto, mais firme, e leva o crédito. Não é falta de conteúdo: é a timidez tirando a força da sua voz, de novo.",
       sintomas: [
@@ -420,13 +430,13 @@
         "A voz sai monótona",
         "A voz morre no final das frases"
       ],
-      solveTitle: "Como o pilar Voz resolve isso",
+      solveTitle: "Como isso se resolve",
       solveBody: "Você treina a projeção pelo diafragma e aprende a usar volume, velocidade, tom e pausa de propósito, não no automático.",
-      cta: "A Voz é o pilar que sustenta sua mensagem do início ao fim."
+      cta: "Sua voz merece sustentar sua mensagem do início ao fim."
     },
     escuta: {
-      eyebrow: "Pilar 3 · Escuta e Empatia",
-      title: "A Escuta",
+      eyebrow: "Suas conversas nunca conectam de verdade",
+      title: "Falta Conexão",
       page: "anuncio3.html",
       body: "Você percebe, tarde demais, que interrompeu de novo. A pessoa do outro lado fecha a cara, a conversa esfria, e você fica remoendo por dias o que podia ter sido diferente. Não é falta de educação: é a pressa da timidez decidindo por você antes de você perceber.",
       sintomas: [
@@ -434,13 +444,13 @@
         "Você interrompe sem perceber",
         "As conversas acabam virando atrito"
       ],
-      solveTitle: "Como o pilar Escuta resolve isso",
+      solveTitle: "Como isso se resolve",
       solveBody: "Você pratica escuta ativa e a técnica de parafrasear antes de responder, criando um intervalo entre ouvir e reagir.",
       cta: "A Escuta é a base de qualquer conversa que não vira atrito."
     },
     mensagem: {
-      eyebrow: "Pilar 4 · Mensagem que Gruda",
-      title: "A Mensagem",
+      eyebrow: "Você começa a falar e se perde no meio do caminho",
+      title: "Você Se Enrola",
       page: "anuncio4.html",
       body: "Você passa a reunião inteira explicando, e no fim alguém pergunta \u201cmas qual era mesmo o ponto?\u201d. Você sente que gastou energia numa ideia que não chegou a lugar nenhum. Não é falta de conteúdo: é a timidez te fazendo enrolar pra não ter que ser direto.",
       sintomas: [
@@ -448,13 +458,13 @@
         "Perde o fio no meio da fala",
         "A ideia principal se perde em vez de grudar"
       ],
-      solveTitle: "Como o pilar Mensagem resolve isso",
+      solveTitle: "Como isso se resolve",
       solveBody: "Você aprende a estrutura de 3 tempos: gancho, no máximo 3 pontos, fechamento, pra sua ideia central sobreviver à conversa.",
-      cta: "A Mensagem é o pilar que faz o que você diz ficar na cabeça de quem ouve."
+      cta: "O que você diz merece ficar na cabeça de quem ouve."
     },
     corpo: {
-      eyebrow: "Pilar 5 · Linguagem Corporal",
-      title: "O Corpo Confirma",
+      eyebrow: "Seus braços fecham, seu olhar foge: o corpo entrega a timidez",
+      title: "Corpo Fechado",
       page: "anuncio5.html",
       body: "Você prepara o que vai dizer, ensaia até decorar, e na hora H seu corpo conta uma história diferente da sua voz: ombros fechados, olhar no chão, mãos sem lugar. As pessoas confiam no que veem antes do que ouvem. Não é falta de confiança: é o corpo entregando a timidez antes de você abrir a boca.",
       sintomas: [
@@ -462,27 +472,27 @@
         "Evita contato visual",
         "A postura fecha"
       ],
-      solveTitle: "Como o pilar Corpo resolve isso",
+      solveTitle: "Como isso se resolve",
       solveBody: "Você aprende onde colocar as mãos, como sustentar contato visual, e como alinhar postura e voz na mesma mensagem.",
-      cta: "O Corpo é o pilar que faz sua linguagem corporal confirmar o que você diz, não contradizer."
+      cta: "Seu corpo pode confirmar o que você diz, em vez de contradizer."
     },
     palco: {
-      eyebrow: "Pilar 6 · Falar em Público",
-      title: "O Palco",
+      eyebrow: "Com uma pessoa você flui. Em grupo, trava.",
+      title: "Trava Em Grupo",
       page: "anuncio6.html",
-      body: "Você decorou cada palavra, treinou na frente do espelho, e no palco, na primeira pergunta fora do script, a mente apaga. O silêncio se estica, a plateia percebe, e o que era pra ser sua melhor apresentação vira a que você mais quer esquecer. Não é falta de preparo: é pânico sem plano B.",
+      body: "Com um amigo, a conversa flui fácil. Mas na frente de um grupo, tudo muda: a voz sai diferente, o corpo enrijece, e você sente que está sendo avaliado por todo mundo ao mesmo tempo. Não é falta de preparo: é a plateia ativando um alarme que uma conversa a dois nunca ativa.",
       sintomas: [
         "Trava quando esquece uma parte do que preparou",
         "O foco vai pra própria ansiedade em vez do público",
         "Quando dá branco, não tem plano B"
       ],
-      solveTitle: "Como o pilar Palco resolve isso",
+      solveTitle: "Como isso se resolve",
       solveBody: "Você aprende a estrutura de abertura, condução e fechamento de uma apresentação, e um plano B pronto pra quando der branco.",
-      cta: "O Palco é o pilar que tira o pânico de cena na hora de apresentar."
+      cta: "Você pode tirar o pânico de cena na hora de apresentar."
     },
     habito: {
-      eyebrow: "Pilar 7 · Dia a Dia",
-      title: "O Hábito",
+      eyebrow: "Você sabe a teoria, mas trava do mesmo jeito na hora H",
+      title: "Sabe, Mas Trava",
       page: "anuncio7.html",
       body: "Você já sabe a teoria de cor. Já leu, já assistiu, já entendeu. Mas na hora H, sob pressão, o corpo volta pro automático de sempre, como se nada daquilo tivesse sido aprendido. Você sai da situação se sentindo do mesmo jeito de sempre, e a frustração pesa mais que o erro em si.",
       sintomas: [
@@ -490,9 +500,9 @@
         "Repete sempre o mesmo padrão",
         "Não percebe na hora o que te faz reagir errado"
       ],
-      solveTitle: "Como o pilar Hábito resolve isso",
+      solveTitle: "Como isso se resolve",
       solveBody: "Você treina perceber, na hora, o que te faz reagir errado, com pequenos exercícios que criam memória pro momento real, não só pra teoria.",
-      cta: "O Hábito é o pilar que transforma tudo isso em automático, mesmo sob pressão."
+      cta: "Dá pra transformar isso em automático, mesmo sob pressão."
     }
   };
 
@@ -578,7 +588,7 @@
 
   var loadingMessages = [
     "Cruzando seus padrões de resposta...",
-    "Localizando o pilar que trava sua fala...",
+    "Localizando o que trava sua fala...",
     "Preparando seu diagnóstico Voz que Conecta..."
   ];
 
@@ -600,8 +610,6 @@
   var quizToast = document.getElementById("quiz-toast");
   var btnBack = document.getElementById("btn-back");
   var stickyCta = document.getElementById("sticky-cta");
-  var navCta = document.getElementById("nav-cta");
-  var mainNav = document.getElementById("main-nav");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var resultPageUrl = "anuncio1.html";
 
@@ -612,8 +620,6 @@
     });
     progressRow.classList.toggle("show", name === "quiz");
     stickyCta.classList.toggle("show", name === "result");
-    navCta.textContent = (name === "result") ? "Ver meu pilar" : "Começar diagnóstico";
-    navCta.dataset.mode = (name === "result") ? "result" : "start";
     window.scrollTo(0,0);
   }
 
@@ -685,17 +691,10 @@
     state.scores = {};
     showScreen("quiz");
     renderQuestion();
+    logToSheet('QuizStart');
   }
 
   document.getElementById("btn-start").addEventListener("click", startQuiz);
-
-  navCta.addEventListener("click", function(){
-    if(navCta.dataset.mode === "result"){
-      window.location.href = resultPageUrl;
-    } else {
-      startQuiz();
-    }
-  });
 
   function finishQuiz(){
     showScreen("loading");
@@ -711,8 +710,10 @@
     }, 480);
     setTimeout(function(){
       clearInterval(msgInterval);
-      renderResult();
-      showScreen("result");
+      var id = pickPillar();
+      logToSheet('QuizComplete_' + id);
+      fbq('track', 'Lead');
+      window.location.href = pillars[id].page;
     }, 1500);
   }
 
@@ -784,8 +785,6 @@
     }
     requestAnimationFrame(step);
   }
-  animateCount(document.getElementById("social-proof-count"), 58, 1200);
-
   /* ---------- reveal on scroll ---------- */
   var revealObserver = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
@@ -793,11 +792,6 @@
     });
   }, { threshold:0.1, rootMargin:"0px 0px -50px 0px" });
   document.querySelectorAll(".reveal").forEach(function(el){ revealObserver.observe(el); });
-
-  /* ---------- navbar scroll effect ---------- */
-  window.addEventListener("scroll", function(){
-    mainNav.classList.toggle("scrolled", window.scrollY > 40);
-  });
 
   /* ---------- ambient waveform canvas ---------- */
   function startWave(canvas, barCount){
@@ -827,7 +821,7 @@
         var bh = Math.max(4, h * (0.15 + Math.abs(amp) * 0.65));
         var x = i * (barW + gap);
         var y = (h - bh) / 2;
-        ctx.fillStyle = i % 5 === 0 ? "#EE7148" : "rgba(247,242,233,0.18)";
+        ctx.fillStyle = i % 5 === 0 ? "#FF8500" : "rgba(247,242,233,0.18)";
         ctx.fillRect(x, y, barW, bh);
       }
       t++;
