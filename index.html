@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2161305631446853');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Voz que Conecta — Diagnóstico</title>
+<meta name="description" content="Descubra o que está travando sua fala por timidez. Diagnóstico gratuito de 3 minutos, por Rayhan Coelho.">
+<meta name="theme-color" content="#0C0C0C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0C0C0C;
+    --bg-elevated:#1A1A1A;
+    --bg-elevated-2:#141414;
+    --text:#F7F2E9;
+    --text-secondary:#A6A199;
+    --accent:#FF8500;
+    --accent-dim:#914C00;
+    --line:#2B2B2B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Manrope',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,svg,canvas{display:block;max-width:100%;}
+  a{color:inherit;}
+  button{font-family:inherit;}
+  ::selection{background:var(--accent);color:#151008;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-0.01em;}
+  em{color:var(--accent);font-style:normal;}
+  .eyebrow{
+    font-family:'Manrope',sans-serif;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+  .btn{
+    display:block;
+    width:100%;
+    text-align:center;
+    background:var(--accent);
+    color:#151008;
+    font-family:'Manrope',sans-serif;
+    font-weight:800;
+    font-size:14.5px;
+    letter-spacing:0.02em;
+    text-transform:uppercase;
+    padding:18px 20px;
+    border-radius:8px;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 8px 24px -8px rgba(255,133,0,0.5);
+  }
+  .btn:active{transform:scale(.98);}
+  @media (hover:hover){
+    .btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(255,133,0,0.6);}
+  }
+  .btn-black{background:#000;color:var(--text);border:1px solid var(--line);box-shadow:none;}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);}
+  .reveal.active{opacity:1;transform:translateY(0);}
+
+  .screen{display:none;}
+  section{padding:56px 0;}
+  .divider{height:1px;background:var(--line);width:100%;}
+  .bg-elevated{background:var(--bg-elevated);}
+  .bg-elevated-2{background:var(--bg-elevated-2);}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal, .option, *{transition:none !important;animation:none !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    padding:18px 0;
+    transition:background .3s ease, border-color .3s ease, padding .3s ease;
+  }
+  nav.scrolled{
+    background:rgba(12,12,12,0.85);
+    -webkit-backdrop-filter:blur(10px);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:12px 0;
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo{font-family:'Fraunces',serif;font-size:16px;letter-spacing:-0.01em;}
+  .nav-cta{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:9px 16px;border-radius:999px;
+    font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;
+    background:var(--text);color:#0C0C0C;border:none;cursor:pointer;
+  }
+
+  /* ---------- INTRO ---------- */
+  #screen-intro{
+    min-height:100svh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+    padding:110px 20px 60px;
+    text-align:center;
+  }
+  .glow{
+    position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);
+    width:340px;height:340px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, rgba(255,133,0,0.28), rgba(255,133,0,0) 70%);
+    filter:blur(2px);
+    animation:breathe 6s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.7;}50%{transform:translate(-50%,-50%) scale(1.18);opacity:1;}}
+  .intro-inner{position:relative;z-index:1;max-width:440px;}
+  #screen-intro h1{font-size:clamp(28px,7.5vw,42px);line-height:1.14;margin:16px 0 16px;}
+  #screen-intro .lead{color:var(--text-secondary);font-size:15.5px;max-width:380px;margin:0 auto 20px;}
+  #screen-intro .lead .light{color:var(--text-secondary);opacity:.75;}
+  .social-proof{
+    font-size:11px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.08em;
+    margin-bottom:26px;
+  }
+  .social-proof strong{color:var(--accent);font-weight:700;}
+  .intro-actions{display:flex;flex-direction:column;align-items:center;gap:12px;}
+  #btn-start{max-width:340px;}
+  .microcopy{font-size:10.5px;color:var(--text-secondary);opacity:.7;text-transform:uppercase;letter-spacing:0.08em;}
+  #wave-intro-wrap{position:absolute;bottom:26px;left:0;right:0;display:flex;justify-content:center;opacity:.35;pointer-events:none;}
+
+  /* ---------- QUIZ ---------- */
+  #screen-quiz{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:100px 20px 60px;}
+  .quiz-inner{max-width:420px;margin:0 auto;width:100%;}
+  #progress-row{display:none;align-items:center;gap:10px;margin-bottom:26px;font-size:10.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);}
+  #progress-row.show{display:flex;}
+  #progress-count{white-space:nowrap;font-variant-numeric:tabular-nums;}
+  .progress-track{flex:1;height:3px;border-radius:999px;background:var(--line);overflow:hidden;}
+  #progress-fill{height:100%;width:0;background:var(--accent);border-radius:999px;transition:width .3s ease;}
+  #btn-back{background:none;border:none;color:var(--text-secondary);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;margin-bottom:18px;padding:4px 0;}
+  #btn-back:disabled{visibility:hidden;}
+  #quiz-toast{
+    font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;
+    min-height:16px;margin-bottom:14px;opacity:0;transform:translateY(-4px);
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  #quiz-toast.show{opacity:1;transform:translateY(0);}
+  #q-title{font-size:clamp(19px,5.4vw,24px);line-height:1.3;margin-bottom:22px;}
+  #q-options{display:flex;flex-direction:column;gap:10px;}
+  .option{
+    display:flex;align-items:center;gap:13px;width:100%;text-align:left;
+    background:var(--bg-elevated);border:1px solid var(--line);color:var(--text);
+    padding:15px;border-radius:12px;font-size:14.5px;line-height:1.35;cursor:pointer;
+    font-family:'Manrope',sans-serif;
+    transition:border-color .15s ease, background .15s ease, transform .1s ease;
+  }
+  @media (hover:hover){
+    .option:hover{border-color:rgba(255,133,0,0.4);background:#1f1f1f;}
+  }
+  .option.selected{border-color:var(--accent);background:#1f1f1f;transform:scale(.98);}
+  .options.locked{pointer-events:none;}
+  .bars{display:flex;align-items:flex-end;gap:3px;flex:0 0 auto;height:18px;}
+  .bars span{width:3.5px;display:block;background:var(--line);border-radius:1px;}
+  .bars span:nth-child(1){height:5px;}
+  .bars span:nth-child(2){height:10px;}
+  .bars span:nth-child(3){height:14px;}
+  .bars span:nth-child(4){height:18px;}
+  .option[data-level="1"] .bars span:nth-child(-n+1){background:var(--accent);}
+  .option[data-level="2"] .bars span:nth-child(-n+2){background:var(--accent);}
+  .option[data-level="3"] .bars span:nth-child(-n+3){background:var(--accent);}
+  .option[data-level="4"] .bars span{background:#7a3a2a;}
+  .option[data-level="4"] .bars span:nth-child(-n+4){background:var(--accent);}
+
+  /* ---------- LOADING ---------- */
+  #screen-loading{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:0 20px;text-align:center;}
+  #loading-label{font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-secondary);}
+
+  /* ---------- RESULT ---------- */
+  #resultado{padding:100px 20px 48px;text-align:center;border-bottom:1px solid var(--line);}
+  #resultado .eyebrow{margin-bottom:12px;display:block;}
+  #verdict-title{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(30px,9vw,44px);margin-bottom:14px;}
+  #verdict-body{color:var(--text-secondary);font-size:14.5px;line-height:1.65;max-width:440px;margin:0 auto 12px;}
+  #result-stat{font-size:11px;color:var(--text-secondary);opacity:.75;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:30px;}
+  .meter{max-width:340px;margin:0 auto;}
+  .meter-bar{height:6px;border-radius:999px;position:relative;background:linear-gradient(90deg,#FF8500 0%,#FF8500 35%,#c98a3f 60%,#7a2318 100%);}
+  #meter-marker{position:absolute;top:-4px;width:2px;height:14px;background:var(--text);border-radius:1px;transition:left .9s cubic-bezier(.16,1,.3,1);}
+  .meter-labels{display:flex;justify-content:space-between;margin-top:10px;font-size:9px;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);opacity:.7;}
+
+  .quote-block{padding:56px 0;text-align:center;}
+  .quote-block p{font-family:'Fraunces',serif;font-size:clamp(19px,5vw,25px);line-height:1.4;color:var(--text);}
+
+  .pilar-grid{display:grid;grid-template-columns:1fr;gap:14px;}
+  .pilar-card{background:var(--bg-elevated);border:1px solid var(--line);border-radius:16px;padding:24px;}
+  .pilar-card .eyebrow{margin-bottom:10px;display:block;}
+  .pilar-card h3{font-size:19px;margin-bottom:14px;}
+  .pilar-card ul{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:13.5px;color:var(--text-secondary);}
+  .pilar-card ul li{display:flex;gap:10px;}
+  .pilar-card ul li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:7px;}
+  .pilar-card.solve{background:var(--accent);color:#151008;}
+  .pilar-card.solve .eyebrow{color:rgba(21,16,8,0.6);}
+  .pilar-card.solve h3{color:#151008;}
+  .pilar-card.solve p{font-size:13.5px;color:rgba(21,16,8,0.8);line-height:1.6;margin-bottom:10px;}
+  .pilar-card.solve p:last-child{margin-bottom:0;}
+
+  .section-title{text-align:center;font-size:clamp(22px,6vw,28px);margin-bottom:30px;}
+
+  .use-grid{display:grid;grid-template-columns:1fr;gap:12px;}
+  .use-card{background:var(--bg-elevated);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+  .use-card p.title{font-family:'Fraunces',serif;font-size:16px;margin-bottom:6px;}
+  .use-card p.desc{font-size:13.5px;color:var(--text-secondary);}
+
+  .testi-grid{display:grid;grid-template-columns:1fr;gap:12px;}
+  .testi-card{background:var(--bg-elevated-2);border:1px solid var(--line);border-radius:12px;padding:18px 20px;opacity:0;transform:translateY(10px);transition:opacity .5s ease, transform .5s ease;}
+  .testi-card.visible{opacity:1;transform:translateY(0);}
+  .testi-card p{font-style:italic;font-size:13.5px;color:var(--text);line-height:1.55;margin-bottom:12px;}
+  .testi-card span{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-secondary);}
+
+  .get-list{list-style:none;display:flex;flex-direction:column;gap:12px;font-size:14px;color:var(--text-secondary);max-width:400px;margin:0 auto;}
+  .get-list li{display:flex;gap:10px;}
+  .get-list li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:8px;}
+
+  .price-card{background:var(--accent);border-radius:20px;padding:32px 26px;color:#151008;text-align:center;max-width:380px;margin:0 auto;}
+  .price-card .eyebrow{color:rgba(21,16,8,0.6);margin-bottom:10px;display:block;}
+  .price-card h3{font-size:20px;margin-bottom:20px;color:#151008;}
+  .price-card .amount{font-family:'Fraunces',serif;font-size:38px;font-weight:600;}
+  .price-card .sub{font-size:13px;color:rgba(21,16,8,0.7);margin:4px 0 2px;}
+  .price-card .note{font-size:10.5px;text-transform:uppercase;letter-spacing:0.06em;color:rgba(21,16,8,0.6);margin-bottom:24px;}
+  .price-card ul{list-style:none;text-align:left;max-width:260px;margin:0 auto 22px;display:flex;flex-direction:column;gap:8px;font-size:13.5px;color:rgba(21,16,8,0.85);}
+  .price-card .guarantee{font-size:10.5px;text-transform:uppercase;letter-spacing:0.06em;color:rgba(21,16,8,0.55);margin-top:14px;}
+
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    width:100%;display:flex;justify-content:space-between;align-items:center;
+    padding:18px 0;text-align:left;background:none;border:none;cursor:pointer;
+    font-family:'Fraunces',serif;font-size:15.5px;color:var(--text);
+  }
+  .faq-icon{color:var(--accent);font-size:18px;transition:transform .2s ease;flex-shrink:0;margin-left:12px;}
+  .faq-item.open .faq-icon{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .faq-item.open .faq-a{max-height:260px;}
+  .faq-a p{font-size:13.5px;color:var(--text-secondary);line-height:1.6;padding-bottom:18px;}
+
+  .about-block{text-align:center;}
+  .about-avatar{width:64px;height:64px;border-radius:50%;overflow:hidden;margin:0 auto 20px;background:linear-gradient(155deg,var(--accent) 0%, var(--accent-dim) 100%);}
+  .about-avatar img{width:100%;height:100%;object-fit:cover;}
+  .about-block p{font-size:13.5px;color:var(--text-secondary);line-height:1.65;max-width:420px;margin:0 auto 14px;}
+  .about-block p strong{color:var(--text);}
+  .about-block .stat{font-size:10.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-secondary);opacity:.7;}
+
+  .final-block{text-align:center;padding-bottom:24px;}
+  #cta-microcopy{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:18px;}
+  .final-block .guarantee{font-size:10.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-secondary);opacity:.7;margin-top:14px;}
+  #btn-retake{margin-top:30px;background:none;border:none;color:var(--text-secondary);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;}
+
+  footer{padding:48px 0 120px;border-top:1px solid var(--line);text-align:center;}
+  footer .brand-mark{font-family:'Fraunces',serif;font-size:15vw;line-height:0.8;letter-spacing:-0.02em;color:rgba(247,242,233,0.04);font-weight:700;margin-bottom:26px;user-select:none;}
+  footer .links{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-secondary);}
+
+  #sticky-cta{
+    display:none;
+    position:fixed;bottom:0;left:0;right:0;z-index:40;
+    background:rgba(12,12,12,0.92);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    padding:12px 20px calc(12px + env(safe-area-inset-bottom));
+  }
+  #sticky-cta.show{display:block;}
+  #sticky-cta .btn{padding:15px 20px;font-size:13px;}
+
+  @media (min-width:600px){
+    .pilar-grid, .use-grid, .testi-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<main>
+
+  <!-- INTRO -->
+  <section id="screen-intro" class="screen active">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="intro-inner">
+      <p class="eyebrow reveal active">Diagnóstico · 3 minutos</p>
+      <h1 class="reveal active" style="transition-delay:80ms">Qual é a <em>raiz</em> da sua timidez?</h1>
+      <div class="intro-actions reveal active" style="transition-delay:150ms">
+        <button id="btn-start" class="btn">Começar diagnóstico →</button>
+      </div>
+    </div>
+    <div id="wave-intro-wrap"><canvas id="wave-intro" width="280" height="48" style="width:260px;height:44px;"></canvas></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="screen-quiz" class="screen">
+    <div class="quiz-inner">
+      <div id="progress-row">
+        <span id="progress-count">01/09</span>
+        <div class="progress-track"><div id="progress-fill"></div></div>
+      </div>
+      <button id="btn-back" disabled>← Voltar</button>
+      <p id="quiz-toast"></p>
+      <h2 id="q-title"></h2>
+      <div id="q-options" class="options"></div>
+    </div>
+  </section>
+
+  <!-- LOADING -->
+  <section id="screen-loading" class="screen">
+    <p id="loading-label">Cruzando seus padrões de resposta</p>
+    <canvas id="wave-loading" width="180" height="44" style="width:180px;height:44px;"></canvas>
+  </section>
+
+  <!-- RESULT -->
+  <section id="screen-result" class="screen">
+
+    <div id="resultado" class="reveal">
+      <div class="wrap">
+        <span class="eyebrow">Seu diagnóstico</span>
+        <p id="verdict-eyebrow" class="eyebrow" style="margin-top:6px;margin-bottom:16px;"></p>
+        <h1 id="verdict-title"></h1>
+        <p id="verdict-body"></p>
+      </div>
+    </div>
+
+    <div class="quote-block reveal">
+      <div class="wrap">
+        <p>Isso normalmente não é falta de conteúdo ou de personalidade: é a <em>timidez travando esse ponto específico</em> antes dos outros.</p>
+      </div>
+    </div>
+
+    <div class="wrap" style="padding-bottom:40px;">
+      <div class="pilar-grid">
+        <div class="pilar-card reveal">
+          <span class="eyebrow">Você se identifica?</span>
+          <h3 id="sintomas-title">Isso acontece com você</h3>
+          <ul id="sintomas-list"></ul>
+        </div>
+        <div class="pilar-card solve reveal" style="transition-delay:100ms">
+          <span class="eyebrow">Por onde começar</span>
+          <h3 id="solve-title"></h3>
+          <p id="solve-body"></p>
+          <a id="cta-pilar" data-cta class="btn btn-black" style="margin-top:18px;">Ver como resolver →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <section class="final-block">
+      <div class="wrap">
+        <p id="cta-microcopy"></p>
+        <button data-cta class="btn" style="max-width:340px;margin:0 auto;">Quero resolver isso agora →</button>
+        <p class="guarantee">Garantia incondicional de 7 dias</p>
+        <button id="btn-retake">Refazer o diagnóstico</button>
+      </div>
+    </section>
+
+  </section>
+</main>
+
+<div id="sticky-cta">
+  <button data-cta class="btn">Ver meu resultado →</button>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ======= URL do Apps Script (planilha) ======= */
+  const SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzii4mp3EPFPfo-8O6ZRHQpvvllPo2UODqZvzBRnNME7KMtejzHVRF1-IZEM1iMOg/exec';
+  /* ============================================== */
+
+  function logToSheet(evento){
+    if(!SHEET_WEBHOOK_URL || SHEET_WEBHOOK_URL.indexOf('COLE_AQUI') !== -1) return;
+    fetch(SHEET_WEBHOOK_URL, {
+      method:'POST', mode:'no-cors', headers:{ 'Content-Type':'text/plain' },
+      body: JSON.stringify({ evento, pagina:'voc-quiz', data:new Date().toISOString() }),
+    }).catch(()=>{});
+  }
+
+  logToSheet('PageView');
+
+  var pillars = {
+    presenca: {
+      eyebrow: "Dá um branco bem na hora que você mais precisa",
+      title: "Deu Branco",
+      page: "anuncio1.html",
+      body: "Você chega em casa depois de mais um dia em que engoliu o que queria dizer. A ideia boa que não virou palavra. A promoção que foi pra outra pessoa que \u201csabe se vender\u201d. Seu corpo trava antes da boca abrir, o coração acelera, a mente apaga bem na hora que você mais precisa de clareza. Não é falta de conteúdo: é o corpo reagindo como se falar fosse um perigo real.",
+      sintomas: [
+        "O coração acelera antes de você começar a falar",
+        "A voz sai tremida logo no início",
+        "A mente apaga na hora que você mais precisa de clareza",
+        "A respiração fica curta, presa no peito"
+      ],
+      solveTitle: "Como isso se resolve",
+      solveBody: "Você aprende a reconhecer os primeiros sinais e desarmar essa resposta do corpo antes que ela tome conta, com respiração e ancoragem física.",
+      cta: "Isso é o que sustenta tudo o resto. É por aqui que você destrava primeiro."
+    },
+    voz: {
+      eyebrow: "Sua voz trava, treme ou fica baixa demais",
+      title: "Sua Voz Trava",
+      page: "anuncio2.html",
+      body: "Você está numa reunião importante e sente sua voz sumir bem na hora de defender sua ideia. Alguém repete o que você quis dizer, só que mais alto, mais firme, e leva o crédito. Não é falta de conteúdo: é a timidez tirando a força da sua voz, de novo.",
+      sintomas: [
+        "Você fala rápido demais quando fica ansioso(a)",
+        "A voz sai monótona",
+        "A voz morre no final das frases"
+      ],
+      solveTitle: "Como isso se resolve",
+      solveBody: "Você treina a projeção pelo diafragma e aprende a usar volume, velocidade, tom e pausa de propósito, não no automático.",
+      cta: "Sua voz merece sustentar sua mensagem do início ao fim."
+    },
+    escuta: {
+      eyebrow: "Suas conversas nunca conectam de verdade",
+      title: "Falta Conexão",
+      page: "anuncio3.html",
+      body: "Você percebe, tarde demais, que interrompeu de novo. A pessoa do outro lado fecha a cara, a conversa esfria, e você fica remoendo por dias o que podia ter sido diferente. Não é falta de educação: é a pressa da timidez decidindo por você antes de você perceber.",
+      sintomas: [
+        "A resposta já está montada antes do outro terminar",
+        "Você interrompe sem perceber",
+        "As conversas acabam virando atrito"
+      ],
+      solveTitle: "Como isso se resolve",
+      solveBody: "Você pratica escuta ativa e a técnica de parafrasear antes de responder, criando um intervalo entre ouvir e reagir.",
+      cta: "A Escuta é a base de qualquer conversa que não vira atrito."
+    },
+    mensagem: {
+      eyebrow: "Você começa a falar e se perde no meio do caminho",
+      title: "Você Se Enrola",
+      page: "anuncio4.html",
+      body: "Você passa a reunião inteira explicando, e no fim alguém pergunta \u201cmas qual era mesmo o ponto?\u201d. Você sente que gastou energia numa ideia que não chegou a lugar nenhum. Não é falta de conteúdo: é a timidez te fazendo enrolar pra não ter que ser direto.",
+      sintomas: [
+        "Você vai e volta na explicação",
+        "Perde o fio no meio da fala",
+        "A ideia principal se perde em vez de grudar"
+      ],
+      solveTitle: "Como isso se resolve",
+      solveBody: "Você aprende a estrutura de 3 tempos: gancho, no máximo 3 pontos, fechamento, pra sua ideia central sobreviver à conversa.",
+      cta: "O que você diz merece ficar na cabeça de quem ouve."
+    },
+    corpo: {
+      eyebrow: "Seus braços fecham, seu olhar foge: o corpo entrega a timidez",
+      title: "Corpo Fechado",
+      page: "anuncio5.html",
+      body: "Você prepara o que vai dizer, ensaia até decorar, e na hora H seu corpo conta uma história diferente da sua voz: ombros fechados, olhar no chão, mãos sem lugar. As pessoas confiam no que veem antes do que ouvem. Não é falta de confiança: é o corpo entregando a timidez antes de você abrir a boca.",
+      sintomas: [
+        "Não sabe o que fazer com as mãos",
+        "Evita contato visual",
+        "A postura fecha"
+      ],
+      solveTitle: "Como isso se resolve",
+      solveBody: "Você aprende onde colocar as mãos, como sustentar contato visual, e como alinhar postura e voz na mesma mensagem.",
+      cta: "Seu corpo pode confirmar o que você diz, em vez de contradizer."
+    },
+    palco: {
+      eyebrow: "Com uma pessoa você flui. Em grupo, trava.",
+      title: "Trava Em Grupo",
+      page: "anuncio6.html",
+      body: "Com um amigo, a conversa flui fácil. Mas na frente de um grupo, tudo muda: a voz sai diferente, o corpo enrijece, e você sente que está sendo avaliado por todo mundo ao mesmo tempo. Não é falta de preparo: é a plateia ativando um alarme que uma conversa a dois nunca ativa.",
+      sintomas: [
+        "Trava quando esquece uma parte do que preparou",
+        "O foco vai pra própria ansiedade em vez do público",
+        "Quando dá branco, não tem plano B"
+      ],
+      solveTitle: "Como isso se resolve",
+      solveBody: "Você aprende a estrutura de abertura, condução e fechamento de uma apresentação, e um plano B pronto pra quando der branco.",
+      cta: "Você pode tirar o pânico de cena na hora de apresentar."
+    },
+    habito: {
+      eyebrow: "Você sabe a teoria, mas trava do mesmo jeito na hora H",
+      title: "Sabe, Mas Trava",
+      page: "anuncio7.html",
+      body: "Você já sabe a teoria de cor. Já leu, já assistiu, já entendeu. Mas na hora H, sob pressão, o corpo volta pro automático de sempre, como se nada daquilo tivesse sido aprendido. Você sai da situação se sentindo do mesmo jeito de sempre, e a frustração pesa mais que o erro em si.",
+      sintomas: [
+        "Sabe o que fazer, mas esquece bem na hora H",
+        "Repete sempre o mesmo padrão",
+        "Não percebe na hora o que te faz reagir errado"
+      ],
+      solveTitle: "Como isso se resolve",
+      solveBody: "Você treina perceber, na hora, o que te faz reagir errado, com pequenos exercícios que criam memória pro momento real, não só pra teoria.",
+      cta: "Dá pra transformar isso em automático, mesmo sob pressão."
+    }
+  };
+
+  var pillarOrder = ["presenca","voz","escuta","mensagem","corpo","palco","habito"];
+
+  var questions = [
+    {
+      pillar: "presenca",
+      title: "Antes de falar, seu corpo:",
+      options: [
+        {text:"Fica levemente tenso, mas nada muito forte", score:1},
+        {text:"Sinto um friozinho na barriga", score:2},
+        {text:"O coração acelera e a respiração fica curta", score:3},
+        {text:"Trava completamente, dá um branco", score:4}
+      ]
+    },
+    {
+      pillar: "voz",
+      title: "Quando você começa a falar, sua voz:",
+      options: [
+        {text:"Sai normal, só um pouco mais baixa", score:1},
+        {text:"Fica insegura no início, mas melhora", score:2},
+        {text:"Sai tremida ou acelera sem controle", score:3},
+        {text:"Falha, sai fraca ou quebra no meio da frase", score:4}
+      ]
+    },
+    {
+      pillar: "escuta",
+      title: "No meio de uma conversa importante, você:",
+      options: [
+        {text:"Escuto até o fim, sem problema", score:1},
+        {text:"Às vezes penso na resposta antes de terminar de ouvir", score:2},
+        {text:"Frequentemente monto a resposta antes do outro acabar", score:3},
+        {text:"Interrompo sem perceber, e a conversa vira atrito", score:4}
+      ]
+    },
+    {
+      pillar: "mensagem",
+      title: "Depois que você fala, a reação das pessoas costuma ser:",
+      options: [
+        {text:"Entendem bem e lembram do que eu disse", score:1},
+        {text:"Entendem, mas perguntam de novo depois", score:2},
+        {text:"Ficam com cara de \u201conde você quer chegar?\u201d", score:3},
+        {text:"Ninguém lembra o que eu disse, mesmo eu falando bastante", score:4}
+      ]
+    },
+    {
+      pillar: "corpo",
+      title: "Enquanto fala, seu corpo:",
+      options: [
+        {text:"Fica tranquilo, sem chamar atenção", score:1},
+        {text:"Fico um pouco rígido(a), mas nada visível", score:2},
+        {text:"Evito contato visual ou não sei o que fazer com as mãos", score:3},
+        {text:"A postura fecha, e sinto que o corpo entrega o nervosismo antes da voz", score:4}
+      ]
+    },
+    {
+      pillar: "palco",
+      title: "Numa apresentação com plateia, se algo foge do script:",
+      options: [
+        {text:"Sigo em frente sem problema", score:1},
+        {text:"Fico incomodado(a), mas continuo", score:2},
+        {text:"Preciso de um segundo pra me recompor", score:3},
+        {text:"Dá branco total e não sei como voltar", score:4}
+      ]
+    },
+    {
+      pillar: "habito",
+      title: "Depois de aprender uma técnica nova de comunicação, você:",
+      options: [
+        {text:"Consigo aplicar na hora, sem esforço", score:1},
+        {text:"Aplico às vezes, esqueço em momentos de pressão", score:2},
+        {text:"Sei a teoria, mas na hora H volto ao automático de sempre", score:3},
+        {text:"Nem percebo o padrão acontecendo, só depois que já passou", score:4}
+      ]
+    }
+  ];
+
+  var toastMessages = {
+    3: "Curiosidade: o efeito halo faz alguém confiar em você antes mesmo de te conhecer.",
+    5: "Sabia que um silêncio de 3 segundos pode fazer a outra pessoa falar muito mais que você?"
+  };
+
+  var loadingMessages = [
+    "Cruzando seus padrões de resposta...",
+    "Localizando o que trava sua fala...",
+    "Preparando seu diagnóstico Voz que Conecta..."
+  ];
+
+  var screenDisplay = { intro:"flex", quiz:"flex", loading:"flex", result:"block" };
+
+  var state = { index:0, scores:{} };
+
+  var screens = {
+    intro: document.getElementById("screen-intro"),
+    quiz: document.getElementById("screen-quiz"),
+    loading: document.getElementById("screen-loading"),
+    result: document.getElementById("screen-result")
+  };
+  var progressRow = document.getElementById("progress-row");
+  var progressFill = document.getElementById("progress-fill");
+  var progressCount = document.getElementById("progress-count");
+  var qTitle = document.getElementById("q-title");
+  var qOptions = document.getElementById("q-options");
+  var quizToast = document.getElementById("quiz-toast");
+  var btnBack = document.getElementById("btn-back");
+  var stickyCta = document.getElementById("sticky-cta");
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var resultPageUrl = "anuncio1.html";
+
+  function showScreen(name){
+    Object.keys(screens).forEach(function(k){
+      screens[k].style.display = (k === name) ? screenDisplay[k] : "none";
+      screens[k].classList.toggle("active", k === name);
+    });
+    progressRow.classList.toggle("show", name === "quiz");
+    stickyCta.classList.toggle("show", name === "result");
+    window.scrollTo(0,0);
+  }
+
+  function showToast(msg){
+    if(!quizToast) return;
+    quizToast.textContent = msg;
+    quizToast.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function(){ quizToast.classList.remove("show"); }, 2600);
+  }
+
+  function renderQuestion(){
+    var q = questions[state.index];
+    qTitle.textContent = q.title;
+    var countText = String(state.index+1).padStart(2,"0") + "/" + String(questions.length).padStart(2,"0");
+    if(state.index === questions.length - 2){ countText += " · quase lá"; }
+    progressCount.textContent = countText;
+    progressFill.style.width = ((state.index) / questions.length * 100) + "%";
+    btnBack.disabled = state.index === 0;
+    quizToast.classList.remove("show");
+
+    qOptions.innerHTML = "";
+    qOptions.classList.remove("locked");
+    q.options.forEach(function(opt){
+      var b = document.createElement("button");
+      b.className = "option";
+      b.type = "button";
+      b.setAttribute("data-level", opt.score);
+      var bars = document.createElement("span");
+      bars.className = "bars";
+      for(var i=0;i<4;i++){ bars.appendChild(document.createElement("span")); }
+      var label = document.createElement("span");
+      label.textContent = opt.text;
+      b.appendChild(bars);
+      b.appendChild(label);
+      b.addEventListener("click", function(){
+        if(qOptions.classList.contains("locked")) return;
+        qOptions.classList.add("locked");
+        b.classList.add("selected");
+        setTimeout(function(){
+          selectAnswer(q.pillar, opt.score);
+        }, reduceMotion ? 0 : 180);
+      });
+      qOptions.appendChild(b);
+    });
+  }
+
+  function selectAnswer(pillarId, score){
+    state.scores[pillarId] = score;
+    if(state.index < questions.length - 1){
+      state.index++;
+      renderQuestion();
+      if(toastMessages[state.index]){ showToast(toastMessages[state.index]); }
+    } else {
+      progressFill.style.width = "100%";
+      finishQuiz();
+    }
+  }
+
+  btnBack.addEventListener("click", function(){
+    if(state.index > 0){
+      state.index--;
+      renderQuestion();
+    }
+  });
+
+  function startQuiz(){
+    state.index = 0;
+    state.scores = {};
+    showScreen("quiz");
+    renderQuestion();
+    logToSheet('QuizStart');
+  }
+
+  document.getElementById("btn-start").addEventListener("click", startQuiz);
+
+  function finishQuiz(){
+    showScreen("loading");
+    startWave(document.getElementById("wave-loading"), 16);
+    var loadingLabel = document.getElementById("loading-label");
+    var step = 0;
+    loadingLabel.textContent = loadingMessages[0];
+    var msgInterval = setInterval(function(){
+      step++;
+      if(step < loadingMessages.length){
+        loadingLabel.textContent = loadingMessages[step];
+      }
+    }, 480);
+    setTimeout(function(){
+      clearInterval(msgInterval);
+      var id = pickPillar();
+      logToSheet('QuizComplete_' + id);
+      fbq('track', 'Lead');
+      window.location.href = pillars[id].page;
+    }, 1500);
+  }
+
+  function pickPillar(){
+    var best = pillarOrder[0];
+    var bestScore = -1;
+    pillarOrder.forEach(function(id){
+      var s = state.scores[id] || 0;
+      if(s > bestScore){
+        bestScore = s;
+        best = id;
+      }
+    });
+    return best;
+  }
+
+  function renderResult(){
+    var id = pickPillar();
+    var p = pillars[id];
+    resultPageUrl = p.page;
+
+    document.getElementById("verdict-eyebrow").textContent = p.eyebrow;
+    document.getElementById("verdict-title").textContent = p.title;
+    document.getElementById("verdict-body").textContent = p.body;
+    document.getElementById("solve-title").textContent = p.solveTitle;
+    document.getElementById("solve-body").textContent = p.solveBody;
+    document.getElementById("cta-microcopy").textContent = p.cta;
+
+    var sintomasList = document.getElementById("sintomas-list");
+    sintomasList.innerHTML = "";
+    p.sintomas.forEach(function(s){
+      var li = document.createElement("li");
+      li.textContent = s;
+      sintomasList.appendChild(li);
+    });
+
+    document.getElementById("cta-pilar").href = p.page;
+  }
+
+  document.getElementById("btn-retake").addEventListener("click", function(){
+    state.index = 0;
+    state.scores = {};
+    showScreen("intro");
+  });
+
+  var ctaButtons = document.querySelectorAll("[data-cta]");
+  ctaButtons.forEach(function(btn){
+    btn.addEventListener("click", function(e){
+      if(btn.tagName === "A") return;
+      window.location.href = resultPageUrl;
+    });
+  });
+
+  /* ---------- social proof count-up ---------- */
+  function animateCount(el, target, duration){
+    if(!el) return;
+    if(reduceMotion){
+      el.textContent = target.toLocaleString("pt-BR");
+      return;
+    }
+    var start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var progress = Math.min((ts-start)/duration, 1);
+      var eased = 1 - Math.pow(1-progress, 3);
+      el.textContent = Math.floor(eased*target).toLocaleString("pt-BR");
+      if(progress < 1){ requestAnimationFrame(step); }
+      else { el.textContent = target.toLocaleString("pt-BR"); }
+    }
+    requestAnimationFrame(step);
+  }
+  /* ---------- reveal on scroll ---------- */
+  var revealObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){ entry.target.classList.add("active"); }
+    });
+  }, { threshold:0.1, rootMargin:"0px 0px -50px 0px" });
+  document.querySelectorAll(".reveal").forEach(function(el){ revealObserver.observe(el); });
+
+  /* ---------- ambient waveform canvas ---------- */
+  function startWave(canvas, barCount){
+    if(!canvas) return;
+    var ctx = canvas.getContext("2d");
+    var dpr = window.devicePixelRatio || 1;
+
+    function resize(){
+      var rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    var t = 0;
+    function draw(){
+      var rect = canvas.getBoundingClientRect();
+      var w = rect.width, h = rect.height;
+      ctx.clearRect(0,0,w,h);
+      var gap = 4;
+      var barW = (w - gap*(barCount-1)) / barCount;
+      for(var i=0;i<barCount;i++){
+        var phase = i * 0.55;
+        var amp = reduceMotion ? 0.4 : (0.35 + 0.35 * Math.sin(t*0.06 + phase));
+        var bh = Math.max(4, h * (0.15 + Math.abs(amp) * 0.65));
+        var x = i * (barW + gap);
+        var y = (h - bh) / 2;
+        ctx.fillStyle = i % 5 === 0 ? "#FF8500" : "rgba(247,242,233,0.18)";
+        ctx.fillRect(x, y, barW, bh);
+      }
+      t++;
+      if(!reduceMotion){ requestAnimationFrame(draw); }
+    }
+    draw();
+  }
+
+  startWave(document.getElementById("wave-intro"), 24);
+  showScreen("intro");
+})();
+</script>
+
+</body>
+</html>
