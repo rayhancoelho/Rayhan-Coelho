@@ -307,8 +307,10 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
     <div class="intro-inner">
       <p class="eyebrow reveal active">Diagnóstico · 3 minutos</p>
       <h1 class="reveal active" style="transition-delay:80ms">Qual é a <em>raiz</em> da sua timidez?</h1>
+      <p class="lead reveal active" style="transition-delay:120ms">Descubra qual dos 7 pontos trava sua fala, e o primeiro passo pra destravar ele.</p>
       <div class="intro-actions reveal active" style="transition-delay:150ms">
         <button id="btn-start" class="btn">Começar diagnóstico →</button>
+        <span class="microcopy">Sem cadastro · leva menos de 3 minutos</span>
       </div>
     </div>
     <div id="wave-intro-wrap"><canvas id="wave-intro" width="280" height="48" style="width:260px;height:44px;"></canvas></div>
@@ -403,6 +405,26 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
   }
 
   logToSheet('PageView');
+
+  /* ======= Supabase ======= */
+  const SUPABASE_URL = 'https://vxgnbioekkfnkiqxogdj.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_3beq-I7VrWPQ8h7GnT4LKA_-DK6ro-t';
+
+  function logToSupabase(evento, extra){
+    var payload = Object.assign({ evento: evento }, extra || {});
+    fetch(SUPABASE_URL + '/rest/v1/quiz_respostas', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    }).catch(function(){});
+  }
+
+  logToSupabase('PageView');
 
   var pillars = {
     presenca: {
@@ -583,13 +605,13 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
 
   var toastMessages = {
     3: "Curiosidade: o efeito halo faz alguém confiar em você antes mesmo de te conhecer.",
-    5: "Sabia que um silêncio de 3 segundos pode fazer a outra pessoa falar muito mais que você?"
+    5: "Faltam só 2 perguntas pro seu diagnóstico."
   };
 
   var loadingMessages = [
     "Cruzando seus padrões de resposta...",
-    "Localizando o que trava sua fala...",
-    "Preparando seu diagnóstico Voz que Conecta..."
+    "Seu ponto de maior trava está sendo identificado...",
+    "Preparando seu diagnóstico personalizado..."
   ];
 
   var screenDisplay = { intro:"flex", quiz:"flex", loading:"flex", result:"block" };
@@ -692,6 +714,7 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
     showScreen("quiz");
     renderQuestion();
     logToSheet('QuizStart');
+    logToSupabase('QuizStart', {});
   }
 
   document.getElementById("btn-start").addEventListener("click", startQuiz);
@@ -712,6 +735,11 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
       clearInterval(msgInterval);
       var id = pickPillar();
       logToSheet('QuizComplete_' + id);
+      logToSupabase('QuizComplete', {
+        pilar_resultado: id,
+        pontuacoes: state.scores,
+        pagina_destino: pillars[id].page
+      });
       fbq('track', 'Lead');
       window.location.href = pillars[id].page;
     }, 1500);
