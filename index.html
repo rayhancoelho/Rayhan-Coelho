@@ -384,8 +384,7 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
     <!-- 1. VÍDEO (aparece sozinho primeiro) -->
     <div id="video-block" class="wrap reveal" style="padding:60px 0 24px;display:none;">
       <div id="video-wrap" style="position:relative;width:100%;max-width:420px;aspect-ratio:9/16;margin:0 auto;border-radius:16px;overflow:hidden;background:#000;">
-        <div id="verdict-video" style="width:100%;height:100%;"></div>
-        <div style="position:absolute;top:0;left:0;right:0;height:56px;background:linear-gradient(180deg,rgba(0,0,0,0.85),rgba(0,0,0,0));pointer-events:none;"></div>
+        <video id="verdict-video" playsinline style="width:100%;height:100%;object-fit:cover;background:#000;"></video>
       </div>
       <div style="max-width:420px;margin:14px auto 0;height:4px;background:var(--line);border-radius:2px;overflow:hidden;">
         <div id="video-progress-fill" style="height:100%;width:0%;background:var(--accent);transition:width .3s linear;"></div>
@@ -448,7 +447,6 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
   </div>
 </div>
 
-<script src="https://www.youtube.com/iframe_api"></script>
 <script>
 (function(){
   "use strict";
@@ -821,11 +819,9 @@ testis: [
   var resultPageUrl = "anuncio1.html";
   var currentScreenName = "intro";
 
-  /* Vídeo único da Mini-VSL (YouTube), mesmo pra qualquer resultado do quiz.
-     Preencha só o ID do vídeo (a parte depois de "v=" ou "youtu.be/") quando
-     você subir o vídeo no YouTube — não precisa link inteiro.
-     Ex: se o link for https://youtu.be/AbC123xyz9, preencha "AbC123xyz9". */
-  var miniVslYoutubeId = "FWjMujY8-Nc";
+  /* Vídeo único da Mini-VSL, hospedado no Cloudinary (ou outro link .mp4 direto).
+     Preencha com a URL completa do arquivo .mp4 quando você subir. */
+  var miniVslVideoUrl = "https://res.cloudinary.com/n9iijflf/video/upload/v1787610316/voc-mini-vsl-comprimido.mp4";
   var resultCheckoutUrl = "https://pay.kiwify.com.br/3Do6yJS";
 
   function showScreen(name){
@@ -998,12 +994,15 @@ testis: [
 
     var videoBlock = document.getElementById("video-block");
     var resultRest = document.getElementById("result-rest");
-    if(miniVslYoutubeId){
+    var videoEl = document.getElementById("verdict-video");
+    if(miniVslVideoUrl){
       videoBlock.style.display = "block";
       resultRest.classList.remove("show");
       document.getElementById("sticky-cta").classList.remove("show");
       document.getElementById("video-progress-fill").style.width = "0%";
-      startYtPlayer(miniVslYoutubeId);
+      videoEl.src = miniVslVideoUrl;
+      videoEl.currentTime = 0;
+      videoEl.play().catch(function(){});
     } else {
       videoBlock.style.display = "none";
       resultRest.classList.add("show");
@@ -1013,54 +1012,23 @@ testis: [
   function revealResultRest(){
     document.getElementById("result-rest").classList.add("show");
     document.getElementById("sticky-cta").classList.add("show");
-    if(ytProgressInterval){ clearInterval(ytProgressInterval); ytProgressInterval = null; }
   }
 
-  /* ---------- Player oficial do YouTube (progresso real + detecção de fim) ---------- */
-  var ytApiReady = false;
-  var ytPlayer = null;
-  var ytProgressInterval = null;
-  var pendingVideoId = null;
+  /* ---------- Player de vídeo nativo (progresso real + detecção de fim) ---------- */
+  var verdictVideoEl = document.getElementById("verdict-video");
 
-  window.onYouTubeIframeAPIReady = function(){
-    ytApiReady = true;
-    if(pendingVideoId){ startYtPlayer(pendingVideoId); }
-  };
-
-  function startYtPlayer(videoId){
-    if(!ytApiReady){ pendingVideoId = videoId; return; }
-    if(ytProgressInterval){ clearInterval(ytProgressInterval); ytProgressInterval = null; }
-    if(ytPlayer && typeof ytPlayer.destroy === "function"){
-      ytPlayer.destroy();
-    }
-    ytPlayer = new YT.Player("verdict-video", {
-      videoId: videoId,
-      playerVars: { rel:0, modestbranding:1, iv_load_policy:3, playsinline:1 },
-      events: {
-        onReady: function(e){ e.target.playVideo(); },
-        onStateChange: function(e){
-          if(e.data === YT.PlayerState.PLAYING){
-            if(!ytProgressInterval){
-              ytProgressInterval = setInterval(updateVideoProgress, 300);
-            }
-          }
-          if(e.data === YT.PlayerState.ENDED){
-            document.getElementById("video-progress-fill").style.width = "100%";
-            revealResultRest();
-          }
-        }
-      }
-    });
-  }
-
-  function updateVideoProgress(){
-    if(!ytPlayer || typeof ytPlayer.getDuration !== "function") return;
-    var dur = ytPlayer.getDuration();
-    var cur = ytPlayer.getCurrentTime();
+  verdictVideoEl.addEventListener("timeupdate", function(){
+    var dur = verdictVideoEl.duration;
+    var cur = verdictVideoEl.currentTime;
     if(!dur) return;
     var pct = Math.min(100, (cur / dur) * 100);
     document.getElementById("video-progress-fill").style.width = pct + "%";
-  }
+  });
+
+  verdictVideoEl.addEventListener("ended", function(){
+    document.getElementById("video-progress-fill").style.width = "100%";
+    revealResultRest();
+  });
 
   var ctaButtons = document.querySelectorAll("[data-cta]");
   ctaButtons.forEach(function(btn){
