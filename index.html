@@ -389,6 +389,9 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
       <div style="max-width:420px;margin:14px auto 0;height:4px;background:var(--line);border-radius:2px;overflow:hidden;">
         <div id="video-progress-fill" style="height:100%;width:0%;background:var(--accent);transition:width .3s linear;"></div>
       </div>
+      <div style="text-align:center;margin-top:16px;">
+        <button id="btn-skip-video" disabled style="background:none;border:none;color:var(--text-secondary);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;visibility:hidden;">Pular e ver diagnóstico →</button>
+      </div>
     </div>
 
     <!-- resto do diagnóstico: fica escondido até o vídeo acabar ou a pessoa pular -->
@@ -995,11 +998,14 @@ testis: [
     var videoBlock = document.getElementById("video-block");
     var resultRest = document.getElementById("result-rest");
     var videoEl = document.getElementById("verdict-video");
+    var skipBtn = document.getElementById("btn-skip-video");
     if(miniVslVideoUrl){
       videoBlock.style.display = "block";
       resultRest.classList.remove("show");
       document.getElementById("sticky-cta").classList.remove("show");
       document.getElementById("video-progress-fill").style.width = "0%";
+      skipBtn.style.visibility = "hidden";
+      skipBtn.disabled = true;
       videoEl.src = miniVslVideoUrl;
       videoEl.currentTime = 0;
       videoEl.play().catch(function(){});
@@ -1023,10 +1029,21 @@ testis: [
     if(!dur) return;
     var pct = Math.min(100, (cur / dur) * 100);
     document.getElementById("video-progress-fill").style.width = pct + "%";
+
+    var skipBtn = document.getElementById("btn-skip-video");
+    if(cur >= 60 && skipBtn.disabled){
+      skipBtn.disabled = false;
+      skipBtn.style.visibility = "visible";
+    }
   });
 
   verdictVideoEl.addEventListener("ended", function(){
     document.getElementById("video-progress-fill").style.width = "100%";
+    revealResultRest();
+  });
+
+  document.getElementById("btn-skip-video").addEventListener("click", function(){
+    if(this.disabled) return;
     revealResultRest();
   });
 
