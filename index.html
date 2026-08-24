@@ -384,10 +384,11 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
     <!-- 1. VÍDEO (aparece sozinho primeiro) -->
     <div id="video-block" class="wrap reveal" style="padding:60px 0 24px;display:none;">
       <div id="video-wrap" style="position:relative;width:100%;max-width:420px;aspect-ratio:9/16;margin:0 auto;border-radius:16px;overflow:hidden;background:#000;">
-        <iframe id="verdict-video" style="width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div id="verdict-video" style="width:100%;height:100%;"></div>
+        <div style="position:absolute;top:0;left:0;right:0;height:56px;background:linear-gradient(180deg,rgba(0,0,0,0.85),rgba(0,0,0,0));pointer-events:none;"></div>
       </div>
-      <div style="text-align:center;margin-top:16px;">
-        <button id="btn-skip-video" disabled style="background:none;border:none;color:var(--text-secondary);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;visibility:hidden;">Pular e ver diagnóstico →</button>
+      <div style="max-width:420px;margin:14px auto 0;height:4px;background:var(--line);border-radius:2px;overflow:hidden;">
+        <div id="video-progress-fill" style="height:100%;width:0%;background:var(--accent);transition:width .3s linear;"></div>
       </div>
     </div>
 
@@ -833,7 +834,7 @@ testis: [
       screens[k].classList.toggle("active", k === name);
     });
     progressRow.classList.toggle("show", name === "quiz");
-    stickyCta.classList.toggle("show", name === "result");
+    stickyCta.classList.toggle("show", name === "result" && document.getElementById("result-rest").classList.contains("show"));
     currentScreenName = name;
     window.scrollTo(0,0);
   }
@@ -996,53 +997,70 @@ testis: [
     document.getElementById("cta-pilar").href = p.page;
 
     var videoBlock = document.getElementById("video-block");
-    var videoEl = document.getElementById("verdict-video");
     var resultRest = document.getElementById("result-rest");
-    var skipBtn = document.getElementById("btn-skip-video");
     if(miniVslYoutubeId){
-      videoEl.src = "https://www.youtube.com/embed/" + miniVslYoutubeId + "?rel=0&enablejsapi=1";
       videoBlock.style.display = "block";
       resultRest.classList.remove("show");
-      skipBtn.style.visibility = "hidden";
-      skipBtn.disabled = true;
-      clearTimeout(skipUnlockTimer);
-      skipUnlockTimer = setTimeout(function(){
-        skipBtn.style.visibility = "visible";
-        skipBtn.disabled = false;
-      }, 60000);
-      videoEl.addEventListener("load", function(){
-        try {
-          videoEl.contentWindow.postMessage(JSON.stringify({event:"listening", id: 1}), "*");
-        } catch(e){}
-      });
+      document.getElementById("sticky-cta").classList.remove("show");
+      document.getElementById("video-progress-fill").style.width = "0%";
+      startYtPlayer(miniVslYoutubeId);
     } else {
-      videoEl.removeAttribute("src");
       videoBlock.style.display = "none";
       resultRest.classList.add("show");
     }
   }
 
-  var skipUnlockTimer = null;
-
   function revealResultRest(){
     document.getElementById("result-rest").classList.add("show");
+    document.getElementById("sticky-cta").classList.add("show");
+    if(ytProgressInterval){ clearInterval(ytProgressInterval); ytProgressInterval = null; }
   }
 
-  document.getElementById("btn-skip-video").addEventListener("click", function(){
-    if(this.disabled) return;
-    revealResultRest();
-  });
+  /* ---------- Player oficial do YouTube (progresso real + detecção de fim) ---------- */
+  var ytApiReady = false;
+  var ytPlayer = null;
+  var ytProgressInterval = null;
+  var pendingVideoId = null;
 
-  /* detecta o fim do vídeo do YouTube via postMessage da API do player */
-  window.addEventListener("message", function(event){
-    if(typeof event.data !== "string") return;
-    try {
-      var data = JSON.parse(event.data);
-      if(data.event === "onStateChange" && data.info === 0){
-        revealResultRest();
+  window.onYouTubeIframeAPIReady = function(){
+    ytApiReady = true;
+    if(pendingVideoId){ startYtPlayer(pendingVideoId); }
+  };
+
+  function startYtPlayer(videoId){
+    if(!ytApiReady){ pendingVideoId = videoId; return; }
+    if(ytProgressInterval){ clearInterval(ytProgressInterval); ytProgressInterval = null; }
+    if(ytPlayer && typeof ytPlayer.destroy === "function"){
+      ytPlayer.destroy();
+    }
+    ytPlayer = new YT.Player("verdict-video", {
+      videoId: videoId,
+      playerVars: { rel:0, modestbranding:1, iv_load_policy:3, playsinline:1 },
+      events: {
+        onReady: function(e){ e.target.playVideo(); },
+        onStateChange: function(e){
+          if(e.data === YT.PlayerState.PLAYING){
+            if(!ytProgressInterval){
+              ytProgressInterval = setInterval(updateVideoProgress, 300);
+            }
+          }
+          if(e.data === YT.PlayerState.ENDED){
+            document.getElementById("video-progress-fill").style.width = "100%";
+            revealResultRest();
+          }
+        }
       }
-    } catch(e){}
-  });
+    });
+  }
+
+  function updateVideoProgress(){
+    if(!ytPlayer || typeof ytPlayer.getDuration !== "function") return;
+    var dur = ytPlayer.getDuration();
+    var cur = ytPlayer.getCurrentTime();
+    if(!dur) return;
+    var pct = Math.min(100, (cur / dur) * 100);
+    document.getElementById("video-progress-fill").style.width = pct + "%";
+  }
 
   var ctaButtons = document.querySelectorAll("[data-cta]");
   ctaButtons.forEach(function(btn){
