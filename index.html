@@ -1004,7 +1004,7 @@ testis: [
       testiList.appendChild(card);
     });
 
-    document.getElementById("cta-pilar").href = p.page;
+    document.getElementById("cta-pilar").href = p.checkout;
 
     var videoBlock = document.getElementById("video-block");
     var resultRest = document.getElementById("result-rest");
@@ -1061,8 +1061,11 @@ testis: [
   var ctaButtons = document.querySelectorAll("[data-cta]");
   ctaButtons.forEach(function(btn){
     btn.addEventListener("click", function(e){
+      fbq('track', 'InitiateCheckout');
+      logToSheet('InitiateCheckout');
+      logToSupabase('InitiateCheckout', { pilar_resultado: currentPillarId, pagina_destino: resultCheckoutUrl });
       if(btn.tagName === "A") return;
-      window.location.href = resultPageUrl;
+      window.location.href = resultCheckoutUrl;
     });
   });
 
@@ -1154,7 +1157,7 @@ testis: [
         hideBackRedirect();
         logToSheet('BackRedirectDiscountClick');
         logToSupabase('BackRedirectDiscountClick', { pilar_resultado: currentPillarId });
-        window.location.href = descontoUrl || resultPageUrl;
+        window.location.href = descontoUrl || resultCheckoutUrl;
       };
     } else if(currentScreenName === "quiz"){
       brTitle.textContent = "Espera!";
