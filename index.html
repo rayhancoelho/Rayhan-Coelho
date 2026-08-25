@@ -155,7 +155,7 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
   #wave-intro-wrap{position:absolute;bottom:26px;left:0;right:0;display:flex;justify-content:center;opacity:.35;pointer-events:none;}
 
   /* ---------- QUIZ ---------- */
-  #screen-quiz{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:100px 20px 60px;}
+  #screen-quiz{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-start;padding:90px 20px 60px;}
   .quiz-inner{max-width:420px;margin:0 auto;width:100%;}
   #progress-row{display:none;align-items:center;gap:10px;margin-bottom:26px;font-size:10.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);}
   #progress-row.show{display:flex;}
@@ -170,13 +170,18 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
     transition:opacity .25s ease, transform .25s ease;
   }
   #quiz-toast.show{opacity:1;transform:translateY(0);}
-  #q-title{font-size:clamp(19px,5.4vw,24px);line-height:1.3;margin-bottom:22px;}
+  #q-title{
+    font-size:clamp(19px,5.4vw,24px);line-height:1.3;margin-bottom:22px;
+    min-height:calc(1.3em * 2);
+    display:flex;align-items:flex-end;
+  }
   #q-options{display:flex;flex-direction:column;gap:10px;}
   .option{
     display:flex;align-items:center;gap:13px;width:100%;text-align:left;
     background:var(--bg-elevated);border:1px solid var(--line);color:var(--text);
     padding:15px;border-radius:12px;font-size:14.5px;line-height:1.35;cursor:pointer;
     font-family:'Manrope',sans-serif;
+    min-height:52px;
     transition:border-color .15s ease, background .15s ease, transform .1s ease;
   }
   @media (hover:hover){
@@ -197,8 +202,16 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
   .option[data-level="4"] .bars span:nth-child(-n+4){background:var(--accent);}
 
   /* ---------- LOADING ---------- */
-  #screen-loading{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:0 20px;text-align:center;}
-  #loading-label{font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-secondary);}
+  #screen-loading{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:0 32px;text-align:center;}
+  #loading-label{
+    font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;
+    color:var(--text-secondary);
+    max-width:280px;
+    min-height:38px;
+    display:flex;align-items:center;justify-content:center;
+    line-height:1.5;
+    transition:opacity .25s ease;
+  }
 
   /* ---------- RESULT ---------- */
   #resultado{padding:100px 20px 48px;text-align:center;border-bottom:1px solid var(--line);}
@@ -383,14 +396,14 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
 
     <!-- 1. VÍDEO (aparece sozinho primeiro) -->
     <div id="video-block" class="wrap reveal" style="padding:60px 0 24px;display:none;">
-      <div id="video-wrap" style="position:relative;width:100%;max-width:420px;aspect-ratio:9/16;margin:0 auto;border-radius:16px;overflow:hidden;background:#000;">
+      <div id="video-wrap" style="position:relative;width:78%;max-width:280px;aspect-ratio:9/16;margin:0 auto;border-radius:16px;overflow:hidden;background:#000;">
         <video id="verdict-video" playsinline style="width:100%;height:100%;object-fit:cover;background:#000;"></video>
       </div>
-      <div style="max-width:420px;margin:14px auto 0;height:4px;background:var(--line);border-radius:2px;overflow:hidden;">
+      <div style="width:78%;max-width:280px;margin:14px auto 0;height:4px;background:var(--line);border-radius:2px;overflow:hidden;">
         <div id="video-progress-fill" style="height:100%;width:0%;background:var(--accent);transition:width .3s linear;"></div>
       </div>
-      <div style="text-align:center;margin-top:16px;">
-        <button id="btn-skip-video" disabled style="background:none;border:none;color:var(--accent);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;visibility:hidden;">Pular e ver diagnóstico →</button>
+      <div style="text-align:center;margin-top:20px;">
+        <button id="btn-skip-video" disabled class="btn btn-black" style="display:inline-block;width:auto;padding:13px 22px;font-size:12px;visibility:hidden;">Pular e ver diagnóstico →</button>
       </div>
     </div>
 
@@ -802,9 +815,9 @@ testis: [
   };
 
   var loadingMessages = [
-    "Cruzando seus padrões de resposta...",
-    "Seu ponto de maior trava está sendo identificado...",
-    "Preparando seu diagnóstico personalizado..."
+    "Cruzando suas respostas...",
+    "Identificando o ponto que mais trava...",
+    "Montando seu diagnóstico..."
   ];
 
   var screenDisplay = { intro:"flex", quiz:"flex", loading:"flex", result:"block" };
@@ -927,12 +940,17 @@ testis: [
     var loadingLabel = document.getElementById("loading-label");
     var step = 0;
     loadingLabel.textContent = loadingMessages[0];
+    loadingLabel.style.opacity = "1";
     var msgInterval = setInterval(function(){
       step++;
       if(step < loadingMessages.length){
-        loadingLabel.textContent = loadingMessages[step];
+        loadingLabel.style.opacity = "0";
+        setTimeout(function(){
+          loadingLabel.textContent = loadingMessages[step];
+          loadingLabel.style.opacity = "1";
+        }, 250);
       }
-    }, 480);
+    }, 900);
     setTimeout(function(){
       clearInterval(msgInterval);
       var id = pickPillar();
@@ -945,7 +963,7 @@ testis: [
       fbq('track', 'Lead');
       renderResult();
       showScreen("result");
-    }, 1500);
+    }, 2700);
   }
 
   function computeScores(){
