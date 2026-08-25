@@ -390,7 +390,7 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
         <div id="video-progress-fill" style="height:100%;width:0%;background:var(--accent);transition:width .3s linear;"></div>
       </div>
       <div style="text-align:center;margin-top:16px;">
-        <button id="btn-skip-video" disabled style="background:none;border:none;color:var(--text-secondary);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;visibility:hidden;">Pular e ver diagnóstico →</button>
+        <button id="btn-skip-video" disabled style="background:none;border:none;color:var(--accent);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;visibility:hidden;">Pular e ver diagnóstico →</button>
       </div>
     </div>
 
@@ -494,6 +494,7 @@ src="https://www.facebook.com/tr?id=2161305631446853&ev=PageView&noscript=1"
       title: "Deu Branco",
       page: "anuncio1.html",
       checkout: "https://pay.kiwify.com.br/3Do6yJS",
+      checkoutDesconto: "", // link do Kiwify com cupom RETURN (R$47,90) já aplicado
       sintomas: [
         "O coração acelera antes mesmo de abrir a boca",
         "A mente apaga na hora que você mais precisa de clareza",
@@ -511,6 +512,7 @@ testis: [
       title: "Sua Voz Trava",
       page: "anuncio2.html",
       checkout: "https://pay.kiwify.com.br/loLhffj",
+      checkoutDesconto: "", // link do Kiwify com cupom RETURN (R$47,90) já aplicado
       sintomas: [
         "A voz sai tremida logo nas primeiras palavras",
         "Você fala rápido demais quando fica ansioso(a)",
@@ -528,6 +530,7 @@ testis: [
       title: "Falta Conexão",
       page: "anuncio3.html",
       checkout: "https://pay.kiwify.com.br/rMug2I9",
+      checkoutDesconto: "", // link do Kiwify com cupom RETURN (R$47,90) já aplicado
       sintomas: [
         "Você já monta a resposta antes do outro terminar de falar",
         "Interrompe sem perceber, e a conversa esfria",
@@ -545,6 +548,7 @@ testis: [
       title: "Você Se Enrola",
       page: "anuncio4.html",
       checkout: "https://pay.kiwify.com.br/lXmkMu0",
+      checkoutDesconto: "", // link do Kiwify com cupom RETURN (R$47,90) já aplicado
       sintomas: [
         "Você se enrola no meio da explicação",
         "Perde o fio e esquece qual era o ponto",
@@ -562,6 +566,7 @@ testis: [
       title: "Corpo Fechado",
       page: "anuncio5.html",
       checkout: "https://pay.kiwify.com.br/yqgfeG3",
+      checkoutDesconto: "", // link do Kiwify com cupom RETURN (R$47,90) já aplicado
       sintomas: [
         "Você não sabe onde colocar as mãos enquanto fala",
         "Evita contato visual sem perceber",
@@ -579,6 +584,7 @@ testis: [
       title: "Trava Em Grupo",
       page: "anuncio6.html",
       checkout: "https://pay.kiwify.com.br/OLfH8OV",
+      checkoutDesconto: "", // link do Kiwify com cupom RETURN (R$47,90) já aplicado
       sintomas: [
         "Com uma pessoa você flui, mas em grupo tudo trava",
         "Quando foge do script, o pânico assume",
@@ -596,6 +602,7 @@ testis: [
       title: "Sabe, Mas Trava",
       page: "anuncio7.html",
       checkout: "https://pay.kiwify.com.br/Elcs08a",
+      checkoutDesconto: "", // link do Kiwify com cupom RETURN (R$47,90) já aplicado
       sintomas: [
         "Você sabe a teoria, mas trava do mesmo jeito na hora H",
         "Só percebe o erro depois que a situação já passou",
@@ -821,6 +828,8 @@ testis: [
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var resultPageUrl = "anuncio1.html";
   var currentScreenName = "intro";
+  var currentPillarId = null;
+  var currentPillarData = null;
 
   /* Vídeo único da Mini-VSL, hospedado no Cloudinary (ou outro link .mp4 direto).
      Preencha com a URL completa do arquivo .mp4 quando você subir. */
@@ -967,6 +976,8 @@ testis: [
     var p = pillars[id];
     resultPageUrl = p.page;
     resultCheckoutUrl = p.checkout;
+    currentPillarId = id;
+    currentPillarData = p;
 
     document.getElementById("verdict-title").textContent = p.title;
     document.getElementById("verdict-body").textContent = p.body;
@@ -1135,12 +1146,15 @@ testis: [
 
   function showBackRedirect(){
     if(currentScreenName === "result"){
-      brTitle.textContent = "Antes de sair...";
-      brBody.textContent = "Seu diagnóstico já está pronto e sua condição de hoje pode não valer depois. Dá uma olhada antes de fechar.";
-      brCta.textContent = "Ver como resolver agora →";
+      var descontoUrl = currentPillarData && currentPillarData.checkoutDesconto;
+      brTitle.textContent = "Espera, tenho uma oferta pra você";
+      brBody.textContent = "Só agora: fecha por R$47,90 sem sair dessa página. De R$67,90 por R$47,90.";
+      brCta.textContent = "Quero o desconto agora →";
       brCta.onclick = function(){
         hideBackRedirect();
-        window.location.href = resultPageUrl;
+        logToSheet('BackRedirectDiscountClick');
+        logToSupabase('BackRedirectDiscountClick', { pilar_resultado: currentPillarId });
+        window.location.href = descontoUrl || resultPageUrl;
       };
     } else if(currentScreenName === "quiz"){
       brTitle.textContent = "Espera!";
