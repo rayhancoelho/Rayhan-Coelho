@@ -1022,7 +1022,7 @@ testis: [
       testiList.appendChild(card);
     });
 
-    document.getElementById("cta-pilar").href = p.checkout;
+    document.getElementById("cta-pilar").href = p.page;
 
     var videoBlock = document.getElementById("video-block");
     var resultRest = document.getElementById("result-rest");
@@ -1079,11 +1079,11 @@ testis: [
   var ctaButtons = document.querySelectorAll("[data-cta]");
   ctaButtons.forEach(function(btn){
     btn.addEventListener("click", function(e){
-      fbq('track', 'InitiateCheckout');
-      logToSheet('InitiateCheckout');
-      logToSupabase('InitiateCheckout', { pilar_resultado: currentPillarId, pagina_destino: resultCheckoutUrl });
+      fbq('track', 'ViewContent');
+      logToSheet('ClickToLP_' + currentPillarId);
+      logToSupabase('ClickToLP', { pilar_resultado: currentPillarId, pagina_destino: resultPageUrl });
       if(btn.tagName === "A") return;
-      window.location.href = resultCheckoutUrl;
+      window.location.href = resultPageUrl;
     });
   });
 
