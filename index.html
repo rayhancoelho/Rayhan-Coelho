@@ -1046,8 +1046,12 @@ testis: [
   }
 
   function revealResultRest(){
-    document.getElementById("result-rest").classList.add("show");
+    var rest = document.getElementById("result-rest");
+    rest.classList.add("show");
     document.getElementById("sticky-cta").classList.add("show");
+    setTimeout(function(){
+      rest.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
   }
 
   /* ---------- Player de vídeo nativo (progresso real + detecção de fim) ---------- */
