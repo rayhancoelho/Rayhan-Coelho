@@ -638,10 +638,10 @@ testis: [
       spin: "situacao",
       title: "Com que frequência você precisa falar em público, reunião ou conversa importante?",
       options: [
-        {text:"Quase todo dia", score:0},
-        {text:"Algumas vezes por semana", score:0},
-        {text:"De vez em quando", score:0},
-        {text:"Raramente, mas quando precisa, é decisivo", score:0}
+        {text:"Quase todo dia", score:4},
+        {text:"Algumas vezes por semana", score:3},
+        {text:"De vez em quando", score:2},
+        {text:"Raramente, mas quando precisa, é decisivo", score:1}
       ]
     },
     {
@@ -789,10 +789,10 @@ testis: [
       spin: "implicacao",
       title: "O que isso já te custou até hoje?",
       options: [
-        {text:"Uma oportunidade que acabou indo pra outra pessoa", score:0},
-        {text:"Uma amizade ou relação que esfriou", score:0},
-        {text:"A sensação de ser invisível em várias situações", score:0},
-        {text:"Um pouco de tudo isso, se eu for sincero(a)", score:0}
+        {text:"Uma oportunidade que acabou indo pra outra pessoa", score:1},
+        {text:"Uma amizade ou relação que esfriou", score:2},
+        {text:"A sensação de ser invisível em várias situações", score:3},
+        {text:"Um pouco de tudo isso, se eu for sincero(a)", score:4}
       ]
     },
     {
@@ -800,10 +800,10 @@ testis: [
       spin: "necessidade",
       title: "Se isso mudasse de verdade, o que seria diferente pra você?",
       options: [
-        {text:"Ser levado(a) a sério quando eu falo", score:0},
-        {text:"Não precisar mais ensaiar cada frase antes", score:0},
-        {text:"Manter minhas relações sem esse medo no meio", score:0},
-        {text:"Simplesmente ser eu mesmo(a), sem travar", score:0}
+        {text:"Ser levado(a) a sério quando eu falo", score:1},
+        {text:"Não precisar mais ensaiar cada frase antes", score:2},
+        {text:"Manter minhas relações sem esse medo no meio", score:3},
+        {text:"Simplesmente ser eu mesmo(a), sem travar", score:4}
       ]
     }
   ];
@@ -969,6 +969,7 @@ testis: [
   function computeScores(){
     var scores = {};
     questions.forEach(function(q, i){
+      if(!q.pillar) return;
       var val = state.answers[i] || 0;
       scores[q.pillar] = (scores[q.pillar] || 0) + val;
     });
