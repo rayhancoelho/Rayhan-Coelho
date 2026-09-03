@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conversa Viva — Voz Que Conecta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+  :root{
+    --ink:#0B0C0E;
+    --ink2:#111316;
+    --paper:#EDEBE4;
+    --paper-ink:#14130F;
+    --off:#EDEBE4;
+    --body-c:#D3D1C8;
+    --grey:#9C9A92;
+    --grey-dim:#5F5D57;
+    --cyan:#2FD9EC;
+    --cyan-soft:#8FEAF5;
+    --cyan-dim:#1D8C99;
+    --cyan-ink:#0B8DA0;
+    --line:#232420;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--body-c);
+    font-family:'Poppins',sans-serif;
+    font-weight:300;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:clip;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  em{font-style:italic; color:var(--cyan);}
+  b{font-weight:500; color:var(--off);}
+
+  .wrap{max-width:1160px; margin:0 auto; padding:0 24px; position:relative;}
+  @media(min-width:760px){ .wrap{padding:0 56px;} }
+
+  .measure{max-width:560px;}
+
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    color:var(--off);
+    letter-spacing:-.01em;
+  }
+
+  .kicker{
+    font-family:'Poppins',sans-serif; font-weight:500; font-size:11px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--cyan-dim); display:block;
+  }
+
+  section{position:relative;}
+  .pad{padding:88px 0;}
+  .pad-lg{padding:112px 0;}
+  .border-t{border-top:1px solid var(--line);}
+
+  .rv{opacity:0; transform:translateY(20px); filter:blur(6px); transition:opacity .8s ease, transform .8s ease, filter .8s ease;}
+  .rv.left{transform:translate(-22px,8px);}
+  .rv.right{transform:translate(22px,8px);}
+  .rv.in{opacity:1; transform:none; filter:blur(0);}
+  @media (prefers-reduced-motion: reduce){ .rv{opacity:1; transform:none; filter:none; transition:none;} }
+
+  .draw{stroke-dasharray:400; stroke-dashoffset:400; transition:stroke-dashoffset 1.6s cubic-bezier(.16,1,.3,1);}
+  .rv.in .draw{stroke-dashoffset:0;}
+
+  #spine{
+    position:fixed; top:0; bottom:0; left:28px; width:1px; z-index:5; pointer-events:none;
+    background:linear-gradient(to bottom, transparent 0%, rgba(47,217,236,.2) 12%, rgba(47,217,236,.2) 88%, transparent 100%);
+    display:none;
+  }
+  @media(min-width:1180px){ #spine{display:block;} }
+
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(11,12,14,.86); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .wordmark{
+    font-family:'Poppins',sans-serif; font-weight:500; font-size:12px; letter-spacing:.16em;
+    text-transform:lowercase; color:var(--off);
+  }
+  .nav-cta{
+    font-family:'Poppins',sans-serif; font-weight:500; font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--cyan); border:1px solid var(--cyan-dim);
+    padding:9px 16px; text-decoration:none; white-space:nowrap;
+  }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:12px;
+    font-family:'Poppins',sans-serif; font-weight:500; font-size:13px; letter-spacing:.06em;
+    text-transform:uppercase; text-decoration:none; padding:8px 8px 8px 22px; border:1px solid var(--cyan);
+    border-radius:999px; transition:background .25s ease, color .25s ease, transform .25s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-fill{background:var(--cyan); color:#04141a;}
+  .btn-fill:hover{background:var(--cyan-soft);}
+  .btn-big{padding:10px 10px 10px 28px; font-size:14px;}
+  .btn__ic{
+    display:grid; place-items:center; flex:none; width:34px; height:34px; border-radius:50%;
+    background:var(--ink); color:var(--cyan);
+  }
+  .btn-fill .btn__ic{background:#04141a; color:var(--cyan);}
+  .btn-big .btn__ic{width:40px; height:40px;}
+
+  .stats{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-top:none;
+  }
+  .stat{background:var(--ink); padding:30px 20px; text-align:center;}
+  .stat b{display:block; font-family:'Fraunces',serif; font-weight:600; font-size:clamp(26px,4vw,38px); color:var(--cyan); line-height:1;}
+  .stat span{display:block; margin-top:8px; font-size:11.5px; color:var(--grey); letter-spacing:.02em;}
+  @media(max-width:679px){ .stats{grid-template-columns:repeat(2,1fr);} }
+
+  .hero{padding-top:140px; overflow:hidden;}
+  .hero__grid{display:flex; flex-direction:column; gap:44px;}
+  @media(min-width:980px){
+    .hero__grid{flex-direction:row; align-items:flex-end; gap:0; min-height:78vh;}
+    .hero__text{flex:0 0 50%; padding-bottom:72px;}
+    .hero__media-col{flex:0 0 50%; align-self:stretch; position:relative;}
+  }
+  .hero h1{font-size:clamp(32px,5.2vw,56px); line-height:1.14; max-width:620px; margin-top:20px;}
+  .hero .sub{margin-top:24px; font-size:clamp(15px,1.8vw,17px); color:var(--grey); max-width:460px; line-height:1.7; font-weight:300;}
+  .hero .cta-block{margin-top:34px; display:flex; flex-direction:column; align-items:flex-start; gap:14px;}
+  .hero .cta-note{font-size:12.5px; letter-spacing:.05em; color:var(--grey-dim);}
+
+  .hero__photo-wrap{position:relative; height:300px; overflow:visible;}
+  @media(min-width:980px){ .hero__photo-wrap{height:100%; min-height:600px;} }
+  .hero__photo{position:absolute; bottom:0; left:0; right:0; height:100%; width:100%; overflow:hidden; border:1px solid var(--line);}
+  .hero__photo img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 18%;
+    filter:grayscale(.4) contrast(1.06) brightness(.88);
+  }
+  .hero__photo .tint{position:absolute; inset:0; background:linear-gradient(160deg, rgba(11,12,14,.1), rgba(29,140,153,.3)); mix-blend-mode:multiply;}
+  .hero__lines{position:absolute; inset:0; width:100%; height:100%; opacity:.5; pointer-events:none; z-index:2;}
+
+  .hero__tag{position:absolute; top:26px; right:0; z-index:3; width:170px; text-align:right; border-right:1px solid var(--cyan); padding-right:18px;}
+  .hero__tag p{font-family:'Fraunces',serif; font-style:italic; font-size:14px; line-height:1.5; color:var(--off);}
+  .hero__tag cite{display:block; margin-top:6px; font-style:normal; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--cyan);}
+
+  @media(max-width:979px){
+    .hero__photo-wrap{height:340px;}
+    .hero__tag{width:130px; padding-right:14px;}
+    .hero__tag p{font-size:12.5px;}
+  }
+
+  .cascade{display:flex; flex-direction:column; align-items:center; text-align:center; gap:0; margin-top:60px;}
+  .cw{font-family:'Fraunces',serif; font-style:italic; letter-spacing:.02em;}
+  .cw.w1{font-size:clamp(30px,6vw,50px); color:var(--off); font-weight:500;}
+  .cw.w2{font-size:clamp(24px,4.6vw,38px); color:var(--grey); font-weight:400;}
+  .cw.w3{font-size:clamp(28px,5.4vw,44px); color:var(--off); font-weight:500;}
+  .cw.w4{font-size:clamp(20px,3.6vw,30px); color:var(--grey-dim); font-weight:400;}
+  .cw.w5{font-size:clamp(15px,2.4vw,20px); color:var(--grey-dim); font-weight:300; letter-spacing:.24em; text-transform:uppercase; font-style:normal; margin-top:6px;}
+  .ctick{width:1px; background:var(--cyan-dim); margin:14px 0;}
+  .ctick.t1{height:30px; opacity:.7;}
+  .ctick.t2{height:26px; opacity:.55; background:var(--grey-dim);}
+  .ctick.t3{height:26px; opacity:.6;}
+  .ctick.t4{height:34px; opacity:.35; background:var(--grey-dim);}
+
+  .flow2{position:relative; margin-top:60px; min-height:260px;}
+  .flow2-svg{position:absolute; inset:0; width:100%; height:100%;}
+  .flow2-word{position:absolute; font-family:'Fraunces',serif; font-style:italic;}
+  .f2-a{top:6%; left:2%; font-size:clamp(20px,2.8vw,26px); color:var(--grey); font-weight:400;}
+  .f2-b{top:42%; left:36%; font-size:clamp(26px,3.6vw,34px); color:var(--off); font-weight:500;}
+  .f2-c{top:74%; left:66%; font-size:clamp(34px,5vw,46px); color:var(--cyan); font-weight:600;}
+  @media(max-width:759px){
+    .flow2{min-height:340px;}
+    .f2-a{top:4%; left:0;} .f2-b{top:40%; left:14%;} .f2-c{top:76%; left:24%;}
+  }
+
+  .jornada{background:var(--paper); color:var(--paper-ink);}
+  .jornada .kicker{color:var(--cyan-ink);}
+  .jornada__head{max-width:600px; margin-bottom:8px;}
+  .jornada__head h2{color:var(--paper-ink); font-size:clamp(24px,4vw,36px); margin-top:14px;}
+  .jornada__head p{margin-top:16px; color:#5B594F; font-size:15.5px; max-width:480px; line-height:1.65;}
+
+  .jornada__grid{display:grid; grid-template-columns:1fr; gap:0; align-items:start; margin-top:48px;}
+  @media(min-width:900px){ .jornada__grid{grid-template-columns:1fr 1fr; gap:56px;} }
+
+  .jornada__steps{position:relative; padding-left:40px;}
+  .jornada__rail{position:absolute; left:9px; top:6px; bottom:6px; width:1px; background:rgba(20,19,15,.15);}
+  .jornada__rail-fill{position:absolute; left:0; top:0; width:100%; height:100%; background:var(--cyan-ink); transform:scaleY(0); transform-origin:top; transition:transform .2s linear;}
+
+  .jstep{position:relative; min-height:26vh; display:flex; flex-direction:column; justify-content:center; padding:18px 0;}
+  @media(min-width:900px){ .jstep{min-height:32vh;} }
+  .jstep__dot{
+    position:absolute; left:-40px; top:50%; transform:translateY(-50%) scale(.7); width:12px; height:12px;
+    border-radius:50%; background:var(--paper); border:2px solid rgba(20,19,15,.25);
+    transition:transform .5s cubic-bezier(.16,1,.3,1), background .4s, border-color .4s;
+  }
+  .jstep__idx{font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#8B8A80; transition:color .4s;}
+  .jstep__name{margin-top:8px; font-size:clamp(22px,3vw,30px); font-weight:700; color:#8B8A80; opacity:.55; transition:color .4s, opacity .4s;}
+  .jstep__teaser{margin-top:8px; max-width:360px; font-size:14.5px; color:#8B8A80; opacity:0; transform:translateY(8px); transition:opacity .4s, transform .4s;}
+
+  .jstep.is-active .jstep__dot{transform:translateY(-50%) scale(1.15); background:var(--paper-ink); border-color:var(--paper-ink); box-shadow:0 0 0 4px rgba(47,217,236,.35);}
+  .jstep.is-active .jstep__idx{color:var(--cyan-ink);}
+  .jstep.is-active .jstep__name{color:var(--paper-ink); opacity:1;}
+  .jstep.is-active .jstep__teaser{color:#5B594F; opacity:1; transform:none;}
+
+  .jornada__stage{position:sticky; top:96px; align-self:start;}
+  .stage{position:relative; overflow:hidden; min-height:400px; border-radius:4px; padding:38px 34px; background:var(--ink); color:var(--off);}
+  .stage__glow{position:absolute; top:-120px; right:-90px; width:320px; height:320px; max-width:60vw; border-radius:50%; background:radial-gradient(circle, rgba(47,217,236,.16), transparent 70%); pointer-events:none;}
+  .stage__num{position:absolute; top:-30px; right:6px; font-family:'Fraunces',serif; font-weight:700; font-size:8rem; color:transparent; -webkit-text-stroke:1px rgba(47,217,236,.18); pointer-events:none; line-height:1;}
+  .stage__top{position:relative; z-index:1; display:flex; align-items:center; gap:14px; margin-bottom:26px;}
+  .stage__count{font-size:11px; letter-spacing:.1em; color:var(--grey);}
+  .stage__count b{color:var(--cyan);}
+  .stage__ticks{display:flex; gap:6px; flex:1;}
+  .stage__ticks i{position:relative; height:2px; flex:1; background:var(--line); overflow:hidden;}
+  .stage__ticks i::after{content:''; position:absolute; inset:0; background:var(--cyan); transform:scaleX(0); transform-origin:left; transition:transform .5s ease;}
+  .stage__ticks i.on::after{transform:scaleX(1);}
+  .stage__inner{position:relative; z-index:1;}
+  .stage__kicker{display:block; margin-bottom:10px; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--cyan-dim);}
+  .stage__title{font-size:clamp(20px,2.6vw,26px); margin-bottom:14px;}
+  .stage__lessons{list-style:none; display:flex; flex-direction:column; gap:0;}
+  .stage__lessons li{padding:11px 0; border-top:1px solid var(--line); font-size:14px; color:var(--body-c); display:flex; gap:10px; align-items:baseline;}
+  .stage__lessons li:last-child{border-bottom:1px solid var(--line);}
+  .stage__lessons li b{font-family:'Fraunces',serif; font-style:italic; color:var(--cyan-dim); font-weight:500; flex:none; font-size:12px;}
+
+  @media(max-width:899px){
+    .jornada__stage{position:sticky; top:0; padding-top:16px; background:var(--paper); z-index:2;}
+    .stage{min-height:0; padding:26px 22px;}
+    .stage__num{font-size:5rem; top:-16px;}
+    .jstep{min-height:24vh; padding-left:0;}
+    .jornada__steps{padding-left:32px; margin-top:20px;}
+    .jornada__rail{left:5px;}
+    .jstep__dot{left:-32px;}
+  }
+
+  .manifesto{margin-top:52px; display:flex; flex-direction:column;}
+  .mrow{position:relative; padding:28px 0; border-top:1px solid var(--line);}
+  .manifesto .mrow:last-child{border-bottom:1px solid var(--line);}
+  .mrow .ghost{position:absolute; top:50%; transform:translateY(-50%); font-family:'Fraunces',serif; font-weight:600; font-size:clamp(64px,10vw,110px); color:var(--off); opacity:.05; line-height:1; pointer-events:none; user-select:none;}
+  .mrow.odd .ghost{left:0;} .mrow.even .ghost{right:0;}
+  .mrow p{position:relative; font-size:clamp(16px,2vw,19px); color:var(--off); font-weight:400; max-width:500px; line-height:1.55;}
+  .mrow.odd p{margin-left:6%;}
+  .mrow.even{display:flex; justify-content:flex-end;}
+  .mrow.even p{margin-right:6%; text-align:right;}
+  @media(max-width:679px){
+    .mrow.even{display:block;}
+    .mrow.even p{margin-right:0; text-align:left; margin-left:6%;}
+  }
+
+  .idlist{margin-top:52px; display:flex; flex-direction:column; gap:8px;}
+  .idrow{position:relative; padding:24px 0;}
+  .idrow::after{content:'\201C'; position:absolute; top:-6px; font-family:'Fraunces',serif; font-size:84px; color:var(--cyan); opacity:.09; line-height:1;}
+  .idrow.a::after{left:-6px;} .idrow.b::after{right:-6px;}
+  .idline{position:relative; font-family:'Fraunces',serif; font-style:italic; font-size:clamp(17px,2.4vw,22px); color:var(--off); line-height:1.5; max-width:70%;}
+  .idrow.a .idline{margin-right:auto;} .idrow.b .idline{margin-left:auto; text-align:right;}
+  @media(max-width:679px){ .idline{max-width:100%; text-align:left !important;} .idrow.b .idline{margin-left:0;} .idrow.b::after{right:auto; left:-6px;} }
+
+  .impact{background:var(--paper); color:var(--paper-ink);}
+  .impact .kicker{color:var(--cyan-ink);}
+  .impact h2{color:var(--paper-ink); font-size:clamp(26px,4.6vw,44px); line-height:1.28; max-width:900px;}
+  .impact em{color:var(--cyan-ink); font-style:italic;}
+
+  .track{position:relative; margin-top:22px;}
+  .track .line{position:absolute; left:0; right:0; top:50%; height:1px;}
+  .track.before .line{height:0; border-top:1px dashed var(--grey-dim); opacity:.5;}
+  .track.after .line{background:linear-gradient(to right, var(--cyan-dim), var(--cyan));}
+  .track-row{display:flex; justify-content:space-between; align-items:center; padding:34px 0; flex-wrap:wrap; gap:10px 6px;}
+  .track-word{position:relative; background:var(--ink); padding:0 10px 0 0; font-family:'Fraunces',serif; font-style:italic; font-size:clamp(14px,1.8vw,17px);}
+  .track.before .track-word{color:var(--grey);}
+  .track.after .track-word{color:var(--off);}
+  .track.after .track-word:last-child{color:var(--cyan); font-weight:600;}
+  .track-connector{width:0; height:36px; margin:0 auto; border-left:1px dashed var(--grey-dim);}
+  .ab-label{font-family:'Poppins',sans-serif; font-weight:500; font-size:11px; letter-spacing:.18em; text-transform:uppercase;}
+  .track.before .ab-label{color:var(--grey-dim);}
+  .track.after .ab-label{color:var(--cyan);}
+
+  .prod-name{font-size:clamp(30px,6vw,48px); margin-top:14px; max-width:760px;}
+  .spec{margin-top:40px; max-width:640px;}
+  .spec-row{display:flex; flex-direction:column; gap:4px; padding:18px 0; border-top:1px solid var(--line);}
+  @media(min-width:560px){ .spec-row{flex-direction:row; justify-content:space-between; align-items:baseline; gap:20px;} }
+  .spec-row:last-child{border-bottom:1px solid var(--line);}
+  .spec-label{font-family:'Poppins',sans-serif; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--grey-dim); flex:none; width:140px;}
+  .spec-value{font-size:15px; color:var(--off); font-weight:300;}
+  .ph{color:var(--cyan-soft); font-style:italic;}
+  .impact .ph{color:var(--cyan-ink);}
+
+  .rayhan-band{position:relative; width:100%; aspect-ratio:16/11; overflow:hidden;}
+  @media(max-width:679px){ .rayhan-band{aspect-ratio:4/5;} }
+  .rayhan-band .hero__photo{position:absolute; inset:0; border:none;}
+  .rayhan-band .hero__photo img{object-position:center 22%;}
+  .rayhan-band .overlay{position:absolute; inset:0; background:linear-gradient(to top, rgba(11,12,14,.94) 0%, rgba(11,12,14,.5) 40%, transparent 72%);}
+  .rayhan-band .caption{position:absolute; left:24px; bottom:28px; right:24px;}
+  @media(min-width:760px){ .rayhan-band .caption{left:56px; bottom:44px; right:56px;} }
+  .rayhan-band .name{font-size:clamp(32px,6vw,56px); color:var(--off);}
+  .rayhan-band .meta{margin-top:10px; display:flex; gap:18px; flex-wrap:wrap; align-items:baseline;}
+  .rayhan-band .meta span{font-family:'Poppins',sans-serif; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--cyan);}
+  .rayhan-text{margin-top:44px;}
+
+  .oferta{background:var(--ink2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .oferta{overflow:hidden;}
+  .oferta .halo{position:absolute; top:20%; left:50%; transform:translateX(-50%); width:min(900px, 96vw); height:460px; background:radial-gradient(closest-side, rgba(47,217,236,.11), transparent 72%); pointer-events:none;}
+  .oferta h2{max-width:640px;}
+  .oferta-grid{margin-top:48px; display:flex; flex-direction:column; gap:44px;}
+  @media(min-width:860px){ .oferta-grid{flex-direction:row; justify-content:space-between; align-items:flex-start;} }
+  .roadmap{margin-top:20px; max-width:420px; position:relative; padding-left:22px;}
+  .roadmap::before{content:''; position:absolute; left:4px; top:6px; bottom:6px; width:1px; background:linear-gradient(to bottom, var(--cyan-dim), var(--cyan));}
+  .rstep{position:relative; padding:13px 0 13px 20px;}
+  .rstep::before{content:''; position:absolute; left:-22px; top:19px; width:7px; height:7px; border-radius:50%; background:var(--cyan);}
+  .rstep p{font-size:15px; color:var(--off); font-weight:300;}
+  .price-block{text-align:left;}
+  .price{font-family:'Fraunces',serif; font-size:clamp(42px,6.4vw,56px); color:var(--off); line-height:1;}
+  .price-note{margin-top:10px; font-size:12.5px; color:var(--grey-dim); letter-spacing:.02em;}
+
+  .faq{margin-top:40px; max-width:680px; position:relative; padding-left:2px; border-left:1px solid var(--line);}
+  details{padding:20px 0 20px 26px;}
+  details + details{border-top:1px solid var(--line);}
+  summary{cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:20px; font-family:'Poppins',sans-serif; font-weight:400; font-size:15.5px; color:var(--off);}
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:'+'; color:var(--cyan); font-size:20px; font-weight:300; flex:none;}
+  details[open] summary::after{content:'\2013';}
+  details p{margin-top:12px; font-size:14.5px; color:var(--grey); max-width:580px; font-weight:300; line-height:1.65;}
+
+  footer{padding:60px 0 40px; border-top:1px solid var(--line);}
+  footer .top{display:flex; flex-direction:column; gap:6px;}
+  footer .tag{font-size:13px; color:var(--grey-dim);}
+  footer .links{margin-top:32px; display:flex; flex-wrap:wrap; gap:24px; font-size:12px; color:var(--grey-dim);}
+  footer .links a{text-decoration:none;}
+  footer .links a:hover{color:var(--cyan);}
+  footer .copy{margin-top:26px; font-size:11.5px; color:var(--grey-dim); opacity:.7;}
+
+  #mcta{
+    position:fixed; left:0; right:0; bottom:0; z-index:60; background:rgba(11,12,14,.92); backdrop-filter:blur(10px);
+    border-top:1px solid var(--line); padding:12px 20px; display:flex; justify-content:center;
+    transform:translateY(120%); transition:transform .35s ease;
+  }
+  #mcta.show{transform:translateY(0);}
+  #mcta a{width:100%; max-width:420px; justify-content:center; padding:13px 16px; font-size:12px;}
+  @media(min-width:880px){ #mcta{display:none;} }
+</style>
+</head>
+<body>
+
+<div id="spine" aria-hidden="true"></div>
+
+<nav>
+  <div class="wrap">
+    <span class="wordmark">voz que conecta</span>
+    <a class="nav-cta" href="#oferta">quero começar</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__text">
+      <span class="kicker rv">Comunicação na prática</span>
+      <h1 class="rv">Uma conversa não precisa acabar só porque você não sabe o que perguntar depois.</h1>
+      <p class="sub rv">Aprenda a construir conversas que continuam naturalmente, sem transformar cada interação em uma sequência de perguntas e respostas.</p>
+      <div class="cta-block rv">
+        <a class="btn btn-fill btn-big" id="hero-cta" href="#oferta">
+          <span>quero aprender a manter uma conversa</span>
+          <span class="btn__ic" aria-hidden="true">→</span>
+        </a>
+        <span class="cta-note">Treinamento prático · Acesso imediato</span>
+      </div>
+    </div>
+    <div class="hero__media-col rv right">
+      <div class="hero__photo-wrap">
+        <div class="hero__photo">
+          <img src="assets/rayhan-hero.png" alt="Rayhan Coelho">
+          <span class="tint"></span>
+        </div>
+        <svg class="hero__lines" viewBox="0 0 400 640" preserveAspectRatio="none">
+          <path class="draw" d="M -20 60 C 120 120, 60 260, 220 300 S 380 480, 420 560" stroke="#2FD9EC" stroke-width="1" fill="none" opacity="0.55"/>
+        </svg>
+        <blockquote class="hero__tag">
+          <p>"Reagir. Acrescentar. Continuar."</p>
+          <cite>Rayhan Coelho</cite>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding-top:56px;">
+    <div class="stats rv">
+      <div class="stat"><b>4</b><span>módulos</span></div>
+      <div class="stat"><b>9</b><span>aulas</span></div>
+      <div class="stat"><b>~70</b><span>minutos</span></div>
+      <div class="stat"><b>2</b><span>bônus</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ PROBLEMA — cascata ============ -->
+<section class="pad-lg" id="problema">
+  <div class="wrap">
+    <span class="kicker rv">O problema</span>
+    <h2 class="rv" style="font-size:clamp(24px,4vw,34px); max-width:600px; margin-top:14px;">Você consegue começar. O problema é o que acontece depois.</h2>
+
+    <div class="measure rv" style="margin-top:24px;">
+      <p>Você chega, puxa assunto, e nos primeiros minutos tudo flui. O problema aparece um pouco depois: as respostas ficam mais curtas, você já não sabe que pergunta fazer, e a conversa começa a esfriar sem um motivo claro.</p>
+    </div>
+
+    <div class="cascade rv">
+      <span class="cw w1">pergunta</span>
+      <span class="ctick t1"></span>
+      <span class="cw w2">resposta</span>
+      <span class="ctick t2"></span>
+      <span class="cw w3">pergunta</span>
+      <span class="ctick t3"></span>
+      <span class="cw w4">resposta</span>
+      <span class="ctick t4"></span>
+      <span class="cw w5">silêncio</span>
+    </div>
+
+    <div class="measure rv" style="margin:56px auto 0;">
+      <p>Grande parte das pessoas tenta resolver isso do jeito errado: fazendo mais perguntas. Só que perguntar sem parar transforma a conversa numa espécie de entrevista. Um lado pergunta, o outro responde, e nada do que é dito é realmente aproveitado.</p>
+      <p style="margin-top:16px;">O resultado é sempre parecido. A conversa não morre porque faltou assunto. Ela morre porque nada estava sendo construído entre as duas pessoas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MÉTODO — fluxo ============ -->
+<section class="border-t pad-lg" id="metodo">
+  <div class="wrap">
+    <span class="kicker rv">O princípio</span>
+    <h2 class="rv" style="font-size:clamp(24px,4vw,36px); max-width:600px; margin-top:14px;">Conversas não são questionários. São construções.</h2>
+
+    <div class="flow2 rv">
+      <svg class="flow2-svg" viewBox="0 0 1000 260" preserveAspectRatio="none">
+        <path class="draw" d="M 20 40 C 260 60, 300 190, 500 150 S 820 60, 980 210" stroke="#1D8C99" stroke-width="1" fill="none" opacity="0.55"/>
+      </svg>
+      <span class="flow2-word f2-a">reagir</span>
+      <span class="flow2-word f2-b">acrescentar</span>
+      <span class="flow2-word f2-c">continuar</span>
+    </div>
+
+    <div class="measure rv">
+      <p>Existe uma diferença entre quem sabe manter uma conversa e quem só sabe perguntar. Quem mantém usa o que acabou de ouvir: reage de verdade, acrescenta algo próprio, e só depois abre espaço pra continuar. Quem só pergunta descarta a resposta e já parte pra outra coisa.</p>
+      <p style="margin-top:16px;">Isso muda a lógica da conversa. Em vez de sair caçando a próxima pergunta, você aprende a enxergar o que já está ali, na sua frente, esperando pra ser desenvolvido. É essa habilidade que o treinamento coloca em prática.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JORNADA — módulos com palco sticky ============ -->
+<section class="jornada" id="modulos">
+  <div class="wrap pad-lg">
+    <div class="jornada__head rv">
+      <span class="kicker">O treinamento, módulo a módulo</span>
+      <h2>Quatro módulos, um caminho só.</h2>
+      <p>Role para percorrer a jornada, ou clique em qualquer etapa.</p>
+    </div>
+
+    <div class="jornada__grid">
+      <div class="jornada__steps">
+        <div class="jornada__rail" aria-hidden="true"><div class="jornada__rail-fill" id="railFill"></div></div>
+
+        <div class="jstep is-active" data-i="0">
+          <span class="jstep__dot" aria-hidden="true"></span>
+          <span class="jstep__idx">Módulo 1</span>
+          <h3 class="jstep__name">Por que suas conversas morrem</h3>
+          <p class="jstep__teaser">O ciclo pergunta-resposta e o que falta entre uma pergunta e outra.</p>
+        </div>
+        <div class="jstep" data-i="1">
+          <span class="jstep__dot" aria-hidden="true"></span>
+          <span class="jstep__idx">Módulo 2</span>
+          <h3 class="jstep__name">O método R.A.C.</h3>
+          <p class="jstep__teaser">Reagir, acrescentar, continuar — os três movimentos, um por um.</p>
+        </div>
+        <div class="jstep" data-i="2">
+          <span class="jstep__dot" aria-hidden="true"></span>
+          <span class="jstep__idx">Módulo 3</span>
+          <h3 class="jstep__name">Saindo do modo entrevista</h3>
+          <p class="jstep__teaser">Como parar de perguntar no automático e transformar respostas em caminhos.</p>
+        </div>
+        <div class="jstep" data-i="3">
+          <span class="jstep__dot" aria-hidden="true"></span>
+          <span class="jstep__idx">Módulo 4</span>
+          <h3 class="jstep__name">Conversas reais</h3>
+          <p class="jstep__teaser">O R.A.C. aplicado no dia a dia: amigos, encontros, trabalho, gente nova.</p>
+        </div>
+      </div>
+
+      <div class="jornada__stage rv">
+        <div class="stage" id="stage">
+          <span class="stage__glow" aria-hidden="true"></span>
+          <span class="stage__num" id="stageNum" aria-hidden="true">01</span>
+          <div class="stage__top">
+            <span class="stage__count"><b id="stageCount">01</b> / 04</span>
+            <span class="stage__ticks" id="stageTicks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          </div>
+          <div class="stage__inner">
+            <span class="stage__kicker" id="stageKicker">Módulo 1</span>
+            <h3 class="stage__title" id="stageTitle">Por que suas conversas morrem</h3>
+            <ul class="stage__lessons" id="stageLessons">
+              <li><b>01</b>O ciclo pergunta, resposta, pergunta</li>
+              <li><b>02</b>O que está faltando entre uma pergunta e outra</li>
+              <li><b>03</b>Uma conversa precisa de troca</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BENEFÍCIOS — manifesto ============ -->
+<section class="border-t pad-lg" id="beneficios">
+  <div class="wrap">
+    <span class="kicker rv">O que você vai desenvolver</span>
+    <h2 class="rv" style="font-size:clamp(24px,4vw,36px); max-width:600px; margin-top:14px;">Aprenda a dar continuidade ao que já está acontecendo.</h2>
+
+    <div class="manifesto">
+      <div class="mrow odd rv left"><span class="ghost">01</span><p>Reagir ao que a pessoa realmente disse, não ao que você esperava ouvir.</p></div>
+      <div class="mrow even rv right"><span class="ghost">02</span><p>Acrescentar algo seu à conversa, em vez de só devolver perguntas.</p></div>
+      <div class="mrow odd rv left"><span class="ghost">03</span><p>Desenvolver um assunto antes de abandoná-lo cedo demais.</p></div>
+      <div class="mrow even rv right"><span class="ghost">04</span><p>Sair do modo entrevista e voltar a conversar de verdade.</p></div>
+      <div class="mrow odd rv left"><span class="ghost">05</span><p>Lidar melhor com respostas curtas, sem travar.</p></div>
+      <div class="mrow even rv right"><span class="ghost">06</span><p>Criar transições naturais entre um assunto e outro.</p></div>
+      <div class="mrow odd rv left"><span class="ghost">07</span><p>Tornar as conversas mais recíprocas, dos dois lados.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IDENTIFICAÇÃO ============ -->
+<section class="border-t pad-lg" id="identificacao">
+  <div class="wrap">
+    <span class="kicker rv">Isso soa familiar?</span>
+    <h2 class="rv" style="font-size:clamp(24px,4vw,36px); max-width:600px; margin-top:14px;">Se isso acontece com você, este treinamento foi feito para esse problema.</h2>
+
+    <div class="idlist">
+      <div class="idrow a rv left"><p class="idline">Eu começo conversas bem, mas elas não duram.</p></div>
+      <div class="idrow b rv right"><p class="idline">Depois de algumas perguntas, não sei mais o que fazer.</p></div>
+      <div class="idrow a rv left"><p class="idline">Sinto que estou entrevistando a pessoa.</p></div>
+      <div class="idrow b rv right"><p class="idline">A outra pessoa responde, mas não desenvolve.</p></div>
+      <div class="idrow a rv left"><p class="idline">Quando percebo, a conversa já morreu.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IMPACTO invertido ============ -->
+<section class="impact pad-lg" id="transformacao">
+  <div class="wrap">
+    <span class="kicker rv">A mudança</span>
+    <h2 class="rv" style="margin-top:18px;">Em vez de pensar <em>"qual pergunta eu faço agora?"</em>, você passa a pensar <em>"o que posso construir a partir disso?"</em></h2>
+  </div>
+</section>
+
+<!-- ============ ANTES / DEPOIS ============ -->
+<section class="border-t pad-lg">
+  <div class="wrap">
+    <div class="track before rv">
+      <span class="ab-label">Antes</span>
+      <div class="track-row" style="margin-top:14px;">
+        <span class="line"></span>
+        <span class="track-word">perguntar</span>
+        <span class="track-word">responder</span>
+        <span class="track-word">perguntar</span>
+        <span class="track-word">silêncio</span>
+      </div>
+    </div>
+
+    <div class="track-connector"></div>
+
+    <div class="track after rv">
+      <span class="ab-label">Depois</span>
+      <div class="track-row" style="margin-top:14px;">
+        <span class="line"></span>
+        <span class="track-word">ouvir</span>
+        <span class="track-word">reagir</span>
+        <span class="track-word">acrescentar</span>
+        <span class="track-word">continuar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOBRE O PRODUTO ============ -->
+<section class="border-t pad-lg" id="produto">
+  <div class="wrap">
+    <span class="kicker rv">O treinamento</span>
+    <h2 class="prod-name rv">Conversa Viva</h2>
+    <div class="measure rv" style="margin-top:18px;">
+      <p>Você não precisa transformar uma conversa em uma sequência interminável de perguntas. Neste curso, você vai aprender a reagir ao que a pessoa diz, acrescentar algo seu e criar caminhos para a conversa continuar de forma natural.</p>
+    </div>
+
+    <div class="spec rv">
+      <div class="spec-row"><span class="spec-label">Formato</span><span class="spec-value">Curso online gravado</span></div>
+      <div class="spec-row"><span class="spec-label">Duração</span><span class="spec-value">4 módulos · 9 aulas · aproximadamente 70 minutos</span></div>
+      <div class="spec-row"><span class="spec-label">Conteúdo</span><span class="spec-value">Módulo 1 — Por que suas conversas morrem · Módulo 2 — O método R.A.C. · Módulo 3 — Saindo do modo entrevista · Módulo 4 — Conversas reais</span></div>
+      <div class="spec-row"><span class="spec-label">Bônus</span><span class="spec-value">Mapa R.A.C. + Laboratório de conversas</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOBRE RAYHAN — banda editorial ============ -->
+<section class="border-t" id="rayhan">
+  <div class="rayhan-band rv">
+    <div class="hero__photo">
+      <img src="assets/rayhan-sobre.png" alt="Rayhan Coelho">
+      <span class="tint"></span>
+    </div>
+    <div class="overlay"></div>
+    <div class="caption">
+      <h2 class="name">Rayhan</h2>
+      <div class="meta"><span>Voz Que Conecta</span><span>Método V.O.C.</span></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="measure rayhan-text rv">
+      <p>Rayhan Coelho é o criador da <b>Voz Que Conecta</b> e do método <b>V.O.C.</b>, e estuda comunicação há mais de 3 anos.</p>
+      <p style="margin-top:16px;">Seu trabalho é voltado para quem quer deixar de apenas "saber conversar" na teoria e desenvolver uma comunicação mais natural, segura e capaz de gerar conexão.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OFERTA ============ -->
+<section class="oferta pad-lg" id="oferta">
+  <div class="halo"></div>
+  <div class="wrap">
+    <span class="kicker rv">A oferta</span>
+    <h2 class="rv" style="margin-top:14px;">Pare de assistir suas conversas morrerem sem saber o que fazer.</h2>
+
+    <div class="oferta-grid">
+      <div class="rv left">
+        <h3 class="prod-name" style="font-size:clamp(20px,3vw,26px); margin-top:0;">Conversa Viva</h3>
+        <div class="roadmap">
+          <div class="rstep"><p>Curso completo: 4 módulos, 9 aulas (~70 min)</p></div>
+          <div class="rstep"><p>Bônus: Mapa R.A.C.</p></div>
+          <div class="rstep"><p>Bônus: Laboratório de conversas</p></div>
+          <div class="rstep"><p>Acesso imediato</p></div>
+        </div>
+      </div>
+      <div class="price-block rv right">
+        <div class="price">R$ 37,90</div>
+        <div class="price-note ph">[forma de pagamento a definir conforme a plataforma]</div>
+        <a class="btn btn-fill btn-big" style="margin-top:26px;" href="#">
+          <span>quero aprender a manter uma conversa</span>
+          <span class="btn__ic" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="border-t pad-lg" id="faq">
+  <div class="wrap">
+    <span class="kicker rv">Perguntas frequentes</span>
+    <h2 class="rv" style="font-size:clamp(24px,4vw,32px); margin-top:14px;">Perguntas frequentes</h2>
+
+    <div class="faq rv">
+      <details>
+        <summary>Preciso ser extrovertido?</summary>
+        <p>Não. O método não depende de personalidade, depende de prestar atenção no que a outra pessoa diz e usar isso a seu favor. Funciona tanto para quem é mais quieto quanto para quem fala bastante.</p>
+      </details>
+      <details>
+        <summary>Serve para conversas com desconhecidos?</summary>
+        <p>Sim. É justamente onde costuma fazer mais diferença, porque é quando a conversa tem menos histórico prévio pra se apoiar.</p>
+      </details>
+      <details>
+        <summary>Serve para amizades e relacionamentos?</summary>
+        <p>Sim. O princípio é o mesmo em qualquer tipo de conversa: dar continuidade ao que já está sendo dito, em vez de só reagir com outra pergunta.</p>
+      </details>
+      <details>
+        <summary>Preciso decorar perguntas?</summary>
+        <p>Não. O treinamento não é uma lista de perguntas prontas. É um jeito de processar o que a pessoa fala e responder a partir disso.</p>
+      </details>
+      <details>
+        <summary>Funciona em conversas online?</summary>
+        <p>Sim. O R.A.C. funciona em texto, áudio ou pessoalmente. O método é sobre como você processa e responde à conversa, não sobre o canal em que ela acontece.</p>
+      </details>
+      <details>
+        <summary>Como funciona o acesso?</summary>
+        <p class="ph">[acesso e forma de pagamento a definir conforme a plataforma escolhida]</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="top">
+      <span class="wordmark" style="font-size:14px;">voz que conecta</span>
+      <span class="tag">Comunicação que gera influência.</span>
+    </div>
+    <div class="links">
+      <a href="#">[Termos de uso]</a>
+      <a href="#">[Política de privacidade]</a>
+      <a href="#">[Suporte]</a>
+    </div>
+    <div class="copy">© [ano] Voz Que Conecta. Todos os direitos reservados.</div>
+  </div>
+</footer>
+
+<div id="mcta">
+  <a class="btn btn-fill" href="#oferta"><span>quero manter minhas conversas</span></a>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:.14 });
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+  var heroCta = document.getElementById('hero-cta');
+  var mcta = document.getElementById('mcta');
+  if(heroCta && mcta){
+    var ioBtn = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ mcta.classList.toggle('show', !e.isIntersecting); });
+    }, { threshold:0 });
+    ioBtn.observe(heroCta);
+  }
+
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.jstep'));
+  var railFill = document.getElementById('railFill');
+  var stage = document.getElementById('stage');
+  if(!steps.length || !stage) return;
+
+  var data = [
+    { n:'01', k:'Módulo 1', t:'Por que suas conversas morrem', l:[
+      'O ciclo pergunta, resposta, pergunta',
+      'O que está faltando entre uma pergunta e outra',
+      'Uma conversa precisa de troca' ] },
+    { n:'02', k:'Módulo 2', t:'O método R.A.C.', l:[
+      'Reagir',
+      'Acrescentar',
+      'Continuar' ] },
+    { n:'03', k:'Módulo 3', t:'Saindo do modo entrevista', l:[
+      'Como parar de fazer perguntas mecânicas',
+      'Como transformar respostas em novos caminhos' ] },
+    { n:'04', k:'Módulo 4', t:'Conversas reais', l:[
+      'Aplicando o R.A.C. no dia a dia' ] }
+  ];
+
+  var numEl = document.getElementById('stageNum');
+  var countEl = document.getElementById('stageCount');
+  var kickerEl = document.getElementById('stageKicker');
+  var titleEl = document.getElementById('stageTitle');
+  var lessonsEl = document.getElementById('stageLessons');
+  var ticks = Array.prototype.slice.call(document.querySelectorAll('#stageTicks i'));
+  var active = 0;
+
+  function setActive(i){
+    if(i === active || !data[i]) return;
+    active = i;
+    steps.forEach(function(s,k){ s.classList.toggle('is-active', k === i); });
+    ticks.forEach(function(t,k){ t.classList.toggle('on', k <= i); });
+    var d = data[i];
+    numEl.textContent = d.n;
+    countEl.textContent = d.n;
+    kickerEl.textContent = d.k;
+    titleEl.textContent = d.t;
+    lessonsEl.innerHTML = d.l.map(function(x,idx){
+      return '<li><b>' + String(idx+1).padStart(2,'0') + '</b>' + x + '</li>';
+    }).join('');
+  }
+
+  var jio = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ setActive(parseInt(e.target.getAttribute('data-i'),10)); } });
+  }, { rootMargin:'-45% 0px -45% 0px', threshold:0 });
+  steps.forEach(function(s){ jio.observe(s); });
+
+  var jornadaSection = document.querySelector('.jornada');
+  if(railFill && jornadaSection){
+    var ticking = false;
+    var onScroll = function(){
+      if(ticking) return; ticking = true;
+      requestAnimationFrame(function(){
+        var rect = jornadaSection.getBoundingClientRect();
+        var total = jornadaSection.offsetHeight - window.innerHeight;
+        var scrolled = Math.min(Math.max(-rect.top, 0), Math.max(total,1));
+        var frac = total > 0 ? scrolled/total : 0;
+        railFill.style.transform = 'scaleY(' + frac + ')';
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive:true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
+  }
+})();
+</script>
+
+</body>
+</html>
