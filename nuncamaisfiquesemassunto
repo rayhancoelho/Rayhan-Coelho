@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assunto · Voz que Conecta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0a0a0b; --black2:#151311;
+  --accent:#E8631F; --accent-soft:rgba(232,99,31,0.12);
+  --off:#EFEAE1; --dim:#aca69b; --grey:#736d63; --hair:rgba(255,255,255,0.1);
+  --paper:#F4F0E8; --ink:#18160f; --ink-soft:#645f54; --ink-faint:#b9b3a5; --hair-soft:rgba(24,22,15,0.1);
+  --font-sans:'Poppins',sans-serif; --font-serif:'Fraunces',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+body{font-family:var(--font-sans);font-weight:300;color:var(--off);background:var(--black);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+.container{max-width:1180px;margin-inline:auto;padding-inline:44px;}
+@media (max-width:900px){.container{padding-inline:22px;}}
+section{position:relative;}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
+.eyebrow::before{content:'';width:18px;height:1px;background:var(--accent);}
+h1,h2,h3{font-family:var(--font-serif);font-weight:500;color:var(--off);}
+.dark h1,.dark h2,.dark h3{color:var(--off);}
+.light h2,.light h3{color:var(--ink);}
+em.hl{font-style:italic;color:var(--accent);font-weight:400;}
+em.outline{font-style:italic;font-weight:500;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.4);}
+p{font-size:16px;color:#d6d1c6;font-weight:300;}
+.light p{color:var(--ink-soft);}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--accent);color:#0a0a0b;font-weight:600;font-size:13.5px;letter-spacing:.3px;text-transform:uppercase;padding:8px 8px 8px 24px;border-radius:999px;transition:background .25s,color .25s,transform .25s;}
+.btn:hover{background:transparent;color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);transform:translateY(-2px);}
+.btn__ic{width:36px;height:36px;border-radius:50%;background:#0a0a0b;color:var(--accent);display:grid;place-items:center;flex-shrink:0;overflow:hidden;position:relative;}
+.btn:hover .btn__ic{background:var(--accent);color:#0a0a0b;}
+.btn__ic svg{transition:transform .3s cubic-bezier(.4,0,.2,1);}
+.btn__ic svg.clone{position:absolute;transform:translateX(-140%);}
+.btn:hover .btn__ic svg:not(.clone){transform:translateX(140%);}
+.btn:hover .btn__ic svg.clone{transform:translateX(0);}
+.btn-lg{padding:10px 10px 10px 30px;font-size:15px;}
+.btn-lg .btn__ic{width:44px;height:44px;}
+.microline{margin-top:14px;font-size:11.5px;letter-spacing:.4px;color:var(--grey);}
+
+.reveal{opacity:0;transform:translateY(20px);filter:blur(6px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1),filter .8s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1;transform:none;filter:blur(0);}
+.reveal-fade{opacity:0;filter:blur(6px);transition:opacity .7s ease var(--d,0ms),filter .7s ease var(--d,0ms);}
+.reveal-fade.in{opacity:1;filter:blur(0);}
+@media (prefers-reduced-motion:reduce){.reveal,.reveal-fade{opacity:1!important;transform:none!important;filter:none!important;}}
+
+header{position:sticky;top:0;z-index:40;background:rgba(10,10,11,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--hair);}
+.nav{max-width:1180px;margin-inline:auto;padding:18px 44px;display:flex;align-items:center;justify-content:space-between;}
+.brand{font-size:11.5px;letter-spacing:.25em;text-transform:uppercase;font-weight:600;}
+.brand span{color:var(--accent);}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:400;position:relative;padding-bottom:3px;}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s;}
+.nav-links a:hover::after{transform:scaleX(1);}
+@media (max-width:860px){.nav-links,.nav .btn{display:none;}.nav{padding:16px 22px;justify-content:center;}}
+
+/* HERO */
+.hero{border-bottom:1px solid var(--hair);background:linear-gradient(165deg,#1a1109 0%,#0a0a0b 65%);}
+.hero__grid{display:grid;grid-template-columns:minmax(0,26rem) minmax(0,1fr);gap:40px;min-height:88vh;align-items:stretch;}
+.hero__content{align-self:center;padding-block:40px;position:relative;z-index:1;}
+.hero__ghost{position:absolute;left:-24px;top:50%;transform:translateY(-50%);font-family:var(--font-serif);font-weight:600;font-style:italic;font-size:min(24vw,260px);color:var(--off);opacity:.025;white-space:nowrap;pointer-events:none;z-index:0;line-height:1;}
+.hero h1{font-size:clamp(30px,4vw,46px);line-height:1.14;letter-spacing:-.5px;max-width:520px;margin-bottom:22px;}
+.hero__lead{max-width:420px;font-size:16.5px;color:var(--dim);margin-bottom:32px;}
+.hero__media{position:relative;}
+.hero__frame{position:absolute;inset:44px 0 0 0;overflow:hidden;}
+.hero__frame::before{content:'';position:absolute;top:0;left:0;width:44px;height:44px;border-top:1px solid var(--accent);border-left:1px solid var(--accent);z-index:2;}
+.hero__frame::after{content:'';position:absolute;bottom:0;right:0;width:44px;height:44px;border-bottom:1px solid var(--accent);border-right:1px solid var(--accent);z-index:2;}
+.hero__frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%;}
+.hero__quote{position:absolute;top:26px;right:0;z-index:3;width:180px;text-align:right;border-right:1px solid var(--accent);padding-right:18px;}
+.hero__quote p{font-family:var(--font-serif);font-style:italic;font-size:14px;line-height:1.5;color:var(--off);}
+.hero__quote cite{display:block;margin-top:8px;font-style:normal;font-weight:600;font-size:11.5px;color:var(--dim);}
+.hero__pills{position:absolute;right:0;bottom:44px;z-index:3;display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
+.hero__pill{display:flex;align-items:center;gap:10px;padding:11px 18px;border-radius:999px;background:rgba(255,255,255,.05);backdrop-filter:blur(10px) saturate(160%);border:1px solid rgba(255,255,255,.08);font-size:13.5px;font-weight:500;white-space:nowrap;}
+.hero__pill .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+.scroll-cue{position:absolute;left:22px;bottom:22px;z-index:3;width:96px;height:96px;border-radius:50%;background:rgba(255,255,255,.02);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12);}
+.scroll-cue svg.ring{width:100%;height:100%;animation:spin 18s linear infinite;}
+.scroll-cue text{fill:var(--off);font-size:6.6px;letter-spacing:.24em;font-family:var(--font-sans);}
+.scroll-cue .arrow{position:absolute;inset:0;margin:auto;width:18px;height:18px;color:var(--accent);animation:bob .9s ease-in-out infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(5px);}}
+@media (max-width:900px){
+  .hero__grid{grid-template-columns:1fr;min-height:auto;gap:0;}
+  .hero__media{order:-1;height:58vh;}
+  .hero__frame{inset:20px;}
+  .hero__content{padding:44px 0;}
+  .hero__ghost{display:none;}
+  .scroll-cue{display:none;}
+}
+
+/* PROBLEMA */
+.problema{background:var(--black);padding-block:110px;border-bottom:1px solid var(--hair);}
+.problema__grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:64px;align-items:start;}
+.problema__intro{position:sticky;top:100px;}
+.problema__intro h2{font-size:2.4rem;line-height:1.15;margin:10px 0 18px;max-width:420px;}
+.problema__intro p{max-width:400px;margin-bottom:26px;}
+.problema__quote{border-left:2px solid var(--accent);padding:4px 0 4px 18px;font-family:var(--font-serif);font-style:italic;font-size:17px;line-height:1.5;max-width:380px;margin-bottom:30px;}
+.signals{display:flex;flex-direction:column;gap:14px;}
+.signal{display:grid;grid-template-columns:auto 1fr;gap:22px;border:1px solid var(--hair);border-radius:18px;padding:28px;transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;}
+.signal:hover{transform:translateX(8px);border-color:var(--accent);box-shadow:-10px 10px 0 -6px var(--accent);}
+.signal__idx{writing-mode:vertical-rl;transform:rotate(180deg);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:var(--grey);border-left:1px solid var(--hair);padding-left:12px;}
+.signal h3{font-size:19px;margin-bottom:5px;}
+.signal p{font-size:14px;margin:0;}
+.signal__tag{display:inline-block;margin-top:12px;padding:5px 12px;border:1px solid var(--hair);border-radius:999px;font-size:11px;color:var(--grey);}
+@media (max-width:900px){.problema{padding-block:64px;}.problema__grid{grid-template-columns:1fr;gap:0;}.problema__intro{position:static;margin-bottom:36px;}}
+
+/* CONCEITO */
+.conceito{background:radial-gradient(ellipse 90% 60% at 50% -10%,#221408,#0a0a0b 60%);padding-block:130px;overflow:hidden;border-bottom:1px solid var(--hair);}
+.conceito__ghost{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);font-family:var(--font-serif);font-weight:700;font-size:min(30vw,420px);color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.035);white-space:nowrap;pointer-events:none;line-height:1;}
+.conceito .container{position:relative;z-index:1;}
+.conceito__statement{font-family:var(--font-sans);font-weight:600;font-size:clamp(1.7rem,4.4vw,2.9rem);letter-spacing:-.02em;line-height:1.16;max-width:820px;margin-bottom:56px;}
+.conceito__map{border-top:1px solid var(--hair);}
+.map-row{position:relative;overflow:hidden;display:grid;grid-template-columns:3rem 1fr auto 1fr;align-items:center;gap:24px;padding:30px 6px;border-bottom:1px solid var(--hair);}
+.map-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:transform .4s cubic-bezier(.65,0,.35,1);}
+.map-row:hover::before{transform:scaleY(1);}
+.map-row .n{font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--ink-faint);color:var(--grey);}
+.map-row .a{font-family:var(--font-serif);font-size:clamp(1.1rem,2.6vw,1.5rem);}
+.map-row .mid{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);}
+.map-row .mid svg{color:var(--accent);}
+.map-row .b{font-family:var(--font-serif);font-weight:600;font-size:clamp(1.1rem,2.6vw,1.5rem);color:var(--accent);text-align:right;}
+.conceito__close{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-top:56px;flex-wrap:wrap;}
+.conceito__close p{max-width:520px;font-size:16.5px;line-height:1.6;}
+@media (max-width:900px){
+  .conceito{padding-block:70px;}
+  .map-row{grid-template-columns:auto 1fr;grid-template-areas:'n a' '. mid' '. b';gap:6px 16px;padding:22px 4px 22px 16px;}
+  .map-row .n{grid-area:n;}.map-row .a{grid-area:a;}.map-row .mid{grid-area:mid;}.map-row .b{grid-area:b;text-align:left;}
+}
+
+/* FORMAÇÃO (jornada sticky) */
+.formacao{background:var(--black);padding:100px 0 40px;border-bottom:1px solid var(--hair);}
+.formacao__head{max-width:640px;margin-bottom:16px;}
+.formacao__head h2{font-size:2.4rem;margin-bottom:14px;}
+.formacao__journey{display:grid;grid-template-columns:1fr .95fr;gap:60px;align-items:start;position:relative;}
+.formacao__steps{padding-left:50px;position:relative;}
+.formacao__rail{position:absolute;left:20px;top:0;bottom:0;width:2px;background:var(--hair);border-radius:2px;}
+.formacao__rail-fill{position:absolute;left:0;top:0;width:100%;height:0;background:var(--accent);border-radius:2px;}
+.f-step{position:relative;min-height:56vh;display:flex;flex-direction:column;justify-content:center;}
+.f-step__dot{position:absolute;left:-38px;top:50%;transform:translateY(-50%) scale(.7);width:13px;height:13px;border-radius:50%;background:var(--black);border:2px solid var(--grey);transition:transform .5s cubic-bezier(.34,1.56,.64,1),background .4s,border-color .4s,box-shadow .4s;}
+.f-step.is-active .f-step__dot{transform:translateY(-50%) scale(1.1);background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 5px var(--accent-soft);}
+.f-step__idx{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin-bottom:12px;transition:color .4s;}
+.f-step.is-active .f-step__idx{color:var(--accent);}
+.f-step__name{font-size:2.1rem;color:var(--grey);opacity:.5;transition:opacity .5s,color .5s;}
+.f-step.is-active .f-step__name{color:var(--off);opacity:1;}
+.f-step__teaser{margin-top:12px;max-width:360px;font-size:14.5px;color:var(--grey);opacity:0;transform:translateY(8px);filter:blur(3px);transition:opacity .5s,transform .5s,filter .5s;}
+.f-step.is-active .f-step__teaser{opacity:1;transform:none;filter:blur(0);color:var(--dim);}
+.formacao__stage{position:sticky;top:calc((100vh - 26rem)/2);}
+.stage{position:relative;overflow:hidden;min-height:24rem;padding:44px 40px;border-radius:26px;background:radial-gradient(ellipse 120% 90% at 100% 0%,#2a1608,#100b06 60%);border:1px solid var(--hair);display:flex;flex-direction:column;justify-content:flex-end;}
+.stage__num{position:absolute;top:-30px;right:6px;font-weight:700;font-size:9rem;color:transparent;-webkit-text-stroke:1px var(--accent-soft);line-height:1;pointer-events:none;}
+.stage__top{position:absolute;top:26px;left:40px;right:40px;display:flex;align-items:center;gap:14px;}
+.stage__count{font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--dim);flex-shrink:0;}
+.stage__count b{color:var(--accent);}
+.stage__ticks{display:flex;gap:6px;flex:1;}
+.stage__ticks i{position:relative;height:3px;flex:1;border-radius:3px;background:var(--hair);overflow:hidden;}
+.stage__ticks i::after{content:'';position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .5s;}
+.stage__ticks i.on::after{transform:scaleX(1);}
+.stage__kicker{display:block;margin-bottom:12px;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);}
+.stage__title{font-size:2rem;margin-bottom:12px;}
+.stage__desc{max-width:400px;font-size:15px;color:var(--dim);margin-bottom:20px;}
+.stage__tags{display:flex;flex-wrap:wrap;gap:8px;}
+.stage__tags span{padding:7px 14px;border:1px solid var(--hair);border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);}
+@media (max-width:900px){
+  .formacao{padding:64px 0 20px;}
+  .formacao__journey{grid-template-columns:1fr;gap:0;}
+  .formacao__stage{order:-1;position:sticky;top:0;padding-top:14px;background:var(--black);z-index:2;}
+  .stage{min-height:15rem;padding:62px 22px 26px;}
+  .stage__top{left:22px;right:22px;top:22px;}
+  .stage__num{font-size:5.5rem;top:-14px;}
+  .stage__title{font-size:1.5rem;}
+  .formacao__steps{padding-left:40px;margin-top:16px;}
+  .formacao__rail{left:14px;}
+  .f-step{min-height:32vh;}
+  .f-step__dot{left:-32px;}
+  .f-step__name{font-size:1.6rem;}
+}
+
+/* MODULOS */
+.modulos{background:radial-gradient(ellipse 90% 60% at 50% -10%,#221408,#0a0a0b 55%);padding-block:110px;border-bottom:1px solid var(--hair);}
+.modulos__head{max-width:640px;margin-bottom:50px;}
+.modulos__head h2{font-size:2.4rem;margin-bottom:14px;}
+.mod-list{display:flex;flex-direction:column;gap:14px;}
+.mod{border:1px solid var(--hair);border-radius:18px;background:rgba(255,255,255,.015);overflow:hidden;transition:border-color .4s,background .4s;}
+.mod.is-open{border-color:var(--accent-soft);background:rgba(232,99,31,.05);}
+.mod__trigger{width:100%;display:flex;align-items:center;gap:20px;padding:24px 26px;background:none;border:none;cursor:pointer;text-align:left;color:inherit;font-family:inherit;}
+.mod__num{flex-shrink:0;width:44px;font-family:var(--font-serif);font-size:26px;color:var(--accent);}
+.mod__info{flex:1;min-width:0;}
+.mod__label{display:block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:4px;}
+.mod__name{font-size:18px;font-weight:600;color:var(--off);font-family:var(--font-sans);}
+.mod__meta{flex-shrink:0;display:flex;align-items:center;gap:16px;}
+.mod__count{padding:5px 12px;border:1px solid var(--hair);border-radius:999px;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);white-space:nowrap;}
+.mod__ic{width:34px;height:34px;border-radius:50%;border:1px solid var(--hair);background:rgba(255,255,255,.02);display:grid;place-items:center;transition:transform .4s,color .4s,border-color .4s,background .4s;}
+.mod.is-open .mod__ic{transform:rotate(180deg);color:var(--accent);border-color:var(--accent-soft);background:var(--accent-soft);}
+.mod__panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.22,1,.36,1);}
+.mod.is-open .mod__panel{grid-template-rows:1fr;}
+.mod__lessons{overflow:hidden;min-height:0;list-style:none;padding:2px 26px 24px 90px;}
+.mod__lessons li{padding:11px 0;border-top:1px solid rgba(255,255,255,.06);font-size:14px;color:var(--dim);}
+.mod__lessons li::before{content:'';display:inline-block;width:5px;height:5px;margin-right:12px;border-radius:50%;background:var(--accent);vertical-align:middle;}
+.bonus-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:26px;}
+.bonus-chip{display:flex;align-items:center;gap:10px;padding:12px 18px;border:1px dashed var(--hair);border-radius:999px;font-size:13px;color:var(--dim);}
+.bonus-chip b{color:var(--off);font-weight:500;}
+@media (max-width:900px){
+  .modulos{padding-block:64px;}
+  .mod__trigger{padding:18px;gap:12px;}
+  .mod__num{width:30px;font-size:19px;}
+  .mod__name{font-size:15px;}
+  .mod__count{display:none;}
+  .mod__lessons{padding-left:18px;padding-right:18px;}
+}
+
+/* PARA QUEM */
+.paraquem{background:var(--black);padding-block:110px;border-bottom:1px solid var(--hair);}
+.paraquem__head{max-width:620px;margin-bottom:50px;}
+.paraquem__head h2{font-size:2.4rem;}
+.persona-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.persona{border:1px solid var(--hair);border-radius:20px;padding:30px 28px 26px;transition:transform .5s cubic-bezier(.22,1,.36,1),border-color .5s,box-shadow .5s;}
+.persona.is-active{transform:translateY(-6px);border-color:var(--accent-soft);box-shadow:0 24px 46px -30px rgba(0,0,0,.6);}
+.persona__num{font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--grey);margin-bottom:14px;display:block;}
+.persona__line{font-family:var(--font-serif);font-style:italic;font-size:19px;line-height:1.4;margin-bottom:16px;color:var(--off);}
+.persona__out{display:flex;gap:10px;align-items:flex-start;padding-top:14px;border-top:1px dashed var(--hair);opacity:0;transform:translateY(6px);filter:blur(3px);transition:opacity .5s .08s,transform .5s .08s,filter .5s .08s;}
+.persona.is-active .persona__out{opacity:1;transform:none;filter:blur(0);}
+.persona__out svg{flex-shrink:0;color:var(--accent);margin-top:2px;}
+.persona__out span{font-size:13.5px;color:var(--dim);line-height:1.4;}
+@media (max-width:900px){.paraquem{padding-block:64px;}.persona-grid{grid-template-columns:1fr;}}
+
+/* TRANSFORMAÇÃO */
+.transf{background:linear-gradient(to bottom,var(--black) 0%,var(--black) 55%,var(--accent-soft) 100%);text-align:center;padding-block:130px;border-bottom:1px solid var(--hair);}
+.tf-tag{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--grey);}
+.tf-tag.after{color:var(--accent);}
+.tf-txt{font-family:var(--font-serif);font-style:italic;font-size:clamp(22px,3.8vw,36px);line-height:1.35;max-width:680px;margin:18px auto 0;}
+.tf-before .tf-txt{color:var(--grey);}
+.tf-after .tf-txt{color:var(--off);}
+.tf-div{display:flex;flex-direction:column;align-items:center;gap:8px;margin:48px 0;}
+.tf-div .ln{width:1px;height:48px;background:var(--hair);overflow:hidden;position:relative;}
+.tf-div .ln i{position:absolute;inset:0;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:transform 1s ease;}
+.tf-div.in .ln i{transform:scaleY(1);}
+.tf-div svg{color:var(--accent);}
+.transf .note{margin:50px auto 0;max-width:460px;font-size:13.5px;color:var(--grey);}
+@media (max-width:900px){.transf{padding-block:70px;}}
+
+/* SOBRE */
+.sobre{background:radial-gradient(ellipse 90% 60% at 50% -10%,#221408,#0a0a0b 55%);padding-block:110px;border-bottom:1px solid var(--hair);}
+.sobre__grid{display:grid;grid-template-columns:minmax(0,24rem) minmax(0,1fr);gap:60px;align-items:center;}
+.sobre__photo{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;border:1px solid var(--hair);}
+.sobre__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%;}
+.sobre__badge{position:absolute;left:16px;bottom:16px;padding:12px 16px;border-radius:14px;background:rgba(10,10,11,.7);backdrop-filter:blur(8px);border:1px solid var(--hair);font-size:11px;color:var(--dim);}
+.sobre__badge b{display:block;color:var(--accent);font-family:var(--font-serif);font-size:20px;}
+.sobre__text{position:relative;}
+.sobre__q{position:absolute;top:-40px;left:-6px;font-family:var(--font-serif);font-style:italic;font-size:96px;color:var(--accent);opacity:.16;line-height:1;}
+.sobre__text h3{font-size:26px;margin-bottom:4px;position:relative;}
+.sobre__role{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;position:relative;}
+.sobre__text p{max-width:440px;font-size:15.5px;line-height:1.65;position:relative;}
+@media (max-width:900px){.sobre{padding-block:64px;}.sobre__grid{grid-template-columns:1fr;gap:32px;}.sobre__photo{max-width:340px;}}
+
+/* OFERTA */
+.oferta{background:var(--paper);color:var(--ink);padding-block:120px;}
+.oferta .eyebrow{color:var(--accent);}
+.oferta .eyebrow::before{background:var(--accent);}
+.oferta__head{max-width:600px;margin-bottom:50px;}
+.oferta__head h2{font-size:2.4rem;color:var(--ink);}
+.oferta__layout{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:start;}
+.stack{background:#fff;border:1px solid var(--hair-soft);border-radius:24px;padding:38px 34px;}
+.stack__head{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--hair-soft);}
+.stack-item{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px dashed var(--hair-soft);}
+.stack-item:last-child{border-bottom:none;}
+.stack-item__ic{width:38px;height:38px;border-radius:11px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex-shrink:0;}
+.stack-item__tx{font-size:15px;color:var(--ink);}
+.price-card{border:1px solid var(--hair-soft);border-radius:24px;padding:38px 34px;background:#fff;}
+.price-card__tag{display:inline-flex;align-items:center;gap:8px;margin-bottom:22px;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);}
+.price-card__tag i{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.5s ease-in-out infinite;}
+@keyframes blink{50%{opacity:.3;}}
+.price-now{font-family:var(--font-serif);font-size:56px;color:var(--accent);line-height:1;margin-bottom:6px;}
+.price-now sup{font-size:20px;font-weight:600;margin-right:4px;color:var(--ink-soft);}
+.price-pay{font-size:13px;color:var(--ink-soft);margin-bottom:26px;}
+.price-card .btn{width:100%;justify-content:space-between;}
+@media (max-width:900px){.oferta{padding-block:70px;}.oferta__layout{grid-template-columns:1fr;}.stack,.price-card{padding:28px 22px;}}
+
+/* FAQ */
+.faq{background:var(--black);padding-block:110px;}
+.faq__head{max-width:560px;margin:0 auto 44px;text-align:center;}
+.faq__head h2{font-size:2.4rem;}
+.faq-list{max-width:760px;margin-inline:auto;display:flex;flex-direction:column;gap:12px;}
+.faqi{border:1px solid var(--hair);border-radius:16px;overflow:hidden;transition:border-color .35s;}
+.faqi.is-open{border-color:var(--accent-soft);}
+.faqi__trigger{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;background:none;border:none;cursor:pointer;text-align:left;color:var(--off);font-family:var(--font-serif);font-size:16px;font-weight:500;}
+.faqi__chev{flex-shrink:0;width:32px;height:32px;border-radius:50%;border:1px solid var(--hair);color:var(--dim);display:grid;place-items:center;transition:transform .4s,background .4s,color .4s,border-color .4s;}
+.faqi.is-open .faqi__chev{transform:rotate(180deg);background:var(--accent);color:#0a0a0b;border-color:var(--accent);}
+.faqi__panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s cubic-bezier(.22,1,.36,1);}
+.faqi.is-open .faqi__panel{grid-template-rows:1fr;}
+.faqi__panel p{overflow:hidden;min-height:0;padding:0 22px 20px;font-size:14px;color:var(--dim);}
+@media (max-width:900px){.faq{padding-block:64px;}}
+
+/* CTA final + footer */
+.finalcta{padding:100px 0;text-align:center;background:var(--black);}
+.finalcta h2{font-size:clamp(28px,4.4vw,42px);max-width:600px;margin:0 auto 32px;}
+footer{background:var(--black);border-top:1px solid var(--hair);padding:50px 0 30px;}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding-bottom:26px;border-bottom:1px solid var(--hair);flex-wrap:wrap;}
+.foot-tag{margin-top:8px;font-size:12.5px;color:var(--grey);}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px;}
+.foot-links a{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);}
+.foot-links a:hover{color:var(--accent);}
+.foot-copy{margin-top:22px;font-size:11px;color:var(--grey);opacity:.7;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="brand">Voz que <span>Conecta</span></div>
+    <ul class="nav-links">
+      <li><a href="#formacao">Método</a></li>
+      <li><a href="#modulos">Módulos</a></li>
+      <li><a href="#paraquem">Para quem</a></li>
+      <li><a href="#oferta">Oferta</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn" href="#oferta"><span>Quero saber o que falar</span><span class="btn__ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="m10.5,19c-.34,0-.6-.28-.6-.6,0-.16.06-.31.18-.44l4.14-4.43c.94-.94.94-2.5,0-3.45l-4.15-4.44c-.22-.24-.2-.61.02-.83.23-.21.6-.2.82.02l4.14,4.43c1.27,1.27,1.27,3.34,0,4.61l-4.13,4.42c-.11.13-.27.2-.42.2Z"/></svg></span></a>
+  </nav>
+</header>
+
+<main>
+<section class="hero dark" id="topo">
+  <div class="container hero__grid">
+    <div class="hero__content">
+      <div class="hero__ghost" aria-hidden="true">assunto</div>
+      <div class="eyebrow reveal">Comunicação na prática</div>
+      <h1 class="reveal">Você não precisa ter assunto o tempo todo. Precisa saber o que fazer quando ele acaba.</h1>
+      <p class="hero__lead reveal">Aprenda a identificar, explorar e desenvolver o que já existe numa conversa, sem ficar procurando desesperadamente um assunto novo.</p>
+      <div class="reveal">
+        <a class="btn btn-lg" href="#oferta"><span>Quero saber o que falar</span><span class="btn__ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m10.5,19c-.34,0-.6-.28-.6-.6,0-.16.06-.31.18-.44l4.14-4.43c.94-.94.94-2.5,0-3.45l-4.15-4.44c-.22-.24-.2-.61.02-.83.23-.21.6-.2.82.02l4.14,4.43c1.27,1.27,1.27,3.34,0,4.61l-4.13,4.42c-.11.13-.27.2-.42.2Z"/></svg></span></a>
+        <div class="microline">Curso online &middot; Acesso imediato</div>
+      </div>
+    </div>
+    <div class="hero__media">
+      <div class="hero__frame reveal">
+        <img src="assets/rayhan-foto.png" alt="Rayhan Coelho">
+      </div>
+      <blockquote class="hero__quote reveal">
+        <p>"Você não fica sem assunto. Fica sem repertório para desenvolver o que já apareceu."</p>
+        <cite>Rayhan Coelho</cite>
+      </blockquote>
+      <div class="hero__pills">
+        <div class="hero__pill reveal"><span class="dot"></span>Desenvolva qualquer assunto</div>
+        <div class="hero__pill reveal"><span class="dot"></span>Pare de travar em silêncios</div>
+        <div class="hero__pill reveal"><span class="dot"></span>Conduza com naturalidade</div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true">
+        <svg class="ring" viewBox="0 0 100 100">
+          <defs><path id="cc1" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/></defs>
+          <text><textPath href="#cc1" startOffset="50%" text-anchor="middle">ROLE PARA SABER MAIS &middot; ROLE PARA SABER MAIS &middot;</textPath></text>
+        </svg>
+        <svg class="arrow" viewBox="0 0 24 24" fill="currentColor"><path d="m12,15c-.77,0-1.49-.3-2.03-.84L5.66,10.13c-.17-.16-.18-.42-.02-.59.16-.17.42-.18.59-.02l4.31,4.03c.79.79,2.12.78,2.89.01l4.32-4.04c.17-.16.44-.15.59.02.16.17.15.44-.02.59l-4.31,4.03c-.53.53-1.25.84-2.02.84Z"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="problema dark" id="problema">
+  <div class="container problema__grid">
+    <div class="problema__intro reveal">
+      <span class="eyebrow">O problema</span>
+      <h2>Por que você trava no meio de uma conversa</h2>
+      <p>Você tem o que dizer. Só que, no momento certo, a cabeça sai atrás de um assunto novo em vez de continuar o que já estava ali.</p>
+      <div class="problema__quote">Você não fica sem assunto por falta de conteúdo. Fica porque, num certo ponto, para de escutar o que já foi dito.</div>
+      <a class="btn" href="#oferta"><span>Quero mudar isso agora</span><span class="btn__ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="m10.5,19c-.34,0-.6-.28-.6-.6,0-.16.06-.31.18-.44l4.14-4.43c.94-.94.94-2.5,0-3.45l-4.15-4.44c-.22-.24-.2-.61.02-.83.23-.21.6-.2.82.02l4.14,4.43c1.27,1.27,1.27,3.34,0,4.61l-4.13,4.42c-.11.13-.27.2-.42.2Z"/></svg></span></a>
+    </div>
+    <div class="signals">
+      <article class="signal reveal"><span class="signal__idx">Sinal 01</span><div><h3>Pensar no que responder</h3><p>Antes de terminar de ouvir, você já está pensando na próxima fala.</p><span class="signal__tag">"O que eu digo agora?"</span></div></article>
+      <article class="signal reveal"><span class="signal__idx">Sinal 02</span><div><h3>Procurar outro assunto</h3><p>Em vez de continuar o que já apareceu, você sai atrás de algo completamente novo.</p><span class="signal__tag">"Preciso mudar de assunto."</span></div></article>
+      <article class="signal reveal"><span class="signal__idx">Sinal 03</span><div><h3>A conversa esfria</h3><p>As respostas ficam curtas, os intervalos maiores, o clima mais artificial.</p><span class="signal__tag">"Ah, legal..."</span></div></article>
+      <article class="signal reveal"><span class="signal__idx">Sinal 04</span><div><h3>Você trava</h3><p>Nenhuma opção parece boa o suficiente, e vem o silêncio.</p><span class="signal__tag">Silêncio.</span></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="conceito dark" id="conceito">
+  <span class="conceito__ghost" aria-hidden="true">ASSUNTO</span>
+  <div class="container">
+    <span class="eyebrow reveal">A virada</span>
+    <h2 class="conceito__statement reveal">Você não precisa <em class="outline">inventar assunto.</em> Precisa <em class="hl">desenvolver o que já existe.</em></h2>
+
+    <div class="conceito__map">
+      <div class="map-row reveal-fade"><span class="n">01</span><span class="a">Pegar o que a pessoa falou</span><span class="mid">resulta em<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="b">um ponto de partida</span></div>
+      <div class="map-row reveal-fade"><span class="n">02</span><span class="a">Explorar esse ponto</span><span class="mid">resulta em<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="b">profundidade real</span></div>
+      <div class="map-row reveal-fade"><span class="n">03</span><span class="a">Desenvolver com algo seu</span><span class="mid">resulta em<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="b">um caminho novo</span></div>
+    </div>
+
+    <div class="conceito__close reveal">
+      <p>Praticamente toda fala carrega mais de uma direção possível. Você não precisa inventar nada, só escolher um fio e puxar. É esse princípio que o curso ensina a aplicar na prática.</p>
+      <a class="btn" href="#formacao"><span>Ver o método completo</span><span class="btn__ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="m10.5,19c-.34,0-.6-.28-.6-.6,0-.16.06-.31.18-.44l4.14-4.43c.94-.94.94-2.5,0-3.45l-4.15-4.44c-.22-.24-.2-.61.02-.83.23-.21.6-.2.82.02l4.14,4.43c1.27,1.27,1.27,3.34,0,4.61l-4.13,4.42c-.11.13-.27.2-.42.2Z"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<section class="formacao dark" id="formacao">
+  <div class="container">
+    <div class="formacao__head reveal">
+      <span class="eyebrow">Como o curso é organizado</span>
+      <h2>Quatro módulos, um caminho direto</h2>
+      <p>Role para acompanhar a jornada, do motivo do travamento até aplicar o método nas suas próprias conversas.</p>
+    </div>
+
+    <div class="formacao__journey">
+      <div class="formacao__steps">
+        <div class="formacao__rail"><div class="formacao__rail-fill"></div></div>
+
+        <div class="f-step is-active" data-i="0">
+          <span class="f-step__dot"></span>
+          <span class="f-step__idx">Módulo 01</span>
+          <h3 class="f-step__name">Por que você fica sem assunto</h3>
+          <p class="f-step__teaser">Entenda a raiz do travamento antes de tentar resolvê-lo.</p>
+        </div>
+        <div class="f-step" data-i="1">
+          <span class="f-step__dot"></span>
+          <span class="f-step__idx">Módulo 02</span>
+          <h3 class="f-step__name">O método P.E.D.</h3>
+          <p class="f-step__teaser">Pegar, explorar e desenvolver: os três movimentos centrais.</p>
+        </div>
+        <div class="f-step" data-i="2">
+          <span class="f-step__dot"></span>
+          <span class="f-step__idx">Módulo 03</span>
+          <h3 class="f-step__name">Aplicando em conversas reais</h3>
+          <p class="f-step__teaser">O que fazer quando a resposta é curta ou o assunto parece ter acabado.</p>
+        </div>
+        <div class="f-step" data-i="3">
+          <span class="f-step__dot"></span>
+          <span class="f-step__idx">Módulo 04</span>
+          <h3 class="f-step__name">Situações do dia a dia</h3>
+          <p class="f-step__teaser">Encontros, amizades, trabalho, faculdade: o método em contexto.</p>
+        </div>
+      </div>
+
+      <div class="formacao__stage reveal">
+        <div class="stage">
+          <span class="stage__num">01</span>
+          <div class="stage__top">
+            <span class="stage__count"><b>01</b> / 04</span>
+            <span class="stage__ticks"><i class="on"></i><i></i><i></i><i></i></span>
+          </div>
+          <span class="stage__kicker">Módulo 01</span>
+          <h3 class="stage__title">Por que você fica sem assunto</h3>
+          <p class="stage__desc">Entenda por que o problema geralmente não é falta de assunto, mas a tentativa de encontrar algo completamente novo para dizer.</p>
+          <div class="stage__tags"><span>Motivo real</span><span>Pensar demais</span><span>Pare de procurar</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="modulos dark" id="modulos">
+  <div class="container">
+    <div class="modulos__head reveal">
+      <span class="eyebrow">Aulas e módulos</span>
+      <h2>9 aulas curtas, direto ao ponto</h2>
+    </div>
+
+    <div class="mod-list">
+      <article class="mod" data-i="0">
+        <button class="mod__trigger" type="button" aria-expanded="false" aria-controls="mp0">
+          <span class="mod__num">01</span>
+          <span class="mod__info"><span class="mod__label">Módulo 1</span><span class="mod__name">Por que você fica sem assunto</span></span>
+          <span class="mod__meta"><span class="mod__count">3 aulas</span><span class="mod__ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></span>
+        </button>
+        <div class="mod__panel" id="mp0">
+          <ul class="mod__lessons">
+            <li>Aula 1 — O verdadeiro motivo de você ficar sem saber o que falar</li>
+            <li>Aula 2 — O erro de pensar demais antes de responder</li>
+            <li>Aula 3 — Pare de procurar um novo assunto</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="mod" data-i="1">
+        <button class="mod__trigger" type="button" aria-expanded="false" aria-controls="mp1">
+          <span class="mod__num">02</span>
+          <span class="mod__info"><span class="mod__label">Módulo 2</span><span class="mod__name">O método P.E.D.</span></span>
+          <span class="mod__meta"><span class="mod__count">3 aulas</span><span class="mod__ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></span>
+        </button>
+        <div class="mod__panel" id="mp1">
+          <ul class="mod__lessons">
+            <li>Aula 4 — Pegar</li>
+            <li>Aula 5 — Explorar</li>
+            <li>Aula 6 — Desenvolver</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="mod" data-i="2">
+        <button class="mod__trigger" type="button" aria-expanded="false" aria-controls="mp2">
+          <span class="mod__num">03</span>
+          <span class="mod__info"><span class="mod__label">Módulo 3</span><span class="mod__name">Aplicando em conversas reais</span></span>
+          <span class="mod__meta"><span class="mod__count">2 aulas</span><span class="mod__ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></span>
+        </button>
+        <div class="mod__panel" id="mp2">
+          <ul class="mod__lessons">
+            <li>Aula 7 — Quando a pessoa responde pouco</li>
+            <li>Aula 8 — Quando parece que o assunto acabou</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="mod" data-i="3">
+        <button class="mod__trigger" type="button" aria-expanded="false" aria-controls="mp3">
+          <span class="mod__num">04</span>
+          <span class="mod__info"><span class="mod__label">Módulo 4</span><span class="mod__name">Situações do dia a dia</span></span>
+          <span class="mod__meta"><span class="mod__count">1 aula</span><span class="mod__ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></span>
+        </button>
+        <div class="mod__panel" id="mp3">
+          <ul class="mod__lessons">
+            <li>Aula 9 — Como usar o método em diferentes conversas</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+
+    <div class="bonus-row reveal">
+      <span class="bonus-chip"><b>Bônus 1</b>&nbsp;— Mapa P.E.D.</span>
+      <span class="bonus-chip"><b>Bônus 2</b>&nbsp;— 30 situações para praticar</span>
+    </div>
+  </div>
+</section>
+
+<section class="paraquem dark" id="paraquem">
+  <div class="container">
+    <div class="paraquem__head reveal">
+      <span class="eyebrow">Para quem é</span>
+      <h2>Esse curso é para você se...</h2>
+    </div>
+    <div class="persona-grid">
+      <article class="persona"><span class="persona__num">01</span><p class="persona__line">Você frequentemente não sabe o que dizer depois que alguém responde.</p><div class="persona__out"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Você aprende a puxar o próximo passo do que já foi dito.</span></div></article>
+      <article class="persona"><span class="persona__num">02</span><p class="persona__line">Você sente que precisa ser interessante para manter uma conversa.</p><div class="persona__out"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Você para de performar e passa a desenvolver.</span></div></article>
+      <article class="persona"><span class="persona__num">03</span><p class="persona__line">Suas conversas costumam morrer depois de alguns minutos.</p><div class="persona__out"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Você ganha um caminho pra continuar, não só pra começar.</span></div></article>
+      <article class="persona"><span class="persona__num">04</span><p class="persona__line">Você fica pensando demais antes de responder.</p><div class="persona__out"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Você troca a resposta perfeita pela próxima resposta possível.</span></div></article>
+      <article class="persona"><span class="persona__num">05</span><p class="persona__line">Você sabe conversar, mas não sabe como desenvolver um assunto.</p><div class="persona__out"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Você aprende a diferença entre falar e desenvolver.</span></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="transf dark">
+  <div class="container">
+    <div class="tf-before reveal"><div class="tf-tag">Antes</div><div class="tf-txt">"Meu Deus, o que eu falo agora?"</div></div>
+    <div class="tf-div reveal"><div class="ln"><i></i></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 13l7 7 7-7"/></svg></div>
+    <div class="tf-after reveal"><div class="tf-tag after">Depois</div><div class="tf-txt">"A pessoa acabou de falar isso. Dá para desenvolver daqui."</div></div>
+    <p class="note reveal">Isso não quer dizer que toda conversa vai fluir perfeitamente. Quer dizer que você vai ter um caminho claro para seguir, mesmo quando não souber o que dizer na hora.</p>
+  </div>
+</section>
+
+<section class="sobre dark" id="sobre">
+  <div class="container sobre__grid">
+    <div class="sobre__photo reveal">
+      <img src="assets/rayhan-sobre.png" alt="Rayhan Coelho">
+      <div class="sobre__badge"><b>3+</b>anos estudando comunicação</div>
+    </div>
+    <div class="sobre__text reveal">
+      <span class="sobre__q" aria-hidden="true">&#8220;</span>
+      <h3>Rayhan Coelho</h3>
+      <div class="sobre__role">Voz que Conecta &middot; Método VOC</div>
+      <p>Rayhan Coelho é criador do método VOC e estuda comunicação há mais de 3 anos. A partir desse estudo, desenvolveu uma metodologia voltada para pessoas que querem se comunicar com mais segurança, naturalidade e capacidade de criar conexão.</p>
+    </div>
+  </div>
+</section>
+
+<section class="oferta light" id="oferta">
+  <div class="container">
+    <div class="oferta__head reveal">
+      <span class="eyebrow">A oferta</span>
+      <h2>Pare de depender da sorte para saber o que falar.</h2>
+    </div>
+
+    <div class="oferta__layout">
+      <div class="stack reveal">
+        <div class="stack__head">O que está incluso</div>
+        <div class="stack-item"><span class="stack-item__ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8l9-4 9 4-9 4-9-4z"/><path d="M7 10v5c0 1 2.5 2.5 5 2.5s5-1.5 5-2.5v-5"/></svg></span><span class="stack-item__tx">Curso completo Assunto — 4 módulos, 9 aulas, ~70 minutos</span></div>
+        <div class="stack-item"><span class="stack-item__ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16l-4-2-4 2-4-2V5z"/></svg></span><span class="stack-item__tx">Bônus — Mapa P.E.D.</span></div>
+        <div class="stack-item"><span class="stack-item__ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span class="stack-item__tx">Bônus — 30 situações para praticar</span></div>
+        <div class="stack-item"><span class="stack-item__ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span><span class="stack-item__tx">Acesso imediato, no seu ritmo</span></div>
+      </div>
+
+      <aside class="price-card reveal">
+        <span class="price-card__tag"><i></i>Curso online gravado</span>
+        <div class="price-now"><sup>R$</sup>37,90</div>
+        <div class="price-pay">Forma de pagamento: a definir conforme a plataforma</div>
+        <a class="btn btn-lg" href="#"><span>Quero aprender o que falar</span><span class="btn__ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m10.5,19c-.34,0-.6-.28-.6-.6,0-.16.06-.31.18-.44l4.14-4.43c.94-.94.94-2.5,0-3.45l-4.15-4.44c-.22-.24-.2-.61.02-.83.23-.21.6-.2.82.02l4.14,4.43c1.27,1.27,1.27,3.34,0,4.61l-4.13,4.42c-.11.13-.27.2-.42.2Z"/></svg></span></a>
+        <div class="microline">Clique no botão para conhecer o curso.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="faq dark" id="faq">
+  <div class="container">
+    <div class="faq__head reveal">
+      <span class="eyebrow">Perguntas frequentes</span>
+      <h2>Ainda com dúvidas?</h2>
+    </div>
+    <div class="faq-list">
+      <article class="faqi"><button class="faqi__trigger" type="button" aria-expanded="false">Preciso ser extrovertido?<span class="faqi__chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></button><div class="faqi__panel"><p>Não. O método não pede que você fale mais, pede que você preste mais atenção no que já foi dito. Funciona independente do seu jeito de ser.</p></div></article>
+      <article class="faqi"><button class="faqi__trigger" type="button" aria-expanded="false">Funciona mesmo se eu for muito tímido?<span class="faqi__chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></button><div class="faqi__panel"><p>Sim. O método parte de escutar, não de performar — algo que costuma ser mais fácil pra quem é mais reservado.</p></div></article>
+      <article class="faqi"><button class="faqi__trigger" type="button" aria-expanded="false">É para conversas presenciais e online?<span class="faqi__chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></button><div class="faqi__panel"><p>Sim, o método vale pra qualquer conversa em que você precisa desenvolver o que a outra pessoa disse.</p></div></article>
+      <article class="faqi"><button class="faqi__trigger" type="button" aria-expanded="false">Preciso decorar frases?<span class="faqi__chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></button><div class="faqi__panel"><p>Não. A ideia é o oposto: em vez de decorar perguntas prontas, você aprende a reconhecer o que já está na conversa e usar isso.</p></div></article>
+      <article class="faqi"><button class="faqi__trigger" type="button" aria-expanded="false">Quanto tempo tenho para acessar?<span class="faqi__chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></button><div class="faqi__panel"><p>[Resposta editável: informe o prazo de acesso ao conteúdo.]</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="finalcta dark">
+  <div class="container">
+    <h2 class="reveal">Da próxima vez, você vai saber o que falar.</h2>
+    <a class="btn btn-lg reveal" href="#oferta"><span>Quero saber o que falar</span><span class="btn__ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m10.5,19c-.34,0-.6-.28-.6-.6,0-.16.06-.31.18-.44l4.14-4.43c.94-.94.94-2.5,0-3.45l-4.15-4.44c-.22-.24-.2-.61.02-.83.23-.21.6-.2.82.02l4.14,4.43c1.27,1.27,1.27,3.34,0,4.61l-4.13,4.42c-.11.13-.27.2-.42.2Z"/></svg></span></a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot-top">
+      <div><div class="brand">Voz que <span>Conecta</span></div><div class="foot-tag">Comunicação que gera influência.</div></div>
+      <div class="foot-links"><a href="#">Termos de uso</a><a href="#">Política de privacidade</a><a href="#">Suporte</a></div>
+    </div>
+    <div class="foot-copy">© Voz que Conecta. Todos os direitos reservados.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var els = Array.prototype.slice.call(document.querySelectorAll('.reveal, .reveal-fade'));
+  if(!('IntersectionObserver' in window)){ els.forEach(function(el){el.classList.add('in');}); }
+  else{
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
+    els.forEach(function(el){ io.observe(el); });
+  }
+})();
+
+/* módulos accordion + auto-open on scroll */
+(function(){
+  var items = Array.prototype.slice.call(document.querySelectorAll('.mod'));
+  if(!items.length) return;
+  var triggers = items.map(function(it){ return it.querySelector('.mod__trigger'); });
+  var panels = items.map(function(it){ return it.querySelector('.mod__panel'); });
+  var open = -1;
+  function close(i){ if(i<0) return; items[i].classList.remove('is-open'); triggers[i].setAttribute('aria-expanded','false'); }
+  function openI(i){ if(i===open||i<0) return; close(open); open=i; items[i].classList.add('is-open'); triggers[i].setAttribute('aria-expanded','true'); }
+  triggers.forEach(function(t,i){ t.addEventListener('click', function(){ if(i===open){ close(i); open=-1; } else { openI(i); } }); });
+  if('IntersectionObserver' in window){
+    var focused=-1;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ var i=parseInt(e.target.getAttribute('data-i'),10); if(i!==focused){ focused=i; openI(i); } } });
+    }, {rootMargin:'-45% 0px -45% 0px', threshold:0});
+    items.forEach(function(it){ io.observe(it); });
+  } else { openI(0); }
+})();
+
+/* faq accordion */
+(function(){
+  var items = Array.prototype.slice.call(document.querySelectorAll('.faqi'));
+  if(!items.length) return;
+  var triggers = items.map(function(it){ return it.querySelector('.faqi__trigger'); });
+  var panels = items.map(function(it){ return it.querySelector('.faqi__panel'); });
+  var open=-1;
+  function close(i){ if(i<0) return; items[i].classList.remove('is-open'); triggers[i].setAttribute('aria-expanded','false'); }
+  function openI(i){ close(open); open=i; items[i].classList.add('is-open'); triggers[i].setAttribute('aria-expanded','true'); }
+  triggers.forEach(function(t,i){ t.addEventListener('click', function(){ if(i===open){ close(i); open=-1; } else { openI(i); } }); });
+})();
+
+/* formação: jornada sticky */
+(function(){
+  var section = document.querySelector('.formacao');
+  if(!section) return;
+  var steps = Array.prototype.slice.call(section.querySelectorAll('.f-step'));
+  var railFill = section.querySelector('.formacao__rail-fill');
+  var stage = section.querySelector('.stage');
+  var bgNum = section.querySelector('.stage__num');
+  var cnt = section.querySelector('.stage__count b');
+  var kicker = section.querySelector('.stage__kicker');
+  var title = section.querySelector('.stage__title');
+  var desc = section.querySelector('.stage__desc');
+  var tags = section.querySelector('.stage__tags');
+  var ticks = Array.prototype.slice.call(section.querySelectorAll('.stage__ticks i'));
+  if(!steps.length || !stage) return;
+
+  var data = [
+    {num:'01', title:'Por que você fica sem assunto', desc:'Entenda por que o problema geralmente não é falta de assunto, mas a tentativa de encontrar algo completamente novo para dizer.', tags:['Motivo real','Pensar demais','Pare de procurar']},
+    {num:'02', title:'O método P.E.D.', desc:'Pegar, explorar e desenvolver: os três movimentos para transformar qualquer fala em uma oportunidade de continuar.', tags:['Pegar','Explorar','Desenvolver']},
+    {num:'03', title:'Aplicando em conversas reais', desc:'O que fazer quando a pessoa responde pouco ou quando parece que o assunto acabou de vez.', tags:['Resposta curta','Sem forçar','Na prática']},
+    {num:'04', title:'Situações do dia a dia', desc:'Como usar o método em encontros, amizades, faculdade, trabalho e com pessoas novas.', tags:['Encontros','Trabalho','Amizades']}
+  ];
+
+  var active = 0;
+  function setActive(i){
+    if(i===active || !data[i]) return;
+    active = i;
+    steps.forEach(function(s,k){ s.classList.toggle('is-active', k===i); });
+    ticks.forEach(function(t,k){ t.classList.toggle('on', k<=i); });
+    var d = data[i];
+    bgNum.textContent = d.num;
+    cnt.textContent = d.num;
+    kicker.textContent = 'Módulo ' + d.num;
+    title.textContent = d.title;
+    desc.textContent = d.desc;
+    tags.innerHTML = d.tags.map(function(x){ return '<span>'+x+'</span>'; }).join('');
+  }
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ setActive(parseInt(e.target.getAttribute('data-i'),10)); } });
+    }, {rootMargin:'-45% 0px -45% 0px', threshold:0});
+    steps.forEach(function(s){ io.observe(s); });
+  }
+
+  var railTicking=false;
+  function onScroll(){
+    if(railTicking) return; railTicking=true;
+    requestAnimationFrame(function(){
+      var rect = section.getBoundingClientRect();
+      var total = section.offsetHeight - window.innerHeight;
+      var scrolled = Math.min(Math.max(-rect.top,0), Math.max(total,1));
+      var frac = total>0 ? scrolled/total : 0;
+      if(railFill) railFill.style.height = (frac*100)+'%';
+      railTicking=false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+
+/* para quem: scroll focus */
+(function(){
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.persona'));
+  if(!cards.length || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ e.target.classList.toggle('is-active', e.isIntersecting); });
+  }, {rootMargin:'-40% 0px -40% 0px', threshold:0});
+  cards.forEach(function(c){ io.observe(c); });
+})();
+
+/* transformação: draw divider line */
+(function(){
+  var el = document.querySelector('.tf-div');
+  if(!el || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.4});
+  io.observe(el);
+})();
+</script>
+</body>
+</html>
