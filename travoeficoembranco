@@ -1,0 +1,964 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sem Branco — Voz que Conecta</title>
+<meta name="description" content="Sem Branco: o método para saber o que responder quando sua mente trava. Um treinamento da Voz que Conecta, com Rayhan Coelho.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Piazzolla:ital,opsz,wght@0,8..30,400;0,8..30,500;0,8..30,600;0,8..30,700;1,8..30,400;1,8..30,500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+/* ==========================================================================
+   Sem Branco — Voz que Conecta
+   MOBILE-FIRST. A regra base (sem @media) é o MOBILE; os ajustes sobem em
+   @media (min-width: 700px) e @media (min-width: 980px).
+   ========================================================================== */
+
+:root{
+  --black: #08070c;
+  --black-2: #0b0910;
+  --black-3: #0f0c15;
+  --violet-900: #2c1657;
+  --violet-800: #421c85;
+  --violet-700: #5b21b6;
+  --violet-600: #7c3aed;
+  --violet-500: #9455f4;
+  --violet-glow: #b79aff;
+  --off: #f0ece6;
+  --off-dim: #c9c1d6;
+  --off-faint: #766c86;
+  --hair: rgba(240,236,230,0.13);
+
+  --ink: #14111c;
+  --paper: #f2eee7;
+  --paper-dim: #6a6270;
+
+  --font-sans: 'Poppins', sans-serif;
+  --font-serif: 'Piazzolla', serif;
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; overflow-x: clip; }
+body{
+  margin: 0; background: var(--black); color: var(--off-dim);
+  font-family: var(--font-sans); font-weight: 300; font-size: 16px; line-height: 1.7;
+  -webkit-font-smoothing: antialiased; overflow-x: clip;
+}
+h1,h2,h3{ font-family: var(--font-serif); color: var(--off); font-weight: 500; margin: 0; }
+p{ margin: 0; }
+a{ color: inherit; }
+img{ display: block; max-width: 100%; height: auto; }
+button{ font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+ul{ list-style: none; margin: 0; padding: 0; }
+:focus-visible{ outline: 2px solid var(--violet-glow); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+}
+
+.wrap{ width: 100%; max-width: 26rem; margin-inline: auto; padding-inline: 1.5rem; }
+.wrap-wide{ width: 100%; max-width: 68rem; margin-inline: auto; padding-inline: 1.5rem; position: relative; }
+section{ position: relative; padding-block: 4.5rem; }
+.hair-top{ border-top: 1px solid var(--hair); }
+
+@media (min-width: 700px){
+  .wrap{ max-width: 34rem; }
+  section{ padding-block: 6rem; }
+}
+@media (min-width: 980px){
+  .wrap{ max-width: 40rem; }
+  section{ padding-block: 8rem; }
+}
+
+.eyebrow{
+  display: block; margin-bottom: 1.1rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--violet-glow);
+}
+strong{ color: var(--off); font-weight: 500; }
+em{ font-style: italic; }
+.prose p + p{ margin-top: 1.1rem; }
+
+/* ---------- fragmented word / interrupted line ---------- */
+.frag{ position: relative; color: var(--violet-glow); white-space: nowrap; }
+.frag::after{
+  content: ''; position: absolute; left: -2%; right: -2%; bottom: .08em; height: 1px;
+  background: repeating-linear-gradient(90deg, var(--violet-500) 0 6px, transparent 6px 12px);
+  opacity: .85;
+}
+
+/* ---------- reveal system ---------- */
+.reveal{ opacity: 0; transform: translateY(18px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.in{ opacity: 1; transform: none; }
+.reveal-l{ opacity: 0; transform: translateX(-20px); transition: opacity .8s ease, transform .8s ease; }
+.reveal-l.in{ opacity: 1; transform: none; }
+.reveal-r{ opacity: 0; transform: translateX(20px); transition: opacity .8s ease, transform .8s ease; }
+.reveal-r.in{ opacity: 1; transform: none; }
+
+.wd{
+  display: inline-block; opacity: 0; transform: translateY(.4em);
+  transition: opacity .55s ease, transform .55s ease;
+  transition-delay: calc(var(--i,0) * 45ms);
+}
+.reveal.in .wd{ opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce){
+  .reveal, .reveal-l, .reveal-r, .wd{ opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  display: inline-flex; align-items: center; gap: .8rem;
+  padding: 1rem 1.7rem; background: var(--violet-700); color: var(--off);
+  border: 1px solid var(--violet-600);
+  font-family: var(--font-sans); font-weight: 600; font-size: .85rem; letter-spacing: .04em;
+  text-decoration: none; text-transform: uppercase;
+  transition: background .25s ease, transform .2s ease;
+}
+.btn:hover{ background: var(--violet-600); }
+.btn:active{ transform: translateY(1px); }
+.btn-invert{ background: var(--off); color: var(--black); border-color: var(--off); }
+.btn-invert:hover{ opacity: .9; background: var(--off); }
+
+.link-cta{
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: .7rem 0 .9rem; border-bottom: 1px solid var(--violet-500);
+  font-size: .82rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--violet-glow); text-decoration: none;
+  transition: border-color .25s ease, gap .25s ease;
+}
+.link-cta:hover{ gap: .9rem; border-color: var(--violet-glow); }
+
+.cta-note{
+  display: block; margin-top: .9rem; font-size: .75rem; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--off-faint);
+}
+
+/* ---------- nav ---------- */
+.nav{
+  position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: rgba(8,7,12,0.72); backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transform: translateY(-100%);
+  transition: transform .4s ease, border-color .4s ease;
+}
+.nav.is-visible{ transform: translateY(0); border-color: var(--hair); }
+.nav .brandmark{ font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--off); font-weight: 500; }
+.nav .brandmark b{ color: var(--violet-glow); font-weight: 600; }
+.nav .navcta{
+  display: inline-flex; align-items: center;
+  font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600;
+  color: var(--off); background: var(--violet-700); padding: .9rem 1rem; text-decoration: none; white-space: nowrap;
+}
+
+/* ---------- photo placeholders ---------- */
+.photoph{
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(ellipse 70% 55% at 30% 15%, rgba(148,85,244,0.22), transparent 60%),
+    linear-gradient(155deg, var(--violet-900) 0%, var(--black-2) 78%);
+  border: 1px solid rgba(148,85,244,0.22);
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.photoph span{
+  position: relative; z-index: 1;
+  font-size: .64rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--off-faint); text-align: center; padding: 1rem;
+}
+.photoph img{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
+.photoph.has-photo::after{
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(160deg, rgba(44,22,87,.5) 0%, rgba(10,8,16,.05) 55%, rgba(124,58,237,.22) 100%);
+  mix-blend-mode: multiply;
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hero{
+  min-height: 100svh; display: flex; align-items: center;
+  padding-block: 7rem 3rem;
+  background:
+    radial-gradient(ellipse 65% 40% at 20% 4%, rgba(91,33,182,0.28), transparent 60%),
+    var(--black);
+}
+.hero-grid{ display: flex; flex-direction: column; gap: 2.4rem; }
+.hero-eyebrow{ font-size: .72rem; letter-spacing: .24em; text-transform: uppercase; color: var(--violet-glow); font-weight: 600; margin-bottom: 1.2rem; }
+.hero h1{ font-size: clamp(2rem, 8vw, 2.7rem); line-height: 1.2; letter-spacing: -.01em; }
+.hero .sub{ margin-top: 1.5rem; font-size: 1.05rem; line-height: 1.65; color: var(--off-dim); max-width: 30rem; }
+.hero .actions{ margin-top: 2.2rem; }
+
+.hero-photo-wrap{ position: relative; }
+.hero-photo-wrap .photoph{ aspect-ratio: 4 / 5; width: 100%; }
+.hero-photo-wrap::before{
+  content: ''; position: absolute; width: 55%; padding-bottom: 55%;
+  border: 1px solid rgba(148,85,244,.22); border-radius: 50%;
+  top: -8%; right: -8%; z-index: -1;
+}
+
+.hero-quote{
+  margin-top: -3.2rem; position: relative; z-index: 2;
+  max-width: 15rem; margin-inline: auto;
+  padding: 1rem 1.2rem; text-align: center;
+  background: rgba(8,7,12,0.55); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.hero-quote p{ font-family: var(--font-serif); font-style: italic; font-size: .92rem; line-height: 1.5; color: var(--off); }
+
+.hero-pills{ display: flex; flex-direction: column; gap: .6rem; margin-top: 1.4rem; }
+.hero-pill{
+  display: flex; align-items: center; gap: .7rem;
+  padding: .8rem 1rem; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  backdrop-filter: blur(6px);
+  font-size: .85rem; font-weight: 500; color: var(--off);
+}
+.hero-pill i{ flex: none; width: 5px; height: 5px; border-radius: 50%; background: var(--violet-glow); }
+
+.scroll-cue{
+  display: none; margin: 2.2rem auto 0; width: 5.5rem; height: 5.5rem; position: relative;
+  border-radius: 50%; border: 1px solid rgba(255,255,255,0.14);
+}
+.scroll-cue svg.ring{ width: 100%; height: 100%; animation: scRing 18s linear infinite; }
+.scroll-cue text{ fill: var(--off-faint); font-size: .58rem; letter-spacing: .22em; font-family: var(--font-sans); }
+.scroll-cue .arrow{ position: absolute; inset: 0; margin: auto; width: 1.1rem; height: 1.1rem; color: var(--violet-glow); animation: scArrow .9s ease-in-out infinite; }
+@keyframes scRing{ to{ transform: rotate(360deg); } }
+@keyframes scArrow{ 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(5px);} }
+
+@media (min-width: 980px){
+  .hero-grid{ flex-direction: row; align-items: center; gap: 4rem; }
+  .hero-text{ flex: 0 0 50%; }
+  .hero-media{ flex: 0 0 38%; margin-left: auto; position: relative; }
+  .hero-quote{ position: absolute; top: 1.6rem; right: -2.2rem; margin: 0; width: 12rem; text-align: left; z-index: 3; }
+  .hero-pills{ position: absolute; left: -2.6rem; bottom: 1.6rem; z-index: 3; }
+  .scroll-cue{ display: block; }
+}
+
+/* ==========================================================================
+   IDENTIFICAÇÃO — sinais
+   ========================================================================== */
+.sinal{
+  padding: 1.3rem 0; border-top: 1px dashed var(--hair);
+  display: flex; flex-direction: column; gap: .3rem;
+}
+.sinais .sinal:last-child{ border-bottom: 1px dashed var(--hair); }
+.sinal .tag{ font-family: var(--font-serif); font-style: italic; font-size: .95rem; color: var(--off-faint); }
+.sinal p{ font-size: 1.02rem; color: var(--off); }
+
+/* ==========================================================================
+   CONCEITO — ghost watermark + mapa
+   ========================================================================== */
+.conceito{
+  position: relative; overflow: hidden;
+  background: linear-gradient(165deg, #100a1e 0%, var(--black) 60%);
+}
+.conceito__ghost{
+  position: absolute; left: 50%; top: 1.5rem; transform: translateX(-50%);
+  font-family: var(--font-sans); font-weight: 700; font-size: min(30vw, 340px);
+  letter-spacing: -.04em; line-height: 1; color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.045);
+  white-space: nowrap; pointer-events: none; user-select: none; z-index: 0;
+}
+.conceito .wrap{ position: relative; z-index: 1; }
+.conceito__statement{
+  font-size: clamp(1.6rem, 6vw, 2.3rem); line-height: 1.24; letter-spacing: -.01em; max-width: 30rem;
+}
+.conceito__map{ margin-top: 2.6rem; border-top: 1px solid var(--hair); }
+.conceito__row{
+  padding: 1.4rem 0; border-bottom: 1px solid var(--hair);
+  display: flex; flex-direction: column; gap: .5rem;
+}
+.conceito__row .in{ font-size: 1.05rem; color: var(--off); font-weight: 400; }
+.conceito__row .arrow{ display: flex; align-items: center; gap: .6rem; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--off-faint); }
+.conceito__row .arrow svg{ width: 14px; height: 10px; color: var(--violet-glow); }
+.conceito__row .out{ font-size: 1.05rem; color: var(--violet-glow); font-weight: 500; }
+
+@media (min-width: 700px){
+  .conceito__row{ flex-direction: row; align-items: center; gap: 1.5rem; }
+  .conceito__row .in{ flex: 1 1 40%; }
+  .conceito__row .arrow{ flex: 0 0 auto; }
+  .conceito__row .out{ flex: 1 1 40%; text-align: right; }
+}
+
+/* ==========================================================================
+   FRASE DE IMPACTO — seção clara
+   ========================================================================== */
+.impact{
+  background: var(--paper); color: var(--ink);
+  min-height: 74vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 4rem 1.5rem;
+}
+.impact h2{
+  color: var(--ink); font-weight: 500;
+  font-size: clamp(1.7rem, 7vw, 3rem); line-height: 1.28; max-width: 44rem;
+}
+.impact .frag{ color: var(--violet-700); }
+.impact .frag::after{ background: repeating-linear-gradient(90deg, var(--violet-700) 0 6px, transparent 6px 12px); }
+
+/* ==========================================================================
+   MÉTODO — jornada sticky
+   ========================================================================== */
+.metodo{ background: var(--black); }
+.metodo__head{ max-width: 30rem; margin-bottom: 2.5rem; }
+.metodo__journey{ position: relative; }
+.metodo__steps{ position: relative; padding-left: 1.8rem; }
+.metodo__rail{
+  position: absolute; left: 0; top: .4rem; bottom: .4rem; width: 1px;
+  background: linear-gradient(to bottom, rgba(118,108,134,.5), var(--violet-500) 55%, var(--violet-glow));
+}
+.metodo__step{ position: relative; min-height: 46vh; display: flex; flex-direction: column; justify-content: center; padding: 1.5rem 0; }
+.metodo__step::before{
+  content: ''; position: absolute; left: -2.15rem; top: 50%; transform: translateY(-50%) scale(.7);
+  width: .7rem; height: .7rem; border-radius: 50%; background: var(--black-2); border: 2px solid var(--off-faint);
+  transition: transform .5s cubic-bezier(.16,1,.3,1), background .4s ease, border-color .4s ease;
+}
+.metodo__step-idx{ font-size: .74rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--off-faint); margin-bottom: .6rem; transition: color .4s ease; }
+.metodo__step-name{ font-size: clamp(1.8rem, 8vw, 2.6rem); font-weight: 700; letter-spacing: -.02em; color: var(--off-faint); opacity: .45; font-family: var(--font-serif); font-style: italic; transition: color .5s ease, opacity .5s ease; }
+.metodo__step-teaser{ margin-top: .8rem; max-width: 22rem; font-size: .96rem; color: var(--off-faint); opacity: 0; transform: translateY(8px); filter: blur(3px); transition: opacity .5s ease, transform .5s ease, filter .5s ease, color .4s ease; }
+
+.metodo__step.is-active::before{ transform: translateY(-50%) scale(1.2); background: var(--violet-glow); border-color: var(--violet-glow); }
+.metodo__step.is-active .metodo__step-idx{ color: var(--violet-glow); }
+.metodo__step.is-active .metodo__step-name{ color: var(--off); opacity: 1; font-style: normal; }
+.metodo__step.is-active .metodo__step-teaser{ color: var(--off-dim); opacity: 1; transform: none; filter: blur(0); }
+
+.metodo__stage{
+  position: relative; margin-top: 2.5rem;
+  min-height: 16rem; padding: 2.2rem 1.6rem;
+  background: linear-gradient(160deg, #150a2b 0%, #0c0714 100%);
+  border: 1px solid rgba(148,85,244,0.22);
+  overflow: hidden;
+}
+.metodo__stage-num{
+  position: absolute; top: -1.5rem; right: -.25rem; font-weight: 700; font-size: 6.5rem;
+  color: transparent; -webkit-text-stroke: 1px rgba(183,154,255,0.18); pointer-events: none; z-index: 0;
+}
+.metodo__stage-inner{ position: relative; z-index: 1; }
+.metodo__stage-count{ font-size: .68rem; font-weight: 600; letter-spacing: .12em; color: var(--off-faint); }
+.metodo__stage-count b{ color: var(--violet-glow); }
+.metodo__stage-title{ margin-top: .9rem; font-size: 1.7rem; }
+.metodo__stage-desc{ margin-top: .7rem; max-width: 22rem; font-size: .96rem; line-height: 1.6; color: var(--off-dim); }
+
+@media (min-width: 980px){
+  .metodo__journey{ display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+  .metodo__stage{ position: sticky; top: calc((100vh - 16rem) / 2); margin-top: 0; }
+}
+
+/* ==========================================================================
+   SITUAÇÕES — lista assimétrica com foco por scroll
+   ========================================================================== */
+.situacoes{ margin-top: 2.6rem; }
+.situ{
+  padding: 1.5rem 0; border-top: 1px solid var(--hair);
+  display: flex; gap: 1rem; align-items: baseline;
+  opacity: .45; transition: opacity .5s ease;
+}
+.situacoes .situ:last-child{ border-bottom: 1px solid var(--hair); }
+.situ.is-focus{ opacity: 1; }
+.situ .n{ font-size: .72rem; color: var(--violet-glow); flex: none; width: 1.5rem; }
+.situ p{ font-family: var(--font-serif); font-style: italic; color: var(--off); line-height: 1.35; }
+.situ:nth-child(1) p{ font-size: clamp(1.1rem, 5vw, 1.5rem); }
+.situ:nth-child(2){ padding-left: 6%; }
+.situ:nth-child(2) p{ font-size: clamp(.95rem, 4vw, 1.1rem); color: var(--off-dim); }
+.situ:nth-child(3) p{ font-size: clamp(1.2rem, 5.5vw, 1.7rem); }
+.situ:nth-child(4){ padding-left: 10%; }
+.situ:nth-child(4) p{ font-size: clamp(.95rem, 4vw, 1.05rem); color: var(--off-dim); }
+.situ:nth-child(5) p{ font-size: clamp(1.3rem, 6vw, 1.9rem); color: var(--violet-glow); }
+
+/* ==========================================================================
+   TRANSFORMAÇÃO — foto + números reais
+   ========================================================================== */
+.transf{ background: var(--black-2); }
+.transf__grid{ display: flex; flex-direction: column; gap: 2.4rem; }
+.transf__photo .photoph{ aspect-ratio: 4/5; }
+.transf__stats{ display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--hair); border-left: 1px solid var(--hair); }
+.transf__stat{ padding: 1.6rem 1.3rem; border-right: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+.transf__stat b{ display: block; font-family: var(--font-serif); font-size: 2.2rem; color: var(--violet-glow); font-weight: 600; }
+.transf__stat span{ display: block; margin-top: .35rem; font-size: .82rem; color: var(--off-faint); }
+.transf__list{ margin-top: 2rem; display: flex; flex-direction: column; gap: .1rem; }
+.transf__item{ padding: .85rem 0; border-top: 1px solid var(--hair); font-size: .95rem; color: var(--off-dim); display: flex; gap: .7rem; }
+.transf__list .transf__item:last-child{ border-bottom: 1px solid var(--hair); }
+.transf__item i{ flex: none; width: 5px; height: 5px; border-radius: 50%; background: var(--violet-glow); margin-top: .6rem; }
+
+@media (min-width: 980px){
+  .transf__grid{ flex-direction: row; align-items: center; gap: 4rem; }
+  .transf__photo{ flex: 0 0 34%; }
+  .transf__body{ flex: 1; }
+}
+
+/* ==========================================================================
+   MÓDULOS — accordion
+   ========================================================================== */
+.modulos__list{ margin-top: 2.4rem; display: flex; flex-direction: column; gap: .8rem; }
+.modulo{ border: 1px solid var(--hair); background: rgba(255,255,255,0.015); transition: border-color .3s ease, background .3s ease; }
+.modulo.is-open{ border-color: rgba(183,154,255,0.35); background: rgba(148,85,244,0.05); }
+.modulo__trigger{
+  width: 100%; display: flex; align-items: center; gap: 1rem;
+  padding: 1.2rem 1.3rem; text-align: left; color: inherit; font-family: inherit;
+}
+.modulo__num{ flex: none; width: 2.2rem; font-family: var(--font-serif); font-style: italic; font-size: 1.3rem; color: var(--violet-glow); }
+.modulo__info{ flex: 1; min-width: 0; }
+.modulo__label{ font-size: .66rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--off-faint); }
+.modulo__name{ margin-top: .2rem; font-size: 1.02rem; font-weight: 500; color: var(--off); }
+.modulo__meta{ flex: none; display: flex; align-items: center; gap: .8rem; }
+.modulo__count{ font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; color: var(--off-faint); white-space: nowrap; display: none; }
+.modulo__icon{ width: 1.9rem; height: 1.9rem; flex: none; display: grid; place-items: center; border: 1px solid var(--hair); border-radius: 50%; color: var(--off-faint); transition: transform .35s ease, color .35s ease, border-color .35s ease; }
+.modulo.is-open .modulo__icon{ transform: rotate(180deg); color: var(--violet-glow); border-color: rgba(183,154,255,0.4); }
+.modulo__panel{ display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(.22,1,.36,1); }
+.modulo.is-open .modulo__panel{ grid-template-rows: 1fr; }
+.modulo__lessons{ overflow: hidden; min-height: 0; display: flex; flex-direction: column; }
+.modulo__lessons li{ padding: .55rem 1.3rem .55rem 3.9rem; border-top: 1px solid rgba(255,255,255,0.06); font-size: .88rem; color: var(--off-dim); }
+.modulo__lessons li:first-child{ padding-top: .75rem; }
+.modulo__lessons li:last-child{ padding-bottom: 1.2rem; }
+@media (min-width: 700px){ .modulo__count{ display: inline; } }
+
+/* ==========================================================================
+   SOBRE RAYHAN
+   ========================================================================== */
+.sobre__grid{ display: flex; flex-direction: column; gap: 2.2rem; }
+.sobre__photo .photoph{ aspect-ratio: 3/4; width: 12rem; }
+.sobre__id{ margin-top: 1.2rem; display: flex; flex-direction: column; }
+.sobre__id .line{ padding: .5rem 0; border-top: 1px solid var(--hair); font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--off-faint); }
+.sobre__id .line:first-child{ color: var(--off); font-weight: 500; }
+.sobre__id .line:last-child{ border-bottom: 1px solid var(--hair); }
+
+@media (min-width: 980px){
+  .sobre__grid{ flex-direction: row; gap: 3.5rem; align-items: flex-start; }
+}
+
+/* ==========================================================================
+   OFERTA
+   ========================================================================== */
+.oferta{
+  background: linear-gradient(165deg, var(--violet-900) 0%, var(--black) 68%);
+}
+.oferta h2{ font-size: clamp(1.7rem, 6vw, 2.4rem); line-height: 1.24; max-width: 26rem; }
+.oferta__name{ margin-top: 2.4rem; font-size: clamp(1.3rem, 5vw, 1.7rem); }
+.oferta__includes{ margin-top: 1.6rem; display: flex; flex-direction: column; gap: .7rem; }
+.oferta__includes li{ font-size: .96rem; color: var(--off-dim); padding-left: 1rem; position: relative; }
+.oferta__includes li::before{ content: '—'; position: absolute; left: 0; color: var(--violet-glow); }
+.oferta__price{ margin-top: 2.2rem; font-family: var(--font-serif); font-size: clamp(2.4rem, 12vw, 3.4rem); font-weight: 600; color: var(--off); }
+.oferta__payment{ margin-top: .3rem; font-size: .85rem; color: var(--off-faint); }
+.oferta .btn{ margin-top: 2.2rem; }
+
+/* ==========================================================================
+   FAQ
+   ========================================================================== */
+.faq__list{ margin-top: 2.4rem; display: flex; flex-direction: column; }
+.faq-item{ border-top: 1px solid var(--hair); }
+.faq__list .faq-item:last-child{ border-bottom: 1px solid var(--hair); }
+.faq-item__trigger{
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1.2rem 0; text-align: left; color: var(--off); font-size: .98rem; font-weight: 400;
+}
+.faq-item__chev{ flex: none; width: 1.8rem; height: 1.8rem; display: grid; place-items: center; border: 1px solid var(--hair); border-radius: 50%; color: var(--off-faint); transition: transform .35s ease, color .35s ease, border-color .35s ease; }
+.faq-item.is-open .faq-item__chev{ transform: rotate(45deg); color: var(--violet-glow); border-color: rgba(183,154,255,0.4); }
+.faq-item__panel{ display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(.22,1,.36,1); }
+.faq-item.is-open .faq-item__panel{ grid-template-rows: 1fr; }
+.faq-item__panel-inner{ overflow: hidden; min-height: 0; }
+.faq-item__panel p{ padding: 0 0 1.2rem; font-size: .94rem; line-height: 1.6; color: var(--off-dim); max-width: 30rem; }
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+footer{ padding: 3.2rem 0 2.6rem; border-top: 1px solid var(--hair); }
+footer .brandmark{ font-size: .82rem; letter-spacing: .14em; text-transform: uppercase; color: var(--off); font-weight: 500; }
+footer .brandmark b{ color: var(--violet-glow); }
+footer .tagline{ margin-top: .5rem; font-size: .82rem; color: var(--off-faint); font-style: italic; font-family: var(--font-serif); }
+footer .links{ margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: .4rem 1.1rem; font-size: .74rem; color: var(--off-faint); }
+footer .links a{ display: inline-flex; align-items: center; min-height: 2.75rem; text-decoration: none; }
+footer .links a:hover{ color: var(--off-dim); }
+footer .copy{ margin-top: 1.6rem; font-size: .68rem; color: var(--off-faint); opacity: .7; }
+</style>
+</head>
+<body>
+
+<div class="nav" id="nav">
+  <div class="brandmark">VOZ QUE <b>CONECTA</b></div>
+  <a class="navcta" href="#oferta">Ver oferta</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="hero">
+  <div class="wrap-wide">
+    <div class="hero-grid">
+
+      <div class="hero-text reveal">
+        <span class="hero-eyebrow">Sem Branco</span>
+        <h1><span class="wd" style="--i:0">O</span> <span class="wd" style="--i:1">método</span> <span class="wd" style="--i:2">para</span> <span class="wd" style="--i:3">saber</span> <span class="wd" style="--i:4">o</span> <span class="wd" style="--i:5">que</span> <span class="wd" style="--i:6">responder</span> <span class="wd" style="--i:7">quando</span> <span class="wd" style="--i:8">sua</span> <span class="wd" style="--i:9">mente</span> <span class="wd frag" style="--i:10">trava</span><span class="wd" style="--i:11">.</span></h1>
+        <p class="sub">Quando você sabe o que quer dizer, mas na hora simplesmente não consegue. Um treinamento da Voz que Conecta para sair do branco sem depender da resposta perfeita.</p>
+        <div class="actions">
+          <a class="btn" href="#oferta">QUERO PARAR DE TRAVAR AO FALAR</a>
+          <span class="cta-note">Treinamento prático · Acesso imediato</span>
+        </div>
+      </div>
+
+      <div class="hero-media reveal-r">
+        <div class="hero-photo-wrap">
+          <div class="photoph has-photo"><img src="rayhan-hero.jpg" alt="Rayhan Coelho"></div>
+        </div>
+        <div class="hero-quote">
+          <p>"Você não precisa da resposta perfeita. Precisa da próxima resposta possível."</p>
+        </div>
+        <div class="hero-pills">
+          <div class="hero-pill"><i></i>Menos filtro antes de falar</div>
+          <div class="hero-pill"><i></i>Respostas que nascem na hora</div>
+          <div class="hero-pill"><i></i>Mais espontaneidade nas conversas</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <svg class="ring" viewBox="0 0 120 120">
+        <defs><path id="sc-circle" d="M 60,60 m -50,0 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0"/></defs>
+        <text><textPath href="#sc-circle" startOffset="50%" text-anchor="middle">ROLE PARA CONHECER O MÉTODO</textPath></text>
+      </svg>
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+  </div>
+</header>
+
+<!-- ============ IDENTIFICAÇÃO ============ -->
+<section class="hair-top">
+  <div class="wrap reveal">
+    <span class="eyebrow">O que acontece</span>
+    <h2 style="font-size:clamp(1.5rem,6vw,2.1rem); line-height:1.28; max-width:26rem;">Você sabe o que queria dizer. Só não consegue dizer na hora.</h2>
+    <div class="prose" style="margin-top:1.6rem; max-width:26rem;">
+      <p>Alguém faz uma pergunta e espera uma resposta. Antes de abrir a boca, uma parte da sua cabeça já está avaliando se aquilo que você pensou é bom o suficiente. Enquanto procura uma versão melhor, o tempo passa, o silêncio cresce, e você começa a se julgar por ainda não ter respondido.</p>
+    </div>
+
+    <div class="sinais" style="margin-top:2rem;">
+      <div class="sinal"><span class="tag">"Espera, deixa eu pensar…"</span><p>Você trava tentando montar a resposta ideal antes de falar qualquer coisa.</p></div>
+      <div class="sinal"><span class="tag">"Acho que já passou o momento…"</span><p>A hesitação esfria a conversa e a pausa fica mais pesada do que deveria.</p></div>
+      <div class="sinal"><span class="tag">"Isso não fez sentido nenhum…"</span><p>Você força uma resposta qualquer só pra quebrar o silêncio, e ela sai sem naturalidade.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONCEITO ============ -->
+<section class="conceito hair-top">
+  <span class="conceito__ghost reveal" aria-hidden="true">BRANCO</span>
+  <div class="wrap">
+    <span class="eyebrow reveal">O conceito</span>
+    <h2 class="conceito__statement reveal">O branco não começa quando você fica em silêncio.</h2>
+
+    <div class="conceito__map reveal">
+      <div class="conceito__row">
+        <span class="in">Você trava buscando a resposta perfeita</span>
+        <span class="arrow">custa<svg viewBox="0 0 24 12" fill="none"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="out">sua espontaneidade</span>
+      </div>
+      <div class="conceito__row">
+        <span class="in">Você hesita antes de responder</span>
+        <span class="arrow">custa<svg viewBox="0 0 24 12" fill="none"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="out">o ritmo da conversa</span>
+      </div>
+      <div class="conceito__row">
+        <span class="in">Você força uma resposta qualquer</span>
+        <span class="arrow">custa<svg viewBox="0 0 24 12" fill="none"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="out">a naturalidade da sua fala</span>
+      </div>
+      <div class="conceito__row">
+        <span class="in">Você reconhece o branco e segue falando</span>
+        <span class="arrow">recupera<svg viewBox="0 0 24 12" fill="none"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="out">o controle da conversa</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FRASE DE IMPACTO ============ -->
+<section class="impact">
+  <h2 class="reveal"><span class="wd" style="--i:0">Você</span> <span class="wd" style="--i:1">não</span> <span class="wd" style="--i:2">precisa</span> <span class="wd" style="--i:3">saber</span> <span class="wd" style="--i:4">exatamente</span> <span class="wd" style="--i:5">como</span> <span class="wd" style="--i:6">a</span> <span class="wd" style="--i:7">resposta</span> <span class="wd frag" style="--i:8">termina</span> <span class="wd" style="--i:9">antes</span> <span class="wd" style="--i:10">de</span> <span class="wd" style="--i:11">começar</span> <span class="wd" style="--i:12">a</span> <span class="wd" style="--i:13">falar.</span></h2>
+</section>
+
+<!-- ============ MÉTODO — jornada sticky ============ -->
+<section class="metodo hair-top" id="metodo">
+  <div class="wrap-wide">
+    <div class="metodo__head reveal">
+      <span class="eyebrow">O método</span>
+      <h2 style="font-size:clamp(1.5rem,6vw,2.1rem); line-height:1.28;">R.E.S. — três movimentos pra sair do branco</h2>
+    </div>
+
+    <div class="metodo__journey">
+      <div class="metodo__steps">
+        <div class="metodo__rail" aria-hidden="true"></div>
+
+        <div class="metodo__step" data-i="0">
+          <span class="metodo__step-idx">Movimento 01</span>
+          <h3 class="metodo__step-name">Reconheça</h3>
+          <p class="metodo__step-teaser">No momento em que perceber que está travando, pare de lutar contra isso. Você não precisa vencer o branco antes de falar, só precisa notar que ele está ali.</p>
+        </div>
+        <div class="metodo__step" data-i="1">
+          <span class="metodo__step-idx">Movimento 02</span>
+          <h3 class="metodo__step-name">Expresse</h3>
+          <p class="metodo__step-teaser">Diga a primeira coisa honesta que vier, mesmo que pareça incompleta. Uma primeira impressão, uma reação, o começo de um raciocínio. Não precisa ser a resposta final.</p>
+        </div>
+        <div class="metodo__step" data-i="2">
+          <span class="metodo__step-idx">Movimento 03</span>
+          <h3 class="metodo__step-name">Siga</h3>
+          <p class="metodo__step-teaser">A partir do que você disse, continue: a reação da outra pessoa já indica o próximo passo. Você constrói a resposta enquanto fala, não antes.</p>
+        </div>
+      </div>
+
+      <div class="metodo__stage" id="metodo-stage">
+        <span class="metodo__stage-num" id="stage-num" aria-hidden="true">01</span>
+        <div class="metodo__stage-inner">
+          <span class="metodo__stage-count"><b id="stage-count">01</b> / 03</span>
+          <h3 class="metodo__stage-title" id="stage-title">Reconheça</h3>
+          <p class="metodo__stage-desc" id="stage-desc">Você está se bloqueando. Só isso: perceber que está buscando a resposta perfeita em vez de simplesmente responder.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SITUAÇÕES ============ -->
+<section class="hair-top">
+  <div class="wrap reveal">
+    <span class="eyebrow">Situações reais</span>
+    <h2 style="font-size:clamp(1.5rem,6vw,2.1rem); line-height:1.28;">Porque o branco não acontece em uma situação só.</h2>
+
+    <div class="situacoes">
+      <div class="situ"><span class="n">01</span><p>Quando alguém pergunta sua opinião.</p></div>
+      <div class="situ"><span class="n">02</span><p>Quando você precisa se apresentar.</p></div>
+      <div class="situ"><span class="n">03</span><p>Quando alguém faz uma pergunta inesperada.</p></div>
+      <div class="situ"><span class="n">04</span><p>Quando precisa falar diante de outras pessoas.</p></div>
+      <div class="situ"><span class="n">05</span><p>Quando está conversando com alguém que considera importante.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRANSFORMAÇÃO — foto + números reais ============ -->
+<section class="transf hair-top">
+  <div class="wrap-wide">
+    <div class="transf__grid">
+
+      <div class="transf__photo reveal-l">
+        <div class="photoph"><span>[FOTO RAYHAN — SEÇÃO]</span></div>
+      </div>
+
+      <div class="transf__body reveal">
+        <span class="eyebrow">O que você recebe</span>
+        <h2 style="font-size:clamp(1.5rem,6vw,2.1rem); line-height:1.28; max-width:24rem;">Um treinamento enxuto, direto ao ponto do bloqueio.</h2>
+
+        <div class="transf__stats">
+          <div class="transf__stat"><b>04</b><span>módulos</span></div>
+          <div class="transf__stat"><b>09</b><span>aulas</span></div>
+          <div class="transf__stat"><b>70</b><span>minutos, aprox.</span></div>
+          <div class="transf__stat"><b>02</b><span>bônus inclusos</span></div>
+        </div>
+
+        <div class="transf__list">
+          <div class="transf__item"><i></i>Curso online gravado, aulas curtas e práticas</div>
+          <div class="transf__item"><i></i>Protocolo Sem Branco — guia rápido do método R.E.S.</div>
+          <div class="transf__item"><i></i>Treino de respostas — situações práticas para exercitar</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ MÓDULOS ============ -->
+<section class="hair-top" id="modulos">
+  <div class="wrap reveal">
+    <span class="eyebrow">Aulas e módulos</span>
+    <h2 style="font-size:clamp(1.5rem,6vw,2.1rem); line-height:1.28;">O mapa completo do curso.</h2>
+
+    <div class="modulos__list">
+
+      <article class="modulo" data-i="0">
+        <button class="modulo__trigger" type="button" aria-expanded="false" aria-controls="mp-0" id="mh-0">
+          <span class="modulo__num">01</span>
+          <span class="modulo__info">
+            <span class="modulo__label">Módulo 1</span>
+            <span class="modulo__name">Entendendo o branco</span>
+          </span>
+          <span class="modulo__meta">
+            <span class="modulo__count">3 aulas</span>
+            <span class="modulo__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </span>
+        </button>
+        <div class="modulo__panel" id="mp-0" role="region" aria-labelledby="mh-0">
+          <ul class="modulo__lessons">
+            <li>Aula 1 — O branco começa antes do silêncio</li>
+            <li>Aula 2 — A armadilha da resposta perfeita</li>
+            <li>Aula 3 — A próxima resposta possível</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="modulo" data-i="1">
+        <button class="modulo__trigger" type="button" aria-expanded="false" aria-controls="mp-1" id="mh-1">
+          <span class="modulo__num">02</span>
+          <span class="modulo__info">
+            <span class="modulo__label">Módulo 2</span>
+            <span class="modulo__name">O método R.E.S.</span>
+          </span>
+          <span class="modulo__meta">
+            <span class="modulo__count">3 aulas</span>
+            <span class="modulo__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </span>
+        </button>
+        <div class="modulo__panel" id="mp-1" role="region" aria-labelledby="mh-1">
+          <ul class="modulo__lessons">
+            <li>Aula 4 — Reconheça</li>
+            <li>Aula 5 — Expresse</li>
+            <li>Aula 6 — Siga</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="modulo" data-i="2">
+        <button class="modulo__trigger" type="button" aria-expanded="false" aria-controls="mp-2" id="mh-2">
+          <span class="modulo__num">03</span>
+          <span class="modulo__info">
+            <span class="modulo__label">Módulo 3</span>
+            <span class="modulo__name">Quando você é pego de surpresa</span>
+          </span>
+          <span class="modulo__meta">
+            <span class="modulo__count">2 aulas</span>
+            <span class="modulo__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </span>
+        </button>
+        <div class="modulo__panel" id="mp-2" role="region" aria-labelledby="mh-2">
+          <ul class="modulo__lessons">
+            <li>Aula 7 — Quando alguém pergunta sua opinião</li>
+            <li>Aula 8 — Quando alguém fala algo inesperado</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="modulo" data-i="3">
+        <button class="modulo__trigger" type="button" aria-expanded="false" aria-controls="mp-3" id="mh-3">
+          <span class="modulo__num">04</span>
+          <span class="modulo__info">
+            <span class="modulo__label">Módulo 4</span>
+            <span class="modulo__name">Treinando a resposta</span>
+          </span>
+          <span class="modulo__meta">
+            <span class="modulo__count">1 aula</span>
+            <span class="modulo__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </span>
+        </button>
+        <div class="modulo__panel" id="mp-3" role="region" aria-labelledby="mh-3">
+          <ul class="modulo__lessons">
+            <li>Aula 9 — Como levar o R.E.S. para situações reais</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+
+    <p style="margin-top:2.2rem;"><a class="link-cta" href="#oferta">Ver o que mais está incluso →</a></p>
+  </div>
+</section>
+
+<!-- ============ SOBRE RAYHAN ============ -->
+<section class="hair-top">
+  <div class="wrap-wide">
+    <div class="sobre__grid">
+
+      <div class="reveal-l">
+        <div class="sobre__photo"><div class="photoph has-photo"><img src="rayhan-sobre.jpg" alt="Rayhan Coelho"></div></div>
+        <div class="sobre__id">
+          <div class="line">Rayhan</div>
+          <div class="line">Voz que Conecta</div>
+          <div class="line">Método VOC</div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <span class="eyebrow">Quem está por trás</span>
+        <div class="prose" style="max-width:26rem;">
+          <p><strong>Rayhan Coelho</strong> é criador do método VOC e estuda comunicação há mais de 3 anos.</p>
+          <p>Seu trabalho nasceu da busca por entender por que algumas pessoas sabem exatamente o que querem dizer, mas travam justamente quando precisam se comunicar, e de como transformar esse processo em algo mais natural e consciente.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ OFERTA ============ -->
+<section class="hair-top oferta" id="oferta">
+  <div class="wrap reveal">
+    <span class="eyebrow">A oferta</span>
+    <h2>Você não precisa continuar esperando a frase perfeita aparecer.</h2>
+
+    <div class="oferta__name">SEM BRANCO</div>
+    <ul class="oferta__includes">
+      <li>Curso completo: 4 módulos, 9 aulas, aproximadamente 70 minutos</li>
+      <li>Bônus 1: Protocolo Sem Branco — guia rápido do método R.E.S.</li>
+      <li>Bônus 2: Treino de respostas — situações práticas para exercitar</li>
+    </ul>
+
+    <div class="oferta__price">R$ 37,90</div>
+    <div class="oferta__payment">[Acesso e forma de pagamento: a definir conforme a plataforma]</div>
+
+    <a class="btn btn-invert" href="https://rayhancoelho.com.br/travoeficoembranco">QUERO PARAR DE TRAVAR</a>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="hair-top" id="faq">
+  <div class="wrap reveal">
+    <span class="eyebrow">Dúvidas</span>
+    <h2 style="font-size:clamp(1.5rem,6vw,2.1rem);">Perguntas frequentes</h2>
+
+    <div class="faq__list">
+      <article class="faq-item">
+        <button class="faq-item__trigger" type="button" aria-expanded="false" aria-controls="fp-0" id="fh-0">Preciso ser extrovertido?<span class="faq-item__chev" aria-hidden="true">+</span></button>
+        <div class="faq-item__panel" id="fp-0" role="region" aria-labelledby="fh-0"><div class="faq-item__panel-inner"><p>Não. O método não depende do seu perfil de personalidade: ele trabalha o processo entre pensar e falar, que trava tanto em pessoas mais caladas quanto em pessoas comunicativas.</p></div></div>
+      </article>
+      <article class="faq-item">
+        <button class="faq-item__trigger" type="button" aria-expanded="false" aria-controls="fp-1" id="fh-1">Serve para quem pensa demais antes de responder?<span class="faq-item__chev" aria-hidden="true">+</span></button>
+        <div class="faq-item__panel" id="fp-1" role="region" aria-labelledby="fh-1"><div class="faq-item__panel-inner"><p>Sim, esse é exatamente o padrão que o treinamento trabalha: reduzir o tempo entre pensar e se expressar.</p></div></div>
+      </article>
+      <article class="faq-item">
+        <button class="faq-item__trigger" type="button" aria-expanded="false" aria-controls="fp-2" id="fh-2">Funciona para conversas do dia a dia?<span class="faq-item__chev" aria-hidden="true">+</span></button>
+        <div class="faq-item__panel" id="fp-2" role="region" aria-labelledby="fh-2"><div class="faq-item__panel-inner"><p>Sim, o foco principal é esse: conversas cotidianas, reuniões e momentos em que você precisa responder sem ter preparado nada antes.</p></div></div>
+      </article>
+      <article class="faq-item">
+        <button class="faq-item__trigger" type="button" aria-expanded="false" aria-controls="fp-3" id="fh-3">Serve para falar em público?<span class="faq-item__chev" aria-hidden="true">+</span></button>
+        <div class="faq-item__panel" id="fp-3" role="region" aria-labelledby="fh-3"><div class="faq-item__panel-inner"><p>O foco do curso é o bloqueio em conversas: quando alguém pergunta sua opinião ou fala algo inesperado e sua mente trava. Não é um curso de apresentações formais ou oratória.</p></div></div>
+      </article>
+      <article class="faq-item">
+        <button class="faq-item__trigger" type="button" aria-expanded="false" aria-controls="fp-4" id="fh-4">Preciso decorar respostas?<span class="faq-item__chev" aria-hidden="true">+</span></button>
+        <div class="faq-item__panel" id="fp-4" role="region" aria-labelledby="fh-4"><div class="faq-item__panel-inner"><p>Não. Pelo contrário, o método existe justamente para reduzir a dependência de respostas decoradas ou ensaiadas.</p></div></div>
+      </article>
+      <article class="faq-item">
+        <button class="faq-item__trigger" type="button" aria-expanded="false" aria-controls="fp-5" id="fh-5">Como funciona o acesso?<span class="faq-item__chev" aria-hidden="true">+</span></button>
+        <div class="faq-item__panel" id="fp-5" role="region" aria-labelledby="fh-5"><div class="faq-item__panel-inner"><p>[Edite com os detalhes reais: plataforma de acesso, prazo de liberação do conteúdo e tempo de acesso.]</p></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brandmark">VOZ QUE <b>CONECTA</b></div>
+    <div class="tagline">Comunicação que gera influência.</div>
+    <div class="links">
+      <a href="[termos de uso]">Termos de uso</a>
+      <a href="[política de privacidade]">Política de privacidade</a>
+      <a href="[contato de suporte]">Suporte</a>
+    </div>
+    <div class="copy">© 2026 Voz que Conecta. Todos os direitos reservados.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- nav reveal ---------- */
+  var nav = document.getElementById('nav');
+  var hero = document.getElementById('hero');
+  if (nav && hero && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ nav.classList.toggle('is-visible', !e.isIntersecting); });
+    }, { threshold: .05 }).observe(hero);
+  }
+
+  /* ---------- generic reveal ---------- */
+  var revealEls = document.querySelectorAll('.reveal, .reveal-l, .reveal-r');
+  if (!reduced && 'IntersectionObserver' in window){
+    var revealObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
+    revealEls.forEach(function(el){ revealObs.observe(el); });
+    setTimeout(function(){
+      revealEls.forEach(function(el){ el.classList.add('in'); });
+    }, 4500);
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- método: jornada sticky ---------- */
+  (function(){
+    var steps = Array.prototype.slice.call(document.querySelectorAll('.metodo__step'));
+    if (!steps.length) return;
+
+    var data = [
+      { n: '01', title: 'Reconheça', desc: 'Você está se bloqueando. Só isso: perceber que está buscando a resposta perfeita em vez de simplesmente responder.' },
+      { n: '02', title: 'Expresse',  desc: 'Comece pela primeira ideia honesta, mesmo que pareça incompleta ou mal formulada.' },
+      { n: '03', title: 'Siga',      desc: 'Deixe a resposta se desenvolver enquanto você fala, a partir do que a outra pessoa disser ou perguntar em seguida.' }
+    ];
+
+    var stageNum = document.getElementById('stage-num');
+    var stageCount = document.getElementById('stage-count');
+    var stageTitle = document.getElementById('stage-title');
+    var stageDesc = document.getElementById('stage-desc');
+    var active = 0;
+
+    function setActive(i){
+      if (i === active || !data[i]) return;
+      active = i;
+      steps.forEach(function(s, k){ s.classList.toggle('is-active', k === i); });
+      var d = data[i];
+      stageNum.textContent = d.n;
+      stageCount.textContent = d.n;
+      stageTitle.textContent = d.title;
+      stageDesc.textContent = d.desc;
+    }
+
+    steps[0].classList.add('is-active');
+
+    if ('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting) setActive(parseInt(e.target.getAttribute('data-i'), 10));
+        });
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+      steps.forEach(function(s){ io.observe(s); });
+    }
+  })();
+
+  /* ---------- situações: foco por scroll ---------- */
+  (function(){
+    var items = document.querySelectorAll('.situ');
+    if (!items.length || !('IntersectionObserver' in window)) {
+      items.forEach(function(el){ el.classList.add('is-focus'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ e.target.classList.toggle('is-focus', e.isIntersecting); });
+    }, { rootMargin: '-35% 0px -35% 0px', threshold: 0 });
+    items.forEach(function(el){ io.observe(el); });
+  })();
+
+  /* ---------- accordion factory ---------- */
+  function accordion(itemSel, triggerSel, panelSel, exclusive){
+    var items = Array.prototype.slice.call(document.querySelectorAll(itemSel));
+    if (!items.length) return;
+    var open = -1;
+    items.forEach(function(item, i){
+      var trigger = item.querySelector(triggerSel);
+      trigger.addEventListener('click', function(){
+        var isOpen = item.classList.contains('is-open');
+        if (exclusive && open >= 0 && open !== i){
+          items[open].classList.remove('is-open');
+          items[open].querySelector(triggerSel).setAttribute('aria-expanded', 'false');
+        }
+        item.classList.toggle('is-open', !isOpen);
+        trigger.setAttribute('aria-expanded', String(!isOpen));
+        open = isOpen ? -1 : i;
+      });
+    });
+  }
+  accordion('.modulo', '.modulo__trigger', '.modulo__panel', true);
+  accordion('.faq-item', '.faq-item__trigger', '.faq-item__panel', true);
+})();
+</script>
+
+</body>
+</html>
